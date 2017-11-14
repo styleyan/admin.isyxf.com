@@ -1,28 +1,21 @@
 import axios from 'axios'
+import Ajax from './install'
+import './axios.config'
 
-// 请求配置
-axios.interceptors.request.use((config) => {
-  config.headers['X-Requested-Width'] = 'XMLHttpRequest'
-  return config
-})
-
-// 响应数据配置
-axios.interceptors.response.use((response) => {
-  const data = response.data
-  if (data.state) {
-    return data
+/**
+ * 发送ajax请求列表
+ */
+class Apis extends Ajax {
+  /**
+   * 测试例子数据
+   * @url http://rap.ops.xkeshi.so/workspace/myWorkspace.action?projectId=65#4170
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  login(params) {
+    return super.post('/api/example', params)
   }
-
-  const err = new Error(data.description)
-  err.data = data
-  err.response = response
-}, (err) => {
-  return err
-})
-
-// 添加到Vue全局，方便调用
-axios.install = (Vue) => {
-  Vue.prototype.$axios = axios
 }
 
-export default axios
+const apis = new Apis(axios)
+export default apis

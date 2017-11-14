@@ -6,7 +6,7 @@ const routes = [
   {
     path: '/list',
     name: 'list',
-    component: resolve => require(['../../views/list/index.vue'], resolve),
+    component: resolve => require(['../../views/list/Index.vue'], resolve),
   },
 ]
 
