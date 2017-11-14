@@ -1,28 +1,58 @@
 <template>
   <div class="login-wrap">
     <h2 class="title">{{ msg }}</h2>
-    <Input v-model="userName" size="large" placeholder="输入用户名"></Input>
-    <Input v-model="userPwd" type="password" size="large" placeholder="输入密码"></Input>
-    <Button type="primary" @click="loginHandle" long>登录</Button>
+    <Form ref="formInline" :model="formInline" :rules="ruleInline">
+        <FormItem prop="user">
+            <Input type="text" v-model="formInline.user" placeholder="Username">
+                <Icon type="ios-person-outline" slot="prepend"></Icon>
+            </Input>
+        </FormItem>
+        <FormItem prop="password">
+            <Input type="password" v-model="formInline.password" placeholder="Password">
+                <Icon type="ios-locked-outline" slot="prepend"></Icon>
+            </Input>
+        </FormItem>
+        <FormItem>
+            <Button type="primary" @click="handleSubmit('formInline')" long>登录</Button>
+        </FormItem>
+    </Form>
   </div>
 </template>
-
 <script>
 export default {
-  name: 'hello',
   data() {
     return {
       msg: '后台登录系统',
-      userName: '',
-      userPwd: '',
+      formInline: {
+        user: '',
+        password: '',
+      },
+      ruleInline: {
+        user: [
+          { required: true, message: 'Please fill in the user name', trigger: 'blur' },
+        ],
+        password: [
+          { required: true, message: 'Please fill in the password.', trigger: 'blur' },
+          { type: 'string', min: 6, message: 'The password length cannot be less than 6 bits', trigger: 'blur' },
+        ],
+      },
     }
   },
   methods: {
+    handleSubmit(name) {
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          this.loginHandle()
+        } else {
+          this.$Message.error('Fail!')
+        }
+      })
+    },
     /**
-     * 点击登录
+     * 发起ajax请求
      */
     loginHandle() {
-      this.$ajax.login({userName: this.userName, userPwd: this.userPwd}).then((data) => {
+      this.$ajax.login({userName: this.user, userPwd: this.password}).then((data) => {
         console.log(data)
       }).catch((err) => {
         this.$Message.error(`[${err.code}] : ${err.msg}`)
@@ -31,15 +61,13 @@ export default {
   },
 }
 </script>
-
-<style lang="stylus" scoped>
+<style lang="stylus">
 .login-wrap {
-    margin: 30px
-    .title {
-      margin-bottom : 30px
-    }
-    .ivu-input-wrapper{
-      margin-bottom: 20px
-    }
+  margin: 30px
+  .title {
+    margin-bottom : 30px
+    text-align: center
   }
+}
+
 </style>
