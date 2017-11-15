@@ -7,13 +7,23 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
+const _entry = {
+  app: './src/main.js',
+}
+
+// ======================== mavon-editor markdown编辑器 ==========================
+const lang = require('highlight.js-async-webpack/src/file.lang.hljs.js')
+lang.forEach((prop) => {
+  _entry[prop] = [`mavon-editor/dist/js/${prop}.js`]
+  //console.log(prop, `mavon-editor/dist/js/${prop}.js`)
+})
+// ======================== mavon-editor markdown编辑器 end=======================
+console.log(config.dev.assetsPublicPath)
 module.exports = {
-  entry: {
-    app: './src/main.js'
-  },
+  entry: _entry,
   output: {
     path: config.build.assetsRoot,
-    filename: '[name].js',
+    filename: 'js/[name].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath

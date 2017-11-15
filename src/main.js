@@ -10,10 +10,13 @@ import './filter'
 import './directive'
 import iView from 'iview'
 import 'iview/dist/styles/iview.css'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 Vue.use(iView)
 Vue.use(components)
 Vue.use(axios)
+Vue.use(mavonEditor)
 
 Vue.config.productionTip = false
 /* eslint-disable no-new */

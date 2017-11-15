@@ -1,8 +1,9 @@
 /**
  * 首页路由
  */
-import list from './list'
 import login from './login'
+import hao from './hao'
+import www from './www'
 
 const routes = [
   {
@@ -12,4 +13,4 @@ const routes = [
   },
 ]
 
-export default routes.concat(list, login)
+export default routes.concat(login, hao, www)
