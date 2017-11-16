@@ -3,7 +3,9 @@
     <Tooltip content="添加导航" placement="left">
       <Icon type="compose"></Icon>
     </Tooltip>
-    <Select v-model="model10" multiple style="width:260px">
+
+    <Button icon="trash-a">删除选中</Button>
+    <Select v-model="model10" clearable multiple style="width:260px">
       <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
     </Select>
   </div>

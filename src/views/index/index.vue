@@ -25,11 +25,11 @@
             <MenuGroup title="www.isyxf.com">
               <MenuItem name="3">
                 <Icon type="ios-navigate" :size="iconSize"></Icon>
-                <span class="layout-text">写文章</span>
+                <span class="layout-text">发布文章</span>
               </MenuItem>
               <MenuItem name="4">
                 <Icon type="ios-keypad" :size="iconSize"></Icon>
-                <span class="layout-text">查看列表</span>
+                <span class="layout-text">管理文章</span>
               </MenuItem>
             </MenuGroup>
           </Menu>
