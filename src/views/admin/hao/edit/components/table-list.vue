@@ -14,42 +14,56 @@ export default {
         {
           title: '创建时间',
           key: 'date',
+          width: 160,
+          align: 'center',
         },
         {
           title: '网站名称',
           key: 'name',
-        },
-        {
-          title: '链接地址',
-          key: 'url',
-        },
-        {
-          title: '点赞数量',
-          key: 'favor',
-        },
-        {
-          title: '收藏人数',
-          key: 'watch',
-        },
-        {
-          title: '所处分类',
-          key: 'typeName',
+          width: 160,
+          align: 'center',
         },
         {
           title: '网站描述',
           key: 'desc',
+          align: 'center',
+        },
+        {
+          title: '所处分类',
+          key: 'typeName',
+          width: 90,
+          align: 'center',
+        },
+        {
+          title: '链接地址',
+          key: 'url',
+          width: 200,
+          align: 'center',
+        },
+        {
+          title: '点赞数量',
+          key: 'favor',
+          width: 90,
+          align: 'center',
+        },
+        {
+          title: '收藏人数',
+          key: 'watch',
+          width: 90,
+          align: 'center',
         },
         {
           title: '操作',
           key: 'action',
-          width: 150,
+          width: 160,
           align: 'center',
           render: (h, params) => {
-            return h('div', [
+            return [
               h('Button', {
                 props: {
                   type: 'primary',
                   size: 'small',
+                  icon: 'compose',
                 },
                 style: {
                   marginRight: '5px',
@@ -64,6 +78,7 @@ export default {
                 props: {
                   type: 'error',
                   size: 'small',
+                  icon: 'trash-a',
                 },
                 on: {
                   click: () => {
@@ -71,13 +86,13 @@ export default {
                   },
                 },
               }, '删除'),
-            ])
+            ]
           },
         },
       ],
       data5: [
         {
-          date: '2016-10-03',
+          date: '2016-10-03 12:21:40',
           name: '秀8',
           url: 'http://www.xiu8.com',
           favor: 300,
@@ -87,7 +102,7 @@ export default {
           logo: 'http://chuangzaoshi.com/assets/images/C/bootstrap.png',
         },
         {
-          date: '2016-10-23',
+          date: '2016-10-23 12:21:40',
           name: '5755',
           url: 'http://www.5755.com',
           favor: 8000,

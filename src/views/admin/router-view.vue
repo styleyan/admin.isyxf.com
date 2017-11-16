@@ -1,41 +1,35 @@
 <template>
   <div class="layout">
-    <Menu mode="horizontal" theme="dark" active-name="1">
-      <div class="layout-logo"><img src="http://chuangzaoshi.com/assets/images/logo.svg" /></div>
-      <Icon class="my-icon-log-out" type="log-out"></Icon>
-    </Menu>
+    <Row class="top-menu">
+      <Col span="12">
+        <div class="layout-logo"><img src="http://chuangzaoshi.com/assets/images/logo.svg" /></div>
+      </Col>
+      <Col span="12" class="col-right">
+        {{userName}}<Icon class="my-icon-log-out" type="log-out"></Icon>
+      </Col>
+    </Row>
     <div class="layout-content-a" :class="{'layout-hide-text': spanLeft < 3}">
       <Row type="flex">
         <Col :span="spanLeft" class="layout-menu-left">
           <Menu active-name="1" theme="dark" class="layout-menu-ul" width="auto">
-            <MenuGroup title="hao.isyxf.com">
-              <MenuItem name="1">
-                <Icon type="ios-navigate" :size="iconSize"></Icon>
-                <router-link :to="{name:'admin-hao-edit'}">
-                  <span class="layout-text">导航列表</span>
-                </router-link>
-              </MenuItem>
-              <MenuItem name="2">
-                <Icon type="ios-keypad" :size="iconSize"></Icon>
-                <router-link :to="{name:'admin-hao-links'}">
-                  <span class="layout-text">友情链接</span>
-                </router-link>
-              </MenuItem>
-            </MenuGroup>
-            <MenuGroup title="www.isyxf.com">
-              <MenuItem name="3">
-                <Icon type="ios-navigate" :size="iconSize"></Icon>
-                <router-link :to="{name:'admin-blog-edit'}">
-                  <span class="layout-text">发布文章</span>
-                </router-link>
-              </MenuItem>
-              <MenuItem name="4">
-                <Icon type="ios-keypad" :size="iconSize"></Icon>
-                <router-link :to="{name:'admin-blog-list'}">
-                  <span class="layout-text">管理文章</span>
-                </router-link>
-              </MenuItem>
-            </MenuGroup>
+            <MenuItem name="1">
+              <Icon type="ios-navigate" :size="iconSize"></Icon>
+              <router-link :to="{name:'admin-hao-edit'}">
+                <span class="layout-text">导航列表</span>
+              </router-link>
+            </MenuItem>
+            <MenuItem name="2">
+              <Icon type="ios-navigate" :size="iconSize"></Icon>
+              <router-link :to="{name:'admin-blog-edit'}">
+                <span class="layout-text">发布文章</span>
+              </router-link>
+            </MenuItem>
+            <MenuItem name="3">
+              <Icon type="ios-keypad" :size="iconSize"></Icon>
+              <router-link :to="{name:'admin-blog-list'}">
+                <span class="layout-text">管理文章</span>
+              </router-link>
+            </MenuItem>
           </Menu>
         </Col>
         <Col :span="spanRight">
@@ -59,6 +53,7 @@ export default {
   name: 'hello',
   data() {
     return {
+      userName: 'Y.Jer',
       spanLeft: 3,
       spanRight: 21,
     }
@@ -84,7 +79,7 @@ export default {
   },
 }
 </script>
-<style lang="stylus" scoped>
+<style lang="stylus">
 .layout-logo{
   width: 100px
   height: 30px
@@ -98,6 +93,22 @@ export default {
     margin-top: -6px
   }
 }
+.top-menu{
+  background: #495060
+  height: 58px
+  .col-right {
+    text-align : right
+    color: #fff
+    line-height: 56px
+  }
+  .my-icon-log-out{
+    margin: 0 30px 0 20px;
+    color: #fff
+    font-size: 18px
+    cursor: pointer
+    vertical-align: middle;
+  }
+}
 .layout-nav{
   width: 420px
   margin: 0 auto
@@ -105,22 +116,16 @@ export default {
 .layout-menu-ul{
   height : 100%
 }
-.my-icon-log-out{
-  color: #fff
-  font-size: 18px
-  float: right
-  margin: 20px 14px 0 0
-  cursor: pointer
-}
+
 // ========================
 .layout-breadcrumb{
     padding: 10px 15px 0
 }
 .layout-content{
     min-width: 1100px
-    padding-right: 60px
     min-height: 200px
-    margin: 15px
+    margin: 30px 0 30px 30px
+    padding-right: 30px
     overflow: hidden
     background: #fff
     border-radius: 4px

@@ -98,7 +98,7 @@ export default {
                     this.show(params.index)
                   },
                 },
-              }, '修改'),
+              }, '编辑'),
               h('Button', {
                 props: {
                   type: 'error',
