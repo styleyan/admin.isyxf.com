@@ -42,8 +42,6 @@ export default {
 </script>
 <style lang="stylus">
 .article-list{
-  width: 1100px
-  margin: 0 auto
 }
 .article-page {
   text-align : right

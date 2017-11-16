@@ -11,21 +11,29 @@
             <MenuGroup title="hao.isyxf.com">
               <MenuItem name="1">
                 <Icon type="ios-navigate" :size="iconSize"></Icon>
-                <span class="layout-text">导航列表</span>
+                <router-link :to="{name:'admin-hao-edit'}">
+                  <span class="layout-text">导航列表</span>
+                </router-link>
               </MenuItem>
               <MenuItem name="2">
                 <Icon type="ios-keypad" :size="iconSize"></Icon>
-                <span class="layout-text">友情链接</span>
+                <router-link :to="{name:'admin-hao-links'}">
+                  <span class="layout-text">友情链接</span>
+                </router-link>
               </MenuItem>
             </MenuGroup>
             <MenuGroup title="www.isyxf.com">
               <MenuItem name="3">
                 <Icon type="ios-navigate" :size="iconSize"></Icon>
-                <span class="layout-text">发布文章</span>
+                <router-link :to="{name:'admin-blog-edit'}">
+                  <span class="layout-text">发布文章</span>
+                </router-link>
               </MenuItem>
               <MenuItem name="4">
                 <Icon type="ios-keypad" :size="iconSize"></Icon>
-                <span class="layout-text">管理文章</span>
+                <router-link :to="{name:'admin-blog-list'}">
+                  <span class="layout-text">管理文章</span>
+                </router-link>
               </MenuItem>
             </MenuGroup>
           </Menu>
@@ -109,6 +117,8 @@ export default {
     padding: 10px 15px 0
 }
 .layout-content{
+    min-width: 1100px
+    padding-right: 60px
     min-height: 200px
     margin: 15px
     overflow: hidden

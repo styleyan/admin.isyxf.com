@@ -1,6 +1,5 @@
 <template>
   <div class="wrap-mavon-edit">
-
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
         <FormItem label="文章标题" prop="name">
           <Input v-model="formValidate.name"></Input>
@@ -127,8 +126,5 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-.wrap-mavon-edit{
-  width: 1100px
-  margin: 0 auto
-}
+.wrap-mavon-edit{}
 </style>

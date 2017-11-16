@@ -11,6 +11,7 @@ const routes = [
       path: 'hao',
       name: 'admin-hao',
       component: resolve => require(['../../views/admin/hao/router-view.vue'], resolve),
+      // hao.isyxf.com 网站导航
       children: [{
         path: 'edit',
         name: 'admin-hao-edit',
@@ -24,6 +25,7 @@ const routes = [
       path: 'blog',
       name: 'admin-blog',
       component: resolve => require(['../../views/admin/blog/router-view.vue'], resolve),
+      // 发布文章
       children: [{
         path: 'edit',
         name: 'admin-blog-edit',

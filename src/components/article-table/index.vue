@@ -17,17 +17,19 @@ export default {
         {
           title: '日期',
           key: 'date',
-          width: 200,
+          width: 160,
           sortable: true,
+          align: 'center',
         },
         {
           title: '文章标题',
           key: 'title',
-          width: 260,
+          align: 'center',
         },
         {
           title: '文章分类',
           key: 'typeName',
+          align: 'center',
           width: 170,
           filters: [
             { label: '技术', value: 1 },
@@ -44,7 +46,7 @@ export default {
         {
           title: '文章标签',
           key: 'tags',
-          width: 170,
+          align: 'center',
           filters: [
             { label: '运维', value: 1 },
             { label: '数据库', value: 2 },
@@ -60,7 +62,7 @@ export default {
         {
           title: '状态',
           key: 'statusText',
-          width: 80,
+          width: 110,
           align: 'center',
           filters: [
             { label: '已显示', value: 1 },
