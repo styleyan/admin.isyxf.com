@@ -1,0 +1,36 @@
+/**
+ * admin路由
+ */
+
+const routes = [
+  {
+    path: '/admin',
+    name: 'admin',
+    component: resolve => require(['../../views/admin/router-view.vue'], resolve),
+    children: [{
+      path: 'hao',
+      name: 'admin-hao',
+      component: resolve => require(['../../views/admin/hao/router-view.vue'], resolve),
+      children: [{
+        path: 'edit',
+        name: 'admin-hao-edit',
+        component: resolve => require(['../../views/admin/hao/edit/index.vue'], resolve),
+      }],
+    }, {
+      path: 'blog',
+      name: 'admin-blog',
+      component: resolve => require(['../../views/admin/blog/router-view.vue'], resolve),
+      children: [{
+        path: 'edit',
+        name: 'admin-blog-edit',
+        component: resolve => require(['../../views/admin/blog/edit/index.vue'], resolve),
+      }, {
+        path: 'list',
+        name: 'admin-blog-list',
+        component: resolve => require(['../../views/admin/blog/list/index.vue'], resolve),
+      }],
+    }],
+  },
+]
+
+export default routes

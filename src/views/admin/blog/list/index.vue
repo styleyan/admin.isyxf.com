@@ -14,7 +14,7 @@
   </div>
 </template>
 <script>
-import articleTable from '../../components/article-table/index.vue'
+import articleTable from '@components/article-table/index.vue'
 
 export default {
   name: 'www',

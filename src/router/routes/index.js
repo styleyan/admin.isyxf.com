@@ -5,6 +5,7 @@ import login from './login'
 import hao from './hao'
 import www from './www'
 import list from './list'
+import admin from './admin'
 
 const routes = [
   {
@@ -14,4 +15,4 @@ const routes = [
   },
 ]
 
-export default routes.concat(login, hao, www, list)
+export default routes.concat(login, hao, www, list, admin)

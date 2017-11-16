@@ -23,7 +23,7 @@ export default {
         {
           title: '文章标题',
           key: 'title',
-          width: 280,
+          width: 260,
         },
         {
           title: '文章分类',
@@ -44,7 +44,7 @@ export default {
         {
           title: '文章标签',
           key: 'tags',
-          width: 150,
+          width: 170,
           filters: [
             { label: '运维', value: 1 },
             { label: '数据库', value: 2 },
@@ -122,24 +122,6 @@ export default {
           type: 1,
           typeName: 'javascript',
           tags: '技术，散文',
-        },
-        {
-          status: 1,
-          statusText: '已显示',
-          title: 'sdfsdfsf',
-          date: '2016-10-03 12:30:20',
-          type: 20,
-          typeName: 'http',
-          tags: '随笔',
-        },
-        {
-          status: 1,
-          statusText: '已显示',
-          title: 'eeeeeeeee',
-          date: '2016-10-01 12:30:20',
-          type: 17,
-          typeName: '需求分析',
-          tags: '数据库',
         },
       ],
     }
