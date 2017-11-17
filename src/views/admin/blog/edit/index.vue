@@ -19,7 +19,7 @@
           </Select>
         </FormItem>
         <FormItem label="发布日期" prop="date">
-          <DatePicker type="date" placeholder="请选择发布日期，默认为当前日期" v-model="formValidate.date" style="width: 260px"></DatePicker>
+          <DatePicker type="date" placement="top-start" placeholder="请选择发布日期，默认为当前日期" v-model="formValidate.date" style="width: 260px"></DatePicker>
         </FormItem>
         <FormItem label="是否显示">
           <i-switch v-model="formValidate.switch" size="large">
@@ -125,6 +125,12 @@ export default {
   },
 }
 </script>
-<style lang="stylus" scoped>
-.wrap-mavon-edit{}
+<style lang="stylus">
+.wrap-mavon-edit {
+  .ivu-date-picker {
+    .ivu-select-dropdown {
+      z-index : 2000
+    }
+  }
+}
 </style>

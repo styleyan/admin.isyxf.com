@@ -11,25 +11,21 @@
     <div class="layout-content-a" :class="{'layout-hide-text': spanLeft < 3}">
       <Row type="flex">
         <Col :span="spanLeft" class="layout-menu-left">
-          <Menu active-name="1" theme="dark" class="layout-menu-ul" width="auto">
-            <MenuItem name="1">
-              <Icon type="ios-navigate" :size="iconSize"></Icon>
-              <router-link :to="{name:'admin-hao-edit'}">
-                <span class="layout-text">管理导航</span>
-              </router-link>
-            </MenuItem>
-            <MenuItem name="2">
-              <Icon type="ios-navigate" :size="iconSize"></Icon>
-              <router-link :to="{name:'article-edit'}">
-                <span class="layout-text">发布文章</span>
-              </router-link>
-            </MenuItem>
-            <MenuItem name="3">
-              <Icon type="ios-keypad" :size="iconSize"></Icon>
-              <router-link :to="{name:'admin-blog-list'}">
-                <span class="layout-text">管理文章</span>
-              </router-link>
-            </MenuItem>
+          <Menu theme="dark" @on-select="menuItemHandle" :active-name="activeRouteName" :open-names="openNames" accordion  class="layout-menu-ul" width="auto">
+            <Submenu name="article">
+              <template slot="title">
+                  <Icon type="ios-paper"></Icon>博客管理
+              </template>
+              <MenuItem name="article-edit">新增文章</MenuItem>
+              <MenuItem name="article-list">文章列表</MenuItem>
+            </Submenu>
+            <Submenu name="hao">
+              <template slot="title">
+                <Icon type="paper-airplane"></Icon>导航管理
+              </template>
+              <MenuItem name="hao-edit">编辑导航</MenuItem>
+              <MenuItem name="hao-link">增加友链</MenuItem>
+            </Submenu>
           </Menu>
         </Col>
         <Col :span="spanRight">
@@ -56,6 +52,8 @@ export default {
       userName: 'Y.Jer',
       spanLeft: 3,
       spanRight: 21,
+      activeRouteName: '',
+      openNames: [],
     }
   },
   computed: {
@@ -64,6 +62,9 @@ export default {
     },
   },
   methods: {
+    menuItemHandle(MenuItem) {
+      this.$router.push({name: MenuItem})
+    },
     modalHandle() {
       this.modalStatus = true
     },
@@ -76,6 +77,10 @@ export default {
         this.spanRight = 21
       }
     },
+  },
+  created() {
+    this.activeRouteName = this.$route.name
+    this.openNames = [this.activeRouteName.split('-')[0]]
   },
 }
 </script>
@@ -100,6 +105,7 @@ export default {
     text-align : right
     color: #fff
     line-height: 56px
+    font-size: 16px
   }
   .my-icon-log-out{
     margin: 0 30px 0 20px;

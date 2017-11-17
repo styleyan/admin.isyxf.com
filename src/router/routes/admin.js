@@ -9,26 +9,26 @@ const routes = [
     component: resolve => require(['../../views/admin/router-view.vue'], resolve),
     children: [{
       path: 'hao',
-      name: 'admin-hao',
+      name: 'hao',
       component: resolve => require(['../../views/admin/hao/router-view.vue'], resolve),
       // hao.isyxf.com 网站导航
       children: [{
         path: 'edit',
-        name: 'admin-hao-edit',
+        name: 'hao-edit',
         component: resolve => require(['../../views/admin/hao/edit/index.vue'], resolve),
       }, {
         path: 'links',
-        name: 'admin-hao-links',
+        name: 'hao-links',
         component: resolve => require(['../../views/admin/hao/links/index.vue'], resolve),
       }],
     }, {
-      path: 'blog',
-      name: 'admin-blog',
+      path: 'article',
+      name: 'article',
       component: resolve => require(['../../views/admin/blog/router-view.vue'], resolve),
-      // 发布文章
+      // 文章列表
       children: [{
         path: 'list',
-        name: 'admin-blog-list',
+        name: 'article-list',
         component: resolve => require(['../../views/admin/blog/list/index.vue'], resolve),
       }],
     }],
