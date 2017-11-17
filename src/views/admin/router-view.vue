@@ -15,12 +15,12 @@
             <MenuItem name="1">
               <Icon type="ios-navigate" :size="iconSize"></Icon>
               <router-link :to="{name:'admin-hao-edit'}">
-                <span class="layout-text">导航列表</span>
+                <span class="layout-text">管理导航</span>
               </router-link>
             </MenuItem>
             <MenuItem name="2">
               <Icon type="ios-navigate" :size="iconSize"></Icon>
-              <router-link :to="{name:'admin-blog-edit'}">
+              <router-link :to="{name:'article-edit'}">
                 <span class="layout-text">发布文章</span>
               </router-link>
             </MenuItem>

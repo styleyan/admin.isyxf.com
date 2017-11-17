@@ -27,10 +27,6 @@ const routes = [
       component: resolve => require(['../../views/admin/blog/router-view.vue'], resolve),
       // 发布文章
       children: [{
-        path: 'edit',
-        name: 'admin-blog-edit',
-        component: resolve => require(['../../views/admin/blog/edit/index.vue'], resolve),
-      }, {
         path: 'list',
         name: 'admin-blog-list',
         component: resolve => require(['../../views/admin/blog/list/index.vue'], resolve),
