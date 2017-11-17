@@ -1,7 +1,7 @@
 <template>
   <div class="wrap-topbar">
     <Tooltip content="添加导航" placement="left">
-      <Icon type="compose"></Icon>
+      <span @click="showModalHandle"><Icon type="compose"></Icon></span>
     </Tooltip>
     <Button icon="trash-a" type="error">删除选中</Button>
     <Select v-model="model10" clearable multiple style="width:260px">

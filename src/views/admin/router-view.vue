@@ -24,7 +24,7 @@
                 <Icon type="paper-airplane"></Icon>导航管理
               </template>
               <MenuItem name="hao-edit">编辑导航</MenuItem>
-              <MenuItem name="hao-link">增加友链</MenuItem>
+              <MenuItem name="hao-links">增加友链</MenuItem>
             </Submenu>
           </Menu>
         </Col>
@@ -100,7 +100,7 @@ export default {
 }
 .top-menu{
   background: #495060
-  height: 58px
+  height: 60px
   .col-right {
     text-align : right
     color: #fff
@@ -108,11 +108,11 @@ export default {
     font-size: 16px
   }
   .my-icon-log-out{
-    margin: 0 30px 0 20px;
+    margin: 0 30px 0 20px
     color: #fff
     font-size: 18px
     cursor: pointer
-    vertical-align: middle;
+    vertical-align: middle
   }
 }
 .layout-nav{
