@@ -76,11 +76,26 @@ export default {
               return row.tags < 25
             }
           },
+          render: (h, params) => {
+            return [
+              h('i-switch', {
+                props: {
+                  size: 'default',
+                  value: params.row.status,
+                },
+                on: {
+                  change: (state) => {
+                    this.switchHandle(params.index, state)
+                  },
+                },
+              }, ''),
+            ]
+          },
         },
         {
           title: '操作',
           key: 'action',
-          width: 170,
+          width: 230,
           align: 'center',
           render: (h, params) => {
             return [
@@ -95,7 +110,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.show(params.index)
+                    this.show(params.index, params)
                   },
                 },
               }, '编辑'),
@@ -107,7 +122,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index)
+                    this.remove(params.index, params)
                   },
                 },
               }, '删除'),
@@ -117,8 +132,7 @@ export default {
       ],
       data1: [
         {
-          status: 0,
-          statusText: '未显示',
+          status: false,
           title: 'New York No. 1 Lake Park',
           date: '2016-10-03 12:30:20',
           type: 1,
@@ -129,11 +143,14 @@ export default {
     }
   },
   methods: {
-    show(index) {
-      console.log(index)
+    show(index, params) {
+      console.log(index, params)
     },
     remove(index) {
       console.log(index)
+    },
+    switchHandle(i, state) {
+      console.log(i, state)
     },
   },
 }
