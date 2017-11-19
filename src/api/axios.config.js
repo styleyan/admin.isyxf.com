@@ -12,16 +12,15 @@ axios.interceptors.request.use((config) => {
 // 响应数据配置
 axios.interceptors.response.use((response) => {
   const data = response.data
-  if (data.state) {
+  if (data.status) {
     return data
   }
-
   const err = new Error(data.description)
   err.data = data
   err.response = response
 }, (err) => {
   return {
-    message: err.response.statusText,
+    msg: err.response.statusText,
     code: err.response.status,
   }
 })

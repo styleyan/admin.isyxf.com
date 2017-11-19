@@ -1,5 +1,5 @@
 <template>
-    <Table :columns="columns6" :data="data5"></Table>
+    <Table :columns="columns6" :data="websiteList"></Table>
 </template>
 <script>
 export default {
@@ -13,19 +13,19 @@ export default {
         },
         {
           title: '创建时间',
-          key: 'date',
+          key: 'createTime',
           width: 160,
           align: 'center',
         },
         {
           title: '网站名称',
-          key: 'name',
+          key: 'websiteName',
           width: 160,
           align: 'center',
         },
         {
           title: '网站描述',
-          key: 'desc',
+          key: 'websiteDesc',
           align: 'center',
         },
         {
@@ -36,13 +36,13 @@ export default {
         },
         {
           title: '链接地址',
-          key: 'url',
+          key: 'websiteUrl',
           width: 200,
           align: 'center',
         },
         {
           title: '点赞数量',
-          key: 'favor',
+          key: 'favour',
           width: 90,
           align: 'center',
         },
@@ -90,39 +90,20 @@ export default {
           },
         },
       ],
-      data5: [
-        {
-          date: '2016-10-03 12:21:40',
-          name: '秀8',
-          url: 'http://www.xiu8.com',
-          favor: 300,
-          watch: 200,
-          typeName: '社区学习',
-          desc: 'New York No. 1 Lake Park',
-          logo: 'http://chuangzaoshi.com/assets/images/C/bootstrap.png',
-        },
-        {
-          date: '2016-10-23 12:21:40',
-          name: '5755',
-          url: 'http://www.5755.com',
-          favor: 8000,
-          watch: 100,
-          typeName: '前端框架',
-          desc: '折是个已是东方神就的网站',
-          logo: 'http://chuangzaoshi.com/assets/images/C/bootstrap.png',
-        },
-      ],
+      websiteList: [],
     }
   },
+  mounted() {
+    this.$ajax.haoList().then((data) => {
+      this.websiteList = data.list
+    }).catch(() => {
+      console.log('dddd')
+    })
+  },
   methods: {
-    show(index) {
-      this.$Modal.info({
-        title: 'User Info',
-        content: `Name：${this.data5[index].name}<br>Age：${this.data5[index].age}<br>Address：${this.data5[index].address}`,
-      })
-    },
+    show(index) {},
     remove(index) {
-      this.data5.splice(index, 1)
+      // this.data5.splice(index, 1)
     },
   },
 }

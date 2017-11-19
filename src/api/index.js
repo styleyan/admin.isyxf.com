@@ -135,6 +135,16 @@ class Apis extends Ajax {
   haoAdd(params) {
     return super.post(`/api/hao/add`, params)
   }
+
+  /**
+   * 测试测试代理哦
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294674
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  haoNav(params) {
+    return super.get(`/api/hao/nav`, params)
+  }
 }
 
 const apis = new Apis(axios)

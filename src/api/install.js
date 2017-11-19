@@ -30,14 +30,13 @@ export default class Ajax {
     let _data = type === 'post' ? params : { params }
     return new Promise((resolve, reject) => {
       this.axios[type](`${this.prefix}${url}`, _data, { headers }).then((data) => {
-        if (data.code === 1) {
+        if (data.status) {
           resolve(data.result)
           return
         }
-        reject({ msg: data.message, code: data.code })
+        reject({ msg: data.msg, code: data.code })
       }).catch((e) => {
-        console.log(e)
-        reject({ msg: e.message })
+        reject(e)
       })
     })
   }
