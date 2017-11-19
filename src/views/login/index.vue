@@ -22,7 +22,7 @@
 export default {
   data() {
     return {
-      msg: '后台登录系统',
+      msg: '登录',
       formInline: {
         user: '',
         password: '',
@@ -63,7 +63,8 @@ export default {
 </script>
 <style lang="stylus">
 .login-wrap {
-  margin: 30px
+  margin: 150px auto 0 auto
+  width: 320px
   .title {
     margin-bottom : 30px
     text-align: center
