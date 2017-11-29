@@ -16,9 +16,10 @@
       </Form-item>
       <Form-item label="分类" prop="type">
         <Select v-model="formValidate.type" placeholder="选择分类">
-            <Option value="1">省吃俭用</Option>
-            <Option value="2">前端工具</Option>
-            <Option value="3">论坛社区</Option>
+            <Option 
+              v-for="(label, key) in websiteType" 
+              :key="key"
+              :value="key">{{label}}</Option>
         </Select>
       </Form-item>
       <Form-item label="描述" prop="websiteDesc">
@@ -28,6 +29,8 @@
   </Modal>
 </template>
 <script>
+import websiteType from '@config/website-type'
+
 export default {
   props: {
     value: {
@@ -38,15 +41,15 @@ export default {
       type: String,
       default: '编辑',
     },
-    modalIndex: {
-      type: Number,
-      default: -1,
-    },
   },
   data() {
     return {
+      websiteType,
+      // 显示、隐藏弹框
       modal: this.value,
+      // 确认按钮点击提交是否出现loading
       loading: true,
+      // 表单数据
       formValidate: {},
       ruleValidate: {
         websiteName: [
@@ -75,9 +78,6 @@ export default {
     modal(val) {
       this.$emit('input', val)
     },
-    modalIndex(val) {
-      console.log(val)
-    },
   },
   methods: {
     /**
@@ -86,6 +86,7 @@ export default {
     asyncOK() {
       this.$refs['formValidate'].validate((valid) => {
         if (valid) {
+          this.formValidate.typeName = websiteType[this.formValidate.type]
           this.postWebsite()
         } else {
           this.loading = false
@@ -102,12 +103,19 @@ export default {
       this.$ajax.haoAdd({
         data: this.formValidate,
         type: 'add',
-        id: '12sdfsdfsdf',
       }).then((data) => {
-        console.log(data)
+        this.reset()
       }).catch((err) => {
-        console.log(err)
+        this.$Message.error(err)
       })
+    },
+    /**
+     * 重置
+     */
+    reset() {
+      this.loading = false
+      this.modal = false
+      this.formValidate = {}
     },
   },
 }

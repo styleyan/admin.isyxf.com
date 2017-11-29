@@ -5,9 +5,9 @@
       :modal-index="0">
     </modal-edit>
     <top-bar @modalHandle="modalHandle"></top-bar>
-    <table-list></table-list>
+    <table-list :websiteList="websiteList"></table-list>
     <div class="wrap-page">
-      <Page :total="100" show-sizer></Page>
+      <Page :total="pageTotal" show-sizer></Page>
     </div>
   </div>
 </template>
@@ -23,12 +23,22 @@ export default {
   data() {
     return {
       modalStatus: false,
+      pageTotal: 1,
+      websiteList: [],
     }
   },
   methods: {
     modalHandle() {
       this.modalStatus = true
     },
+  },
+  mounted() {
+    this.$ajax.haoList().then((data) => {
+      this.websiteList = data.list
+      this.pageTotal = data.pageTotal
+    }).catch((msg) => {
+      this.$Message.error(msg)
+    })
   },
 }
 </script>

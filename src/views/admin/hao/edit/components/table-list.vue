@@ -3,6 +3,13 @@
 </template>
 <script>
 export default {
+  nama: 'hao-table-list',
+  props: {
+    websiteList: {
+      type: Array,
+      default: () => ([]),
+    },
+  },
   data() {
     return {
       columns6: [
@@ -90,15 +97,7 @@ export default {
           },
         },
       ],
-      websiteList: [],
     }
-  },
-  mounted() {
-    this.$ajax.haoList().then((data) => {
-      this.websiteList = data.list
-    }).catch(() => {
-      console.log('dddd')
-    })
   },
   methods: {
     show(index) {},
