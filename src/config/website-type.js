@@ -10,6 +10,7 @@ export default {
   9: '原型工具',
   10: '云存储',
   11: '省吃减用',
+  12: '电影推荐',
 }
 
 // export default [

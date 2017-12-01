@@ -15,9 +15,10 @@ axios.interceptors.response.use((response) => {
   if (data.status) {
     return data
   }
-  const err = new Error(data.description)
+  const err = new Error(data.errMsg)
   err.data = data
   err.response = response
+  throw err
 }, (err) => {
   return {
     msg: err.response.statusText,
