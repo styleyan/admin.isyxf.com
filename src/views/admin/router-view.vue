@@ -5,7 +5,7 @@
         <div class="layout-logo"><img src="http://chuangzaoshi.com/assets/images/logo.svg" /></div>
       </Col>
       <Col span="12" class="col-right">
-        {{userName}}<Icon class="my-icon-log-out" type="log-out"></Icon>
+        {{userName}}<span @click="logoutHandle"><Icon class="my-icon-log-out" type="log-out"></Icon></span>
       </Col>
     </Row>
     <div class="layout-content-a" :class="{'layout-hide-text': spanLeft < 3}">
@@ -37,7 +37,7 @@
           <div class="layout-content">
             <router-view></router-view>
           </div>
-          <div class="layout-copy">2016-2017 &copy; Y. Jer</div>
+          <div class="layout-copy">2016-2017 &copy; {{userName}}</div>
         </Col>
       </Row>
     </div>
@@ -76,6 +76,13 @@ export default {
         this.spanLeft = 3
         this.spanRight = 21
       }
+    },
+    logoutHandle() {
+      this.$ajax.adminLogout().then(() => {
+        this.$router.push({name: 'login'})
+      }).catch((err) => {
+        this.$Message.error(`[${err.code}] : ${err.errorMsg}`)
+      })
     },
   },
   created() {

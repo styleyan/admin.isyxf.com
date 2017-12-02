@@ -6,6 +6,7 @@ const routes = [
   {
     path: '/admin',
     name: 'admin',
+    meta: { requiresAuth: true },
     component: resolve => require(['../../views/admin/router-view.vue'], resolve),
     children: [{
       path: 'hao',

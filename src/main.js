@@ -18,6 +18,8 @@ Vue.use(components)
 Vue.use(axios)
 Vue.use(mavonEditor)
 
+import './plugins'
+
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
