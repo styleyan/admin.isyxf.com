@@ -7,7 +7,7 @@
     <top-bar @modalHandle="modalHandle"></top-bar>
     <table-list :websiteList="websiteList"></table-list>
     <div class="wrap-page">
-      <Page :total="pageTotal" show-sizer></Page>
+      <Page :total="pageTotal" @on-change="pageChange" show-total></Page>
     </div>
   </div>
 </template>
@@ -27,18 +27,30 @@ export default {
       websiteList: [],
     }
   },
+  mounted() {
+    this.getData({
+      pageActive: 1,
+      pageSize: 10,
+    })
+  },
   methods: {
     modalHandle() {
       this.modalStatus = true
     },
-  },
-  mounted() {
-    this.$ajax.haoList().then((data) => {
-      this.websiteList = data.list
-      this.pageTotal = data.pageTotal
-    }).catch((msg) => {
-      this.$Message.error(msg)
-    })
+    pageChange(pageActive) {
+      this.getData({
+        pageActive,
+        pageSize: 10,
+      })
+    },
+    getData(param) {
+      this.$ajax.haoList(param).then((data) => {
+        this.websiteList = data.list
+        this.pageTotal = data.pageTotal
+      }).catch((msg) => {
+        this.$Message.error(msg)
+      })
+    },
   },
 }
 </script>
