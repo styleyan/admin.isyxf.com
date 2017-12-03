@@ -11,6 +11,7 @@ export default {
   10: '云存储',
   11: '省吃减用',
   12: '电影推荐',
+  13: '书籍推荐',
 }
 
 // export default [

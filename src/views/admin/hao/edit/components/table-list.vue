@@ -46,6 +46,28 @@ export default {
           key: 'websiteUrl',
           width: 200,
           align: 'center',
+          render: (h, params) => {
+            if (params.row.websiteUrl === '#') {
+              return '无'
+            }
+            return [
+              h('Button', {
+                props: {
+                  type: 'text',
+                  size: 'small',
+                  icon: 'ios-redo',
+                },
+                style: {
+                  marginRight: '5px',
+                },
+                on: {
+                  click: () => {
+                    this.openWindow(params.row)
+                  },
+                },
+              }, '预览'),
+            ]
+          },
         },
         {
           title: '点赞数量',
@@ -103,6 +125,9 @@ export default {
     show(index) {},
     remove(index) {
       // this.data5.splice(index, 1)
+    },
+    openWindow(row) {
+      window.open(row.websiteUrl)
     },
   },
 }
