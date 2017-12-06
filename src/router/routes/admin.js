@@ -9,6 +9,10 @@ const routes = [
     meta: { requiresAuth: true },
     component: resolve => require(['../../views/admin/router-view.vue'], resolve),
     children: [{
+      path: '/',
+      name: 'admin-hao',
+      component: resolve => require(['../../views/admin/index/index.vue'], resolve),
+    }, {
       path: 'hao',
       name: 'hao',
       component: resolve => require(['../../views/admin/hao/router-view.vue'], resolve),

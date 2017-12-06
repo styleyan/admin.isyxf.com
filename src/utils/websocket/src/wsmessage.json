@@ -1,0 +1,63 @@
+{
+  "nested": {
+    "proto": {
+      "options": {
+        "java_package": "com.xkeshi.xgate.proto"
+      },
+      "nested": {
+        "WsPushMessage": {
+          "fields": {
+            "count": {
+              "type": "int32",
+              "id": 1
+            },
+            "mid": {
+              "type": "int64",
+              "id": 2
+            },
+            "categoryName": {
+              "type": "string",
+              "id": 3
+            },
+            "customCategoryName": {
+              "type": "string",
+              "id": 4
+            },
+            "content": {
+              "type": "string",
+              "id": 5
+            },
+            "customContent": {
+              "type": "string",
+              "id": 6
+            },
+            "type": {
+              "type": "string",
+              "id": 7
+            }
+          }
+        },
+        "WsMessageAck": {
+          "fields": {
+            "token": {
+              "type": "string",
+              "id": 1
+            },
+            "mid": {
+              "type": "int64",
+              "id": 2
+            },
+            "content": {
+              "type": "string",
+              "id": 3
+            },
+            "type": {
+              "type": "string",
+              "id": 4
+            }
+          }
+        }
+      }
+    }
+  }
+}

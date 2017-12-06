@@ -12,6 +12,7 @@ var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev.conf')
 
+
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
 // automatically open browser, if not set will be false
@@ -80,6 +81,21 @@ devMiddleware.waitUntilValid(() => {
 })
 
 var server = app.listen(port)
+
+
+// ==============websocket链接==============
+const WebSocket = require('ws')
+const wss = new WebSocket.Server({server})
+wss.on('connection', (ws) => {
+  console.log(`[SERVER] connection()`);
+  ws.on('message', (message) => {
+    console.log('received: %s', message)
+  })
+  setInterval(() => {
+    ws.send('xxx:something')
+  }, 5000)
+})
+// ==============websocket链接end==============
 
 module.exports = {
   ready: readyPromise,
