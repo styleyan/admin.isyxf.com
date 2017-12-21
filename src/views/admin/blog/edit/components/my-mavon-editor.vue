@@ -3,10 +3,21 @@
 </template>
 <script>
   export default {
+    props: {
+      text: {
+        type: String,
+        default: '',
+      },
+    },
     data() {
       return {
-        value: '',
+        value: this.text,
       }
+    },
+    watch: {
+      value(val) {
+        this.$emit('update:text', val)
+      },
     },
   }
 </script>
