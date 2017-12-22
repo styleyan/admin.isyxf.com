@@ -7,14 +7,9 @@
         <FormItem label="文章内容" prop="desc">
           <my-mavon-editor :text.sync="formValidate.desc"></my-mavon-editor>
         </FormItem>
-        <FormItem label="文章分类" prop="type">
-          <Select v-model="formValidate.type" style="width:260px">
+        <FormItem label="文章分类" prop="types">
+          <Select v-model="formValidate.types" style="width:260px">
             <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-          </Select>
-        </FormItem>
-        <FormItem label="文章标签">
-          <Select v-model="formValidate.tags" multiple style="width:260px">
-            <Option v-for="item in tagList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </FormItem>
         <FormItem label="发布日期" prop="date">
@@ -27,7 +22,7 @@
           </i-switch>
         </FormItem>
         <FormItem>
-            <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+            <Button type="primary" :loading="loadingStatus" @click="handleSubmit('formValidate')">{{loadingText}}</Button>
             <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
         </FormItem>
     </Form>
@@ -40,20 +35,7 @@ export default {
   components: { myMavonEditor },
   data() {
     return {
-      tagList: [
-        {
-          value: '1',
-          label: '技术',
-        },
-        {
-          value: '2',
-          label: '散文',
-        },
-        {
-          value: '3',
-          label: '前端',
-        },
-      ],
+      loadingStatus: false,
       typeList: [
         {
           value: 1,
@@ -73,10 +55,8 @@ export default {
         switch: true,
         // 文章内容
         desc: '',
-        // 文章标签
-        tags: [],
         // 文章分类
-        type: '',
+        types: '',
       },
       ruleValidate: {
         title: [
@@ -85,6 +65,9 @@ export default {
         date: [
             { required: true, type: 'date', message: '请选择发表日期', trigger: 'change' },
         ],
+        types: [
+            { required: true, message: '请选择文章分类' },
+        ],
         desc: [
             { required: true, message: '文章内容不能为空', trigger: 'blur' },
             { type: 'string', min: 20, message: '不能少于20个字', trigger: 'blur' },
@@ -92,13 +75,23 @@ export default {
       },
     }
   },
+  computed: {
+    loadingText() {
+      return this.loadingStatus ? '' : '提交'
+    },
+  },
   methods: {
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.$Message.success('Success!')
+          this.loadingStatus = true
+          this.$ajax.blogAdd(this.formValidate).then((result) => {
+            this.loadingStatus = false
+          }).catch((e) => {
+            this.loadingStatus = false
+          })
         } else {
-          this.$Message.error('Fail!')
+          this.$Message.error('文章相关信息还没填写完整!')
         }
       })
     },
