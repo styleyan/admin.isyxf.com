@@ -4,19 +4,19 @@
         <FormItem label="文章标题" prop="title">
           <Input v-model="formValidate.title"></Input>
         </FormItem>
-        <FormItem label="文章内容" prop="desc">
-          <my-mavon-editor :text.sync="formValidate.desc"></my-mavon-editor>
+        <FormItem label="文章内容" prop="content">
+          <my-mavon-editor :text.sync="formValidate.content"></my-mavon-editor>
         </FormItem>
-        <FormItem label="文章分类" prop="types">
-          <Select v-model="formValidate.types" style="width:260px">
+        <FormItem label="文章分类" prop="classify">
+          <Select v-model="formValidate.classify" style="width:260px">
             <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </FormItem>
-        <FormItem label="发布日期" prop="date">
-          <DatePicker type="date" placement="top-start" placeholder="请选择发布日期，默认为当前日期" v-model="formValidate.date" style="width: 260px"></DatePicker>
+        <FormItem label="发布日期" prop="createTime">
+          <DatePicker type="date" placement="top-start" placeholder="请选择发布日期，默认为当前日期" v-model="formValidate.createTime" style="width: 260px"></DatePicker>
         </FormItem>
         <FormItem label="是否显示">
-          <i-switch v-model="formValidate.switch" size="large">
+          <i-switch v-model="formValidate.isShow" size="large">
             <span slot="open">显示</span>
             <span slot="close">隐藏</span>
           </i-switch>
@@ -50,27 +50,27 @@ export default {
         // 文章标题
         title: '',
         // 文章发表日期
-        date: '',
+        createTime: '',
         // 文章是否显示
-        switch: true,
+        isShow: true,
         // 文章内容
         desc: '',
         // 文章分类
-        types: '',
+        classify: '',
       },
       ruleValidate: {
         title: [
             { required: true, message: '文章标题不能为空', trigger: 'blur' },
         ],
-        date: [
+        createTime: [
             { required: true, type: 'date', message: '请选择发表日期', trigger: 'change' },
         ],
-        types: [
+        classify: [
             { required: true, message: '请选择文章分类' },
         ],
-        desc: [
+        content: [
             { required: true, message: '文章内容不能为空', trigger: 'blur' },
-            { type: 'string', min: 20, message: '不能少于20个字', trigger: 'blur' },
+            { type: 'string', min: 1, message: '不能少于20个字', trigger: 'blur' },
         ],
       },
     }
