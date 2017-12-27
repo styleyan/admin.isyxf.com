@@ -2,10 +2,16 @@
   <Table
     ref="selection"
     :columns="columns4"
-    :data="data1"></Table>
+    :data="datas"></Table>
 </template>
 <script>
 export default {
+  props: {
+    datas: {
+      type: Array,
+      default: () => ([]),
+    },
+  },
   data() {
     return {
       columns4: [
@@ -16,7 +22,7 @@ export default {
         },
         {
           title: '日期',
-          key: 'date',
+          key: 'createTime',
           width: 160,
           sortable: true,
           align: 'center',
@@ -28,41 +34,25 @@ export default {
         },
         {
           title: '文章分类',
-          key: 'typeName',
+          key: 'classifyName',
           align: 'center',
-          width: 170,
+          width: 270,
           filters: [
             { label: '技术', value: 1 },
             { label: '散文', value: 2 },
           ],
           filterMethod(value, row) {
             if (value === 1) {
-              return row.type > 25
+              return row.classify > 25
             } else if (value === 2) {
-              return row.type < 25
-            }
-          },
-        },
-        {
-          title: '文章标签',
-          key: 'tags',
-          align: 'center',
-          filters: [
-            { label: '运维', value: 1 },
-            { label: '数据库', value: 2 },
-          ],
-          filterMethod(value, row) {
-            if (value === 1) {
-              return row.tags > 25
-            } else if (value === 2) {
-              return row.tags < 25
+              return row.classify < 25
             }
           },
         },
         {
           title: '状态',
-          key: 'statusText',
-          width: 110,
+          key: 'isShow',
+          width: 210,
           align: 'center',
           filters: [
             { label: '已显示', value: 1 },
@@ -81,7 +71,7 @@ export default {
               h('i-switch', {
                 props: {
                   size: 'default',
-                  value: params.row.status,
+                  value: params.row.isShow,
                 },
                 on: {
                   change: (state) => {
@@ -95,7 +85,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          width: 230,
+          width: 260,
           align: 'center',
           render: (h, params) => {
             return [
@@ -128,16 +118,6 @@ export default {
               }, '删除'),
             ]
           },
-        },
-      ],
-      data1: [
-        {
-          status: false,
-          title: 'New York No. 1 Lake Park',
-          date: '2016-10-03 12:30:20',
-          type: 1,
-          typeName: 'javascript',
-          tags: '技术，散文',
         },
       ],
     }

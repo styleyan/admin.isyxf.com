@@ -3,13 +3,13 @@
     <Row>
         <Col span="12"><Button type="error" icon="trash-a">删除选中</Button></Col>
         <Col span="12" style="text-align: right;">
-          <Input class="article-search" on-enter="searchHandle" v-model="value" placeholder="请输入标题"></Input>
+          <Input class="article-search" on-enter="searchHandle" v-model="searchVal" placeholder="请输入标题"></Input>
           <Button type="primary" @click="searchHandle">查询</Button>
         </Col>
     </Row>
-    <article-table class="article-table"></article-table>
+    <article-table :datas="datas" class="article-table"></article-table>
     <div class="article-page">
-      <Page :total="50" show-elevator show-sizer></Page>
+      <Page :total="pageTotal" show-elevator show-sizer></Page>
     </div>
   </div>
 </template>
@@ -23,16 +23,27 @@ export default {
   },
   data() {
     return {
-      value: '',
+      searchVal: '',
+      datas: [],
+      pageTotal: 1,
     }
+  },
+  created() {
+    this.searchHandle()
   },
   methods: {
     /**
-     * 执行搜索
+     * 查询文章列表
      */
     searchHandle() {
-      this.$ajax.login().then((data) => {
-        console.log(data)
+      this.$ajax.blogList({
+        search: this.searchVal,
+        pageActive: 1,
+        classify: 1,
+        pageSize: 10,
+      }).then((data) => {
+        this.datas = data.list
+        this.pageTotal = data.pageTotal
       }).catch((err) => {
         console.log(err)
       })
