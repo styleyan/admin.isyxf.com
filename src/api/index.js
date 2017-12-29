@@ -13,7 +13,7 @@ class Apis extends Ajax {
    * @returns {Promise} 请求结果
    */
   blogDelete(params) {
-    return super.post('/api/blog/delete', params)
+    return super.post(`/api/blog/delete/${params.id}`)
   }
 
   /**
@@ -27,33 +27,33 @@ class Apis extends Ajax {
   }
 
   /**
-   * 文章显示与隐藏
-   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294894
-   * @param {Object} params - 请求参数
-   * @returns {Promise} 请求结果
-   */
-  blogSwitch(params) {
-    return super.post('/api/blog/switch', params)
-  }
-
-  /**
    * 文章详情
    * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294889
    * @param {Object} params - 请求参数
    * @returns {Promise} 请求结果
    */
   blogDetail(params) {
-    return super.post(`/api/blog/detail/${params.id}`, params)
+    return super.post(`/api/blog/detail/${params.articleId}`, params)
   }
 
   /**
-   * 新增/更新文章
+   * 新增文章
    * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294678
    * @param {Object} params - 请求参数
    * @returns {Promise} 请求结果
    */
   blogAdd(params) {
     return super.post(`/api/blog/add`, params)
+  }
+
+  /**
+   * 更新文章
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294678
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  blogUpdate(params) {
+    return super.post(`/api/blog/update`, params)
   }
 
   /**

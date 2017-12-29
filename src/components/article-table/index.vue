@@ -100,7 +100,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.show(params.index, params)
+                    this.toEditPage(params.index, params)
                   },
                 },
               }, '编辑'),
@@ -112,7 +112,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index, params)
+                    this.remove(params, params.index)
                   },
                 },
               }, '删除'),
@@ -123,11 +123,17 @@ export default {
     }
   },
   methods: {
-    show(index, params) {
-      console.log(index, params)
+    toEditPage(index, param) {
+      this.$router.push({name: 'article-edit', query: {articleId: param.row.id}})
     },
-    remove(index) {
-      console.log(index)
+    remove(params, index) {
+      this.$Modal.confirm({
+        title: '确认框',
+        content: '确定删除该条信息么? 删除后将无法找回。',
+        onOk: () => {
+          this.$emit('removeHandler', params, index)
+        },
+      })
     },
     switchHandle(i, state) {
       console.log(i, state)

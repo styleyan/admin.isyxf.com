@@ -7,7 +7,7 @@
           <Button type="primary" @click="searchHandle">查询</Button>
         </Col>
     </Row>
-    <article-table :datas="datas" class="article-table"></article-table>
+    <article-table @removeHandler="removeHandler" :datas="datas" class="article-table"></article-table>
     <div class="article-page">
       <Page :total="pageTotal" show-elevator show-sizer></Page>
     </div>
@@ -46,6 +46,18 @@ export default {
         this.pageTotal = data.pageTotal
       }).catch((err) => {
         console.log(err)
+      })
+    },
+    /**
+     * 移除数据事件
+     */
+    removeHandler(param, index) {
+      console.log(param)
+      this.$ajax.blogDelete(param.row).then(() => {
+        this.searchHandle()
+        this.$Message.success('删除成功')
+      }).catch(() => {
+        this.$Message.success('删除失败')
       })
     },
   },

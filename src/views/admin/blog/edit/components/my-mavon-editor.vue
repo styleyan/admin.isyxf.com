@@ -18,6 +18,9 @@
       value(val) {
         this.$emit('update:text', val)
       },
+      text(val) {
+        this.value = val
+      },
     },
   }
 </script>

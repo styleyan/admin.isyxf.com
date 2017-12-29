@@ -13,7 +13,7 @@
           </Select>
         </FormItem>
         <FormItem label="发布日期" prop="createTime">
-          <DatePicker type="date" placement="top-start" placeholder="请选择发布日期，默认为当前日期" v-model="formValidate.createTime" style="width: 260px"></DatePicker>
+          <DatePicker type="datetime" format="yyyy-MM-dd HH:mm:ss" placement="top-start" placeholder="请选择发布日期，默认为当前日期" v-model="formValidate.createTime" style="width: 260px"></DatePicker>
         </FormItem>
         <FormItem label="是否显示">
           <i-switch v-model="formValidate.isShow" size="large">
@@ -50,11 +50,11 @@ export default {
         // 文章标题
         title: '',
         // 文章发表日期
-        createTime: '',
+        createTime: new Date(),
         // 文章是否显示
         isShow: true,
         // 文章内容
-        desc: '',
+        content: '',
         // 文章分类
         classify: '',
       },
@@ -80,23 +80,57 @@ export default {
       return this.loadingStatus ? '' : '提交'
     },
   },
+  created() {
+    const { articleId } = this.$route.query
+    if (articleId) {
+      this.blogDetail(articleId)
+    }
+  },
   methods: {
+    /**
+     * 提交文章数据
+     * @param {String} name - ref值
+     */
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
           this.loadingStatus = true
-          this.$ajax.blogAdd(this.formValidate).then((result) => {
-            this.loadingStatus = false
-          }).catch((e) => {
-            this.loadingStatus = false
-          })
+          this.blogSave(this.formValidate)
         } else {
           this.$Message.error('文章相关信息还没填写完整!')
         }
       })
     },
+    /**
+     * 重置
+     */
     handleReset(name) {
       this.$refs[name].resetFields()
+    },
+    /**
+     * 编辑文章，初始化文章信息
+     * @param {String} articleId - 文章id
+     */
+    blogDetail(articleId) {
+      this.$ajax.blogDetail({articleId}).then((result) => {
+        this.formValidate = result
+      }).catch(() => {
+        this.$Message.error('服务器错误了')
+      })
+    },
+    /**
+     * 更新文章
+     * @param {Object} param - 更新信息
+     */
+    blogSave(param) {
+      const apiFn = param.id ? 'blogUpdate' : 'blogAdd'
+      this.$ajax[apiFn](param).then((data) => {
+        this.loadingStatus = false
+        this.$Message.success('保存成功')
+      }).catch(() => {
+        this.$Message.error('服务器错误了')
+        this.loadingStatus = false
+      })
     },
   },
 }
