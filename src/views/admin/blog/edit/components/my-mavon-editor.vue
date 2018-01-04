@@ -1,5 +1,5 @@
 <template>
-  <mavon-editor :ishljs="true" @change="changeHandler" v-model="value"/>
+  <mavon-editor :ishljs="true" @change="changeHandler" class="mavon-editor-markdown" v-model="value"/>
 </template>
 <script>
   export default {
@@ -33,3 +33,8 @@
     },
   }
 </script>
+<style lang="stylus">
+.mavon-editor-markdown {
+  max-height 300px
+}
+</style>

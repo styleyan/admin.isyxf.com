@@ -7,13 +7,22 @@
         <FormItem label="文章内容" prop="content">
           <my-mavon-editor :toHtml="toHtml" :text.sync="formValidate.content"></my-mavon-editor>
         </FormItem>
+        <FormItem label="文章路径" prop="url">
+          <Input v-model="formValidate.url" class="item-width"></Input>
+        </FormItem>
         <FormItem label="文章分类" prop="classify">
-          <Select v-model="formValidate.classify" style="width:260px">
+          <Select v-model="formValidate.classify" class="item-width">
             <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </FormItem>
         <FormItem label="发布日期" prop="createTime">
-          <DatePicker type="datetime" format="yyyy-MM-dd HH:mm:ss" placement="top-start" placeholder="请选择发布日期，默认为当前日期" v-model="formValidate.createTime" style="width: 260px"></DatePicker>
+          <DatePicker 
+            type="datetime" 
+            format="yyyy-MM-dd HH:mm:ss" 
+            placement="top-start" 
+            placeholder="请选择发布日期，默认为当前日期" 
+            v-model="formValidate.createTime"
+            class="item-width"></DatePicker>
         </FormItem>
         <FormItem label="是否显示">
           <i-switch v-model="formValidate.isShow" size="large">
@@ -57,10 +66,15 @@ export default {
         content: '',
         // 文章分类
         classify: '',
+        // 文章访问地址
+        url: '',
       },
       ruleValidate: {
         title: [
             { required: true, message: '文章标题不能为空', trigger: 'blur' },
+        ],
+        url: [
+            { required: true, message: '文章地址不能为空', trigger: 'blur' },
         ],
         createTime: [
             { required: true, type: 'date', message: '请选择发表日期', trigger: 'change' },
@@ -147,6 +161,9 @@ export default {
     .ivu-select-dropdown {
       z-index : 2000
     }
+  }
+  .item-width {
+    width 260px
   }
 }
 </style>
