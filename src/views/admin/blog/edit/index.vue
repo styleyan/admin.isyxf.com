@@ -5,7 +5,7 @@
           <Input v-model="formValidate.title"></Input>
         </FormItem>
         <FormItem label="文章内容" prop="content">
-          <my-mavon-editor :text.sync="formValidate.content"></my-mavon-editor>
+          <my-mavon-editor :toHtml="toHtml" :text.sync="formValidate.content"></my-mavon-editor>
         </FormItem>
         <FormItem label="文章分类" prop="classify">
           <Select v-model="formValidate.classify" style="width:260px">
@@ -119,7 +119,7 @@ export default {
       })
     },
     /**
-     * 更新文章
+     * 更新/添加文章
      * @param {Object} param - 更新信息
      */
     blogSave(param) {
@@ -131,6 +131,12 @@ export default {
         this.$Message.error('服务器错误了')
         this.loadingStatus = false
       })
+    },
+    /**
+     * html标签
+     */
+    toHtml(html) {
+      this.formValidate.render = html
     },
   },
 }
