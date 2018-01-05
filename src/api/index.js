@@ -13,7 +13,7 @@ class Apis extends Ajax {
    * @returns {Promise} 请求结果
    */
   blogDelete(params) {
-    return super.post(`/api/blog/delete/${params.id}`)
+    return super.post(`/api/blog/delete/${params.articleId}`)
   }
 
   /**

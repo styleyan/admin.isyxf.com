@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     toEditPage(index, param) {
-      this.$router.push({name: 'article-edit', query: {articleId: param.row.id}})
+      this.$router.push({name: 'article-edit', query: {articleId: param.row.articleId}})
     },
     remove(params, index) {
       this.$Modal.confirm({

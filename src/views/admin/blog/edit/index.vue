@@ -7,8 +7,8 @@
         <FormItem label="文章内容" prop="content">
           <my-mavon-editor :toHtml="toHtml" :text.sync="formValidate.content"></my-mavon-editor>
         </FormItem>
-        <FormItem label="文章路径" prop="url">
-          <Input v-model="formValidate.url" class="item-width"></Input>
+        <FormItem label="文章地址" prop="articleId">
+          <Input v-model="formValidate.articleId" class="item-width"></Input>
         </FormItem>
         <FormItem label="文章分类" prop="classify">
           <Select v-model="formValidate.classify" class="item-width">
@@ -67,7 +67,7 @@ export default {
         // 文章分类
         classify: '',
         // 文章访问地址
-        url: '',
+        articleId: '',
       },
       ruleValidate: {
         title: [
@@ -137,7 +137,8 @@ export default {
      * @param {Object} param - 更新信息
      */
     blogSave(param) {
-      const apiFn = param.id ? 'blogUpdate' : 'blogAdd'
+      const apiFn = this.$route.query.articleId ? 'blogUpdate' : 'blogAdd'
+      param.preMore = param.render.split('<!--more-->')[0]
       this.$ajax[apiFn](param).then((data) => {
         this.loadingStatus = false
         this.$Message.success('保存成功')

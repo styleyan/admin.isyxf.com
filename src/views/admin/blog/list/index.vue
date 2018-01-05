@@ -52,7 +52,6 @@ export default {
      * 移除数据事件
      */
     removeHandler(param, index) {
-      console.log(param)
       this.$ajax.blogDelete(param.row).then(() => {
         this.searchHandle()
         this.$Message.success('删除成功')
