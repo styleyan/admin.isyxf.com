@@ -127,7 +127,7 @@ export default {
      */
     blogDetail(articleId) {
       this.$ajax.blogDetail({articleId}).then((result) => {
-        this.formValidate = result
+        this.formValidate = result.article
       }).catch(() => {
         this.$Message.error('服务器错误了')
       })
@@ -138,7 +138,7 @@ export default {
      */
     blogSave(param) {
       const apiFn = this.$route.query.articleId ? 'blogUpdate' : 'blogAdd'
-      param.preMore = param.render.split('<!--more-->')[0]
+      param.preMore = `${param.render.split('<!--more-->')[0]}[...]`
       this.$ajax[apiFn](param).then((data) => {
         this.loadingStatus = false
         this.$Message.success('保存成功')
