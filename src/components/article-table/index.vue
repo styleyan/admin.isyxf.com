@@ -33,7 +33,7 @@ export default {
           align: 'center',
         },
         {
-          title: '文章分类',
+          title: '专题',
           key: 'classifyName',
           align: 'center',
           width: 270,

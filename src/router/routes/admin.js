@@ -21,10 +21,6 @@ const routes = [
         path: 'edit',
         name: 'hao-edit',
         component: resolve => require(['../../views/admin/hao/edit/index.vue'], resolve),
-      }, {
-        path: 'links',
-        name: 'hao-links',
-        component: resolve => require(['../../views/admin/hao/links/index.vue'], resolve),
       }],
     }, {
       path: 'article',
@@ -35,6 +31,14 @@ const routes = [
         path: 'list',
         name: 'article-list',
         component: resolve => require(['../../views/admin/blog/list/index.vue'], resolve),
+      }, {
+        path: 'links',
+        name: 'article-links',
+        component: resolve => require(['../../views/admin/blog/links/index.vue'], resolve),
+      }, {
+        path: 'series',
+        name: 'article-series',
+        component: resolve => require(['../../views/admin/blog/series/index.vue'], resolve),
       }],
     }],
   },

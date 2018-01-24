@@ -10,7 +10,7 @@
         <FormItem label="文章地址" prop="articleId">
           <Input v-model="formValidate.articleId" class="item-width"></Input>
         </FormItem>
-        <FormItem label="文章分类" prop="classify">
+        <FormItem label="专题" prop="classify">
           <Select v-model="formValidate.classify" class="item-width">
             <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
@@ -45,6 +45,8 @@ export default {
   data() {
     return {
       loadingStatus: false,
+      // 文章id
+      articleId: this.$route.query.articleId,
       typeList: [
         {
           value: 1,
@@ -64,7 +66,7 @@ export default {
         isShow: true,
         // 文章内容
         content: '',
-        // 文章分类
+        // 专题
         classify: '',
         // 文章访问地址
         articleId: '',
@@ -80,7 +82,7 @@ export default {
             { required: true, type: 'date', message: '请选择发表日期', trigger: 'change' },
         ],
         classify: [
-            { required: true, message: '请选择文章分类' },
+            { required: true, message: '专题' },
         ],
         content: [
             { required: true, message: '文章内容不能为空', trigger: 'blur' },
@@ -95,9 +97,8 @@ export default {
     },
   },
   created() {
-    const { articleId } = this.$route.query
-    if (articleId) {
-      this.blogDetail(articleId)
+    if (this.articleId) {
+      this.blogDetail(this.articleId)
     }
   },
   methods: {
@@ -137,10 +138,11 @@ export default {
      * @param {Object} param - 更新信息
      */
     blogSave(param) {
-      const apiFn = this.$route.query.articleId ? 'blogUpdate' : 'blogAdd'
+      const apiFn = this.articleId ? 'blogUpdate' : 'blogAdd'
       param.preMore = `${param.render.split('<!--more-->')[0]}[...]`
       this.$ajax[apiFn](param).then((data) => {
         this.loadingStatus = false
+        this.articleId = this.articleId || data.articleId
         this.$Message.success('保存成功')
       }).catch(() => {
         this.$Message.error('服务器错误了')

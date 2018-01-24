@@ -35,6 +35,6 @@
 </script>
 <style lang="stylus">
 .mavon-editor-markdown {
-  max-height 300px
+  height 300px
 }
 </style>
