@@ -12,8 +12,11 @@
         </FormItem>
         <FormItem label="专题" prop="classify">
           <Select v-model="formValidate.classify" class="item-width">
-            <Option v-for="item in typeList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            <Option v-for="item in seriesList" :value="item.uuid" :key="item.uuid">
+              {{ item.label }}
+            </Option>&nbsp;&nbsp;
           </Select>
+          <span class="btn-add-tag" @click="showAddDialog">添加</span>
         </FormItem>
         <FormItem label="发布日期" prop="createTime">
           <DatePicker 
@@ -35,6 +38,7 @@
             <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
         </FormItem>
     </Form>
+    <dialog-add-tag :tags="seriesList" v-model="showAdd"></dialog-add-tag>
   </div>
 </template>
 <script>
@@ -44,18 +48,13 @@ export default {
   components: { myMavonEditor },
   data() {
     return {
+      showAdd: false,
       loadingStatus: false,
       // 文章id
       articleId: this.$route.query.articleId,
-      typeList: [
-        {
-          value: 1,
-          label: '技术',
-        },
-        {
-          value: 2,
-          label: '散文',
-        },
+      seriesList: [
+        {uuid: 1, label: 'https', desc: 'tttttttttttttttttttttttt'},
+        {uuid: 2, label: 'nginx', desc: 'eeeeeeeeeeeeeeee'},
       ],
       formValidate: {
         // 文章标题
@@ -102,6 +101,9 @@ export default {
     }
   },
   methods: {
+    showAddDialog() {
+      this.showAdd = true
+    },
     /**
      * 提交文章数据
      * @param {String} name - ref值
@@ -167,6 +169,11 @@ export default {
   }
   .item-width {
     width 260px
+  }
+  .btn-add-tag {
+    color: #2d8cf0
+    margin-left: 10px
+    cursor: pointer
   }
 }
 </style>

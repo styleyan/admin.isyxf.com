@@ -6,12 +6,19 @@
       :key="index"
       :name="item.uuid"
       closable
-      @on-close="handleClose2">
+      color="red"
+      checked
+      @on-close="handleClose(item.uuid)">
       <span @click="activeTagHandler(index)">{{item.label}}</span></Tag>
-      <Button icon="ios-plus-empty" type="dashed" size="small" @click="handleAdd">添加专题</Button>
+      <Button icon="ios-plus-empty" type="dashed" size="small" @click="showAddDialog">添加专题</Button>
     </div>
-    <Input v-model="activeTagVal" class="text-input" type="textarea" :rows="5" placeholder="专题简介"></Input>
-    <Button type="primary" size="large">提&nbsp;交</Button>
+    <Input v-model="activeLabel" class="text-input" placeholder="专题名称"></Input><br/>
+    <Input v-model="activeDesc" class="text-input" type="textarea" :rows="5" placeholder="专题简介"></Input><br/>
+    <div class="text-input">
+      <Button type="primary" size="large">提&nbsp;交</Button>&nbsp;&nbsp;&nbsp;&nbsp;
+      <Button size="large">重置</Button>
+    </div>
+    <dialog-add-tag :tags="tags" @ok="addOkHandler" v-model="showAdd"></dialog-add-tag>
   </div>
 </template>
 <script>
@@ -24,29 +31,44 @@ export default {
         {uuid: 3, label: 'webpack', desc: 'fffffffffffff'},
         {uuid: 4, label: 'nodejs', desc: 'ddddddddddd'},
       ],
-      activeTagVal: '',
+      showAdd: false,
+      activeLabel: '',
+      activeDesc: '',
     }
   },
   methods: {
-    handleAdd() {
-      if (this.count.length) {
-        this.count.push(this.count[this.count.length - 1] + 1)
-      } else {
-        this.count.push(0)
-      }
+    showAddDialog() {
+      this.showAdd = true
     },
-    handleClose2(event, name) {
-      const index = this.count.indexOf(name)
-      this.count.splice(index, 1)
+    handleClose(uuid) {
+      let index = this.tags.findIndex((obj) => obj.uuid === uuid)
+      let text = ''
+      let label = ''
+
+      if (index > 0) {
+        index -= 1
+      }
+      this.tags.splice(index, 1)
+      if (this.tags.length) {
+        text = this.tags[index].desc
+        label = this.tags[index].label
+      }
+      this.activeLabel = label
+      this.activeDesc = text
     },
     activeTagHandler(index) {
-      this.activeTagVal = this.tags[index].desc
+      this.activeDesc = this.tags[index].desc
+      this.activeLabel = this.tags[index].label
+    },
+    addOkHandler(data) {
+      this.activeLabel = data.label
+      this.activeDesc = data.desc
     },
   },
 }
 </script>
 <style lang="stylus" scoped>
   .text-input {
-    margin 16px 0
+    margin-top 16px
   }
 </style>
