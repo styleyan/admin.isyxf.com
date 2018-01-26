@@ -18,8 +18,8 @@
               </template>
               <MenuItem name="article-edit">新增文章</MenuItem>
               <MenuItem name="article-list">文章列表</MenuItem>
-              <MenuItem name="article-links">增加友链</MenuItem>
               <MenuItem name="article-series">专题编辑</MenuItem>
+              <MenuItem name="article-links">增加友链</MenuItem>
             </Submenu>
             <Submenu name="hao">
               <template slot="title">

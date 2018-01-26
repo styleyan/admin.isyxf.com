@@ -1,8 +1,7 @@
 <template>
   <div>
     <modal-edit
-      v-model="modalStatus"
-      :modal-index="0">
+      v-model="modalStatus">
     </modal-edit>
     <top-bar @modalHandle="modalHandle"></top-bar>
     <table-list :websiteList="websiteList"></table-list>

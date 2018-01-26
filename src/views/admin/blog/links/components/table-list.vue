@@ -21,30 +21,17 @@ export default {
         {
           title: '创建时间',
           key: 'createTime',
-          width: 160,
           align: 'center',
+          width: 160,
         },
         {
           title: '网站名称',
           key: 'websiteName',
-          width: 160,
-          align: 'center',
-        },
-        {
-          title: '网站描述',
-          key: 'websiteDesc',
-          align: 'center',
-        },
-        {
-          title: '所处分类',
-          key: 'typeName',
-          width: 90,
           align: 'center',
         },
         {
           title: '链接地址',
           key: 'websiteUrl',
-          width: 200,
           align: 'center',
           render: (h, params) => {
             if (params.row.websiteUrl === '#') {
@@ -65,20 +52,18 @@ export default {
                     this.openWindow(params.row)
                   },
                 },
-              }, '预览'),
+              }, params.row.websiteUrl),
             ]
           },
         },
         {
-          title: '点赞数量',
-          key: 'favour',
-          width: 90,
+          title: '网站分类',
+          key: 'typeName',
           align: 'center',
         },
         {
-          title: '收藏人数',
-          key: 'watch',
-          width: 90,
+          title: '网站描述',
+          key: 'websiteDesc',
           align: 'center',
         },
         {
