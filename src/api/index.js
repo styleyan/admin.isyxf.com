@@ -185,6 +185,46 @@ class Apis extends Ajax {
   getLink(params) {
     return super.post(`/api/blog/get/link`, params)
   }
+
+  /**
+   * 查询专题
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294674
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  getSeries(params) {
+    return super.post(`/api/blog/get/series`, params)
+  }
+
+  /**
+   * 增加专题
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294674
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  addSeries(params) {
+    return super.post(`/api/blog/add/series`, params)
+  }
+
+  /**
+   * 删除专题
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294674
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  deleteSeries(params) {
+    return super.post(`/api/blog/delete/series`, params)
+  }
+
+  /**
+   * 更新专题
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294674
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  updateSeries(params) {
+    return super.post(`/api/blog/update/series`, params)
+  }
 }
 
 const apis = new Apis(axios)

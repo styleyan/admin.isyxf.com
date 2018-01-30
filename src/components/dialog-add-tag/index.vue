@@ -4,7 +4,7 @@
     v-model="modalStatus"
     :title="title"
     @on-ok="okHandler">
-    <Input v-model="label" placeholder="专题名称"></Input>
+    <Input v-model="classifyName" placeholder="专题名称"></Input>
     <Input v-model="desc" type="textarea" :rows="4" placeholder="专题描述"></Input>
   </Modal>
 </template>
@@ -20,15 +20,11 @@ export default {
       type: Boolean,
       default: true,
     },
-    tags: {
-      type: Array,
-      default: () => ([]),
-    },
   },
   data() {
     return {
       modalStatus: this.value,
-      label: '',
+      classifyName: '',
       desc: '',
     }
   },
@@ -38,7 +34,7 @@ export default {
     },
     value(val) {
       this.modalStatus = val
-      this.label = ''
+      this.classifyName = ''
       this.desc = ''
     },
   },
@@ -48,11 +44,10 @@ export default {
      */
     okHandler() {
       const data = {
-        label: this.label,
+        classifyName: this.classifyName,
         desc: this.desc,
-        uuid: this.tags.length + 1,
+        classify: Math.random().toString(36).substr(2),
       }
-      this.tags.push(data)
       this.$emit('ok', data)
     },
   },
