@@ -14,7 +14,7 @@
         </Tooltip>
       </Col>
     </Row>
-    <table-list></table-list>
+    <table-list :linkList="linkList"></table-list>
     <div class="wrap-page">
       <Page :total="pageTotal" @on-change="pageChange" show-total></Page>
     </div>
@@ -31,8 +31,15 @@ export default {
     return {
       searchVal: '',
       pageTotal: 0,
+      linkList: [],
       modalStatus: false,
     }
+  },
+  created() {
+    this.$ajax.getLink().then((result) => {
+      this.linkList = result.list
+      this.pageTotal = result.pageTotal
+    })
   },
   methods: {
     pageChange() {

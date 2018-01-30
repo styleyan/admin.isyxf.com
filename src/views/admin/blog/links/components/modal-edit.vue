@@ -11,14 +11,14 @@
       <Form-item label="url" prop="websiteUrl">
         <Input v-model="formValidate.websiteUrl" placeholder="请输入..."></Input>
       </Form-item>
-      <Form-item label="分类" prop="type">
-        <RadioGroup v-model="formValidate.isHttps">
-          <Radio :label="1">https</Radio>
+      <Form-item label="分类">
+        <RadioGroup v-model="formValidate.classify">
           <Radio :label="0">http</Radio>
+          <Radio :label="1">https</Radio>
         </RadioGroup>
       </Form-item>
-      <Form-item label="描述" prop="websiteDesc">
-        <Input v-model="formValidate.websiteDesc" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="请输入..."></Input>
+      <Form-item label="描述" prop="desc">
+        <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="请输入..."></Input>
       </Form-item>
     </Form>
   </Modal>
@@ -43,7 +43,7 @@ export default {
       loading: true,
       // 表单数据
       formValidate: {
-        isHttps: 1,
+        classify: 1,
       },
       ruleValidate: {
         websiteName: [
@@ -52,7 +52,7 @@ export default {
         websiteUrl: [
           { required: true, message: 'url不能为空', trigger: 'blur' },
         ],
-        websiteDesc: [
+        desc: [
           { required: true, message: '请输入详情', trigger: 'blur' },
           { type: 'string', min: 10, message: '介绍不能少于10字', trigger: 'blur' },
         ],
@@ -87,15 +87,11 @@ export default {
      * 提交填写的数据
      */
     postWebsite() {
-      console.log(this.formValidate)
-      // this.$ajax.haoAdd({
-      //   data: this.formValidate,
-      //   type: 'add',
-      // }).then((data) => {
-      //   this.reset()
-      // }).catch((err) => {
-      //   this.$Message.error(err)
-      // })
+      this.$ajax.addLink(this.formValidate).then((data) => {
+        this.reset()
+      }).catch((err) => {
+        this.$Message.error(err)
+      })
     },
     /**
      * 重置
@@ -103,7 +99,9 @@ export default {
     reset() {
       this.loading = false
       this.modal = false
-      this.formValidate = {}
+      this.formValidate = {
+        classify: 1,
+      }
     },
   },
 }

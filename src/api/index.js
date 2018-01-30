@@ -145,6 +145,46 @@ class Apis extends Ajax {
   haoNav(params) {
     return super.get(`/api/hao/nav`, params)
   }
+
+  /**
+   * 增加友情链接
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294674
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  addLink(params) {
+    return super.post(`/api/blog/add/link`, params)
+  }
+
+  /**
+   * 删除友链
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294674
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  deleteLink(params) {
+    return super.post(`/api/blog/delete/link`, params)
+  }
+
+  /**
+   * 更新友链
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294674
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  updateLink(params) {
+    return super.post(`/api/blog/update/link`, params)
+  }
+
+  /**
+   * 查询友链
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294674
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  getLink(params) {
+    return super.post(`/api/blog/get/link`, params)
+  }
 }
 
 const apis = new Apis(axios)

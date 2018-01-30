@@ -1,11 +1,11 @@
 <template>
-    <Table :columns="columns6" :data="websiteList"></Table>
+    <Table :columns="columns6" :data="linkList"></Table>
 </template>
 <script>
 export default {
   nama: 'hao-table-list',
   props: {
-    websiteList: {
+    linkList: {
       type: Array,
       default: () => ([]),
     },
@@ -42,7 +42,7 @@ export default {
                 props: {
                   type: 'text',
                   size: 'small',
-                  icon: 'ios-redo',
+                  icon: params.row.classify ? 'locked' : 'ios-redo',
                 },
                 style: {
                   marginRight: '5px',
@@ -53,17 +53,13 @@ export default {
                   },
                 },
               }, params.row.websiteUrl),
+
             ]
           },
         },
         {
-          title: '网站分类',
-          key: 'typeName',
-          align: 'center',
-        },
-        {
           title: '网站描述',
-          key: 'websiteDesc',
+          key: 'desc',
           align: 'center',
         },
         {
@@ -107,9 +103,11 @@ export default {
     }
   },
   methods: {
-    show(index) {},
+    show(index) {
+      console.log(index)
+    },
     remove(index) {
-      // this.data5.splice(index, 1)
+      console.log(this.linkList[index])
     },
     openWindow(row) {
       window.open(row.websiteUrl)
