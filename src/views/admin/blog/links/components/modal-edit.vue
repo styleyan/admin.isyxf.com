@@ -6,19 +6,19 @@
     @on-ok="asyncOK">
     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="50">
       <Form-item label="名称" prop="websiteName">
-        <Input v-model="formValidate.websiteName" placeholder="请输入..."></Input>
+        <Input v-model="formValidate.websiteName" placeholder="请输入站点名称"></Input>
       </Form-item>
       <Form-item label="url" prop="websiteUrl">
-        <Input v-model="formValidate.websiteUrl" placeholder="请输入..."></Input>
+        <Input v-model="formValidate.websiteUrl" placeholder="请输入链接地址"></Input>
       </Form-item>
       <Form-item label="分类">
         <RadioGroup v-model="formValidate.classify">
-          <Radio :label="0">http</Radio>
           <Radio :label="1">https</Radio>
+          <Radio :label="0">http</Radio>
         </RadioGroup>
       </Form-item>
       <Form-item label="描述" prop="desc">
-        <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="请输入..."></Input>
+        <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 5,maxRows: 5}" placeholder="请输入描述"></Input>
       </Form-item>
     </Form>
   </Modal>
@@ -33,6 +33,10 @@ export default {
     title: {
       type: String,
       default: '编辑',
+    },
+    editData: {
+      type: Object,
+      default: () => ({}),
     },
   },
   data() {
@@ -54,7 +58,7 @@ export default {
         ],
         desc: [
           { required: true, message: '请输入详情', trigger: 'blur' },
-          { type: 'string', min: 10, message: '介绍不能少于10字', trigger: 'blur' },
+          { type: 'string', min: 0, message: '介绍不能少于10字', trigger: 'blur' },
         ],
       },
     }
@@ -65,6 +69,9 @@ export default {
     },
     modal(val) {
       this.$emit('input', val)
+    },
+    editData(data) {
+      this.formValidate = Object.keys(data).length ? JSON.parse(JSON.stringify(data)) : {classify: 1}
     },
   },
   methods: {
@@ -87,7 +94,17 @@ export default {
      * 提交填写的数据
      */
     postWebsite() {
-      this.$ajax.addLink(this.formValidate).then((data) => {
+      const ajaxFnName = Object.keys(this.editData).length ? 'updateLink' : 'addLink'
+      const _data = {
+        classify: this.formValidate.classify,
+        createTime: this.formValidate.createTime,
+        desc: this.formValidate.desc || '-',
+        websiteName: this.formValidate.websiteName,
+        websiteUrl: this.formValidate.websiteUrl,
+        uuid: this.formValidate.uuid || Math.random().toString(36).substr(2),
+      }
+      this.$ajax[ajaxFnName](_data).then((data) => {
+        this.$emit('refresh')
         this.reset()
       }).catch((err) => {
         this.$Message.error(err)

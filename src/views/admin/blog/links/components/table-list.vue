@@ -58,7 +58,7 @@ export default {
           },
         },
         {
-          title: '网站描述',
+          title: '备注',
           key: 'desc',
           align: 'center',
         },
@@ -80,7 +80,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.show(params.index)
+                    this.edit(params.row)
                   },
                 },
               }, '编辑'),
@@ -92,7 +92,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.remove(params.index)
+                    this.remove(params.row)
                   },
                 },
               }, '删除'),
@@ -103,11 +103,18 @@ export default {
     }
   },
   methods: {
-    show(index) {
-      console.log(index)
+    edit(row) {
+      this.$emit('edit', row)
     },
-    remove(index) {
-      console.log(this.linkList[index])
+    remove(row) {
+      this.$Modal.confirm({
+        title: '提示',
+        content: '确定删除友情链接么？删除后将无法恢复。',
+        onOk: () => {
+          this.$emit('remove', row)
+        },
+        onCancel: () => {},
+      })
     },
     openWindow(row) {
       window.open(row.websiteUrl)

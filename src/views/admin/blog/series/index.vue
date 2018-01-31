@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="tags">
-      <Tabs 
-        type="card" 
-        closable 
+      <Tabs
+        type="card"
+        closable
         :animated="false"
         :value="tabValue"
         @on-tab-remove="tabRemoveHandler"
@@ -56,7 +56,6 @@ export default {
       let prevClassify = {}
       let index = this.series.findIndex((o) => o.classify === classify)
       this.series.splice(index, 1)
-      console.log(index)
       if (this.series.length) {
         index && --index
         prevClassify = this.series[index]
@@ -78,7 +77,7 @@ export default {
      */
     sendHandler() {
       this.$ajax.updateSeries(this.series).then(() => {
-        console.log('更新成功')
+        this.$Message.success('保存成功')
       })
     },
     /**

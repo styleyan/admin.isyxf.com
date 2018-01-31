@@ -1,6 +1,8 @@
 <template>
   <div class="links-wrap">
     <modal-edit
+      @refresh="getAllLink"
+      :editData="editData"
       v-model="modalStatus">
     </modal-edit>
     <Row class="links-ivu-row">
@@ -14,7 +16,10 @@
         </Tooltip>
       </Col>
     </Row>
-    <table-list :linkList="linkList"></table-list>
+    <table-list
+      @remove="removeHandler"
+      @edit="editHandler"
+      :linkList="linkList"></table-list>
     <div class="wrap-page">
       <Page :total="pageTotal" @on-change="pageChange" show-total></Page>
     </div>
@@ -32,20 +37,40 @@ export default {
       searchVal: '',
       pageTotal: 0,
       linkList: [],
+      editData: {},
       modalStatus: false,
     }
   },
   created() {
-    this.$ajax.getLink().then((result) => {
-      this.linkList = result.list
-      this.pageTotal = result.pageTotal
-    })
+    this.getAllLink()
   },
   methods: {
+    getAllLink() {
+      this.$ajax.getLink().then((result) => {
+        this.linkList = result.list
+        this.pageTotal = result.pageTotal
+      })
+    },
+    /**
+     * 编辑
+     */
+    editHandler(row) {
+      this.editData = row
+      this.modalStatus = true
+    },
+    /**
+     * 删除友情链接
+     */
+    removeHandler(row) {
+      this.$ajax.removeLink({uuid: row.uuid}).then((result) => {
+        this.getAllLink()
+      })
+    },
     pageChange() {
       console.log('dddd')
     },
     showModalHandle() {
+      this.editData = {}
       this.modalStatus = true
     },
   },

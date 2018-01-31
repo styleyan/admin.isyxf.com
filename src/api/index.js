@@ -162,8 +162,9 @@ class Apis extends Ajax {
    * @param {Object} params - 请求参数
    * @returns {Promise} 请求结果
    */
-  deleteLink(params) {
-    return super.post(`/api/blog/delete/link`, params)
+  removeLink(params) {
+    // TODO: 这里很奇怪改为 'api/blog/delete/link' 服务器不知走到服务器哪儿去了
+    return super.post(`/api/blog/remove/link`, params)
   }
 
   /**
