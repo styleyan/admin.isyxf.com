@@ -71,7 +71,7 @@ export default {
         title: [
             { required: true, message: '文章标题不能为空', trigger: 'blur' },
         ],
-        url: [
+        articleId: [
             { required: true, message: '文章地址不能为空', trigger: 'blur' },
         ],
         createTime: [
