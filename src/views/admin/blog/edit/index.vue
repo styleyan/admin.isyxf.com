@@ -51,7 +51,7 @@ export default {
       showAdd: false,
       loadingStatus: false,
       // 文章id
-      articleId: this.$route.query.articleId,
+      uuid: this.$route.query.uuid,
       series: [],
       formValidate: {
         // 文章标题
@@ -94,9 +94,7 @@ export default {
   },
   created() {
     this.getSeries()
-    if (this.articleId) {
-      this.blogDetail(this.articleId)
-    }
+    this.uuid && this.blogDetail(this.uuid)
   },
   methods: {
     showAddDialog() {
@@ -132,10 +130,10 @@ export default {
     },
     /**
      * 编辑文章，初始化文章信息
-     * @param {String} articleId - 文章id
+     * @param {String} uuid - 文章id
      */
-    blogDetail(articleId) {
-      this.$ajax.blogDetail({articleId}).then((result) => {
+    blogDetail(uuid) {
+      this.$ajax.blogDetail({uuid}).then((result) => {
         this.formValidate = result.article
       }).catch(() => {
         this.$Message.error('服务器错误了')
@@ -146,11 +144,12 @@ export default {
      * @param {Object} param - 更新信息
      */
     blogSave(param) {
-      const apiFn = this.articleId ? 'blogUpdate' : 'blogAdd'
+      const apiFn = this.uuid ? 'blogUpdate' : 'blogAdd'
       param.preMore = `${param.render.split('<!--more-->')[0]}[...]`
+      param.uuid = param.uuid || Math.random().toString(36).substr(2)
       this.$ajax[apiFn](param).then((data) => {
         this.loadingStatus = false
-        this.articleId = this.articleId || data.articleId
+        this.uuid = this.uuid || data.uuid
         this.$Message.success('保存成功')
       }).catch(() => {
         this.$Message.error('服务器错误了')

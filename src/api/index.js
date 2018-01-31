@@ -33,7 +33,7 @@ class Apis extends Ajax {
    * @returns {Promise} 请求结果
    */
   blogDetail(params) {
-    return super.post(`/api/blog/detail/${params.articleId}`, params)
+    return super.post(`/api/blog/detail/${params.uuid}`, params)
   }
 
   /**
