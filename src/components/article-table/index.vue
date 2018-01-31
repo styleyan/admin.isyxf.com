@@ -31,6 +31,25 @@ export default {
           title: '文章标题',
           key: 'title',
           align: 'center',
+          render: (h, params) => {
+            return [
+              h('Button', {
+                props: {
+                  type: 'text',
+                  size: 'small',
+                  icon: 'ios-redo',
+                },
+                style: {
+                  marginRight: '5px',
+                },
+                on: {
+                  click: () => {
+                    this.openWindow(params.row)
+                  },
+                },
+              }, 'dddfdfdf'),
+            ]
+          },
         },
         {
           title: '专题',
@@ -137,6 +156,9 @@ export default {
     },
     switchHandle(i, state) {
       console.log(i, state)
+    },
+    openWindow(row) {
+      window.open(`https://www.isyxf.com/article/${row.articleId}`)
     },
   },
 }
