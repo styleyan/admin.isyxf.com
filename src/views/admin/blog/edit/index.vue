@@ -12,18 +12,18 @@
         </FormItem>
         <FormItem label="专题" prop="classify">
           <Select v-model="formValidate.classify" class="item-width">
-            <Option v-for="item in seriesList" :value="item.uuid" :key="item.uuid">
-              {{ item.label }}
+            <Option v-for="item in series" :value="item.classify" :key="item.classify">
+              {{ item.classifyName }}
             </Option>&nbsp;&nbsp;
           </Select>
           <span class="btn-add-tag" @click="showAddDialog">添加</span>
         </FormItem>
         <FormItem label="发布日期" prop="createTime">
-          <DatePicker 
-            type="datetime" 
-            format="yyyy-MM-dd HH:mm:ss" 
-            placement="top-start" 
-            placeholder="请选择发布日期，默认为当前日期" 
+          <DatePicker
+            type="datetime"
+            format="yyyy-MM-dd HH:mm:ss"
+            placement="top-start"
+            placeholder="请选择发布日期，默认为当前日期"
             v-model="formValidate.createTime"
             class="item-width"></DatePicker>
         </FormItem>
@@ -38,7 +38,7 @@
             <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
         </FormItem>
     </Form>
-    <dialog-add-tag :tags="seriesList" v-model="showAdd"></dialog-add-tag>
+    <dialog-add-tag :tags="series" v-model="showAdd"></dialog-add-tag>
   </div>
 </template>
 <script>
@@ -52,10 +52,7 @@ export default {
       loadingStatus: false,
       // 文章id
       articleId: this.$route.query.articleId,
-      seriesList: [
-        {uuid: 1, label: 'https', desc: 'tttttttttttttttttttttttt'},
-        {uuid: 2, label: 'nginx', desc: 'eeeeeeeeeeeeeeee'},
-      ],
+      series: [],
       formValidate: {
         // 文章标题
         title: '',
@@ -96,6 +93,7 @@ export default {
     },
   },
   created() {
+    this.getSeries()
     if (this.articleId) {
       this.blogDetail(this.articleId)
     }
@@ -103,6 +101,14 @@ export default {
   methods: {
     showAddDialog() {
       this.showAdd = true
+    },
+    /**
+     * 专题类型查询
+     */
+    getSeries() {
+      this.$ajax.getSeries().then((data) => {
+        this.series = data.list
+      })
     },
     /**
      * 提交文章数据

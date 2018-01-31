@@ -29,6 +29,10 @@ export default {
       activeLabel: '',
       activeDesc: '',
       tabValue: '',
+      activeEdit: {
+        classifyName: '',
+        desc: '',
+      },
     }
   },
   created() {
