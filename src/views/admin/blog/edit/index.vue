@@ -38,7 +38,7 @@
             <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
         </FormItem>
     </Form>
-    <dialog-add-tag :tags="series" v-model="showAdd"></dialog-add-tag>
+    <dialog-add-tag @ok="addTagHandler" :tags="series" v-model="showAdd"></dialog-add-tag>
   </div>
 </template>
 <script>
@@ -97,6 +97,16 @@ export default {
     this.uuid && this.blogDetail(this.uuid)
   },
   methods: {
+    /**
+     * 添加专提
+     */
+    addTagHandler(item) {
+      this.$ajax.addSeries(item).then(() => {
+        this.series.push(item)
+      }).catch((msg) => {
+        this.$Message.error(msg)
+      })
+    },
     showAddDialog() {
       this.showAdd = true
     },
