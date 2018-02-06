@@ -21,6 +21,10 @@ const routes = [
         path: 'edit',
         name: 'hao-edit',
         component: resolve => require(['../../views/admin/hao/edit/index.vue'], resolve),
+      }, {
+        path: 'class',
+        name: 'hao-class',
+        component: resolve => require(['../../views/admin/hao/class/index.vue'], resolve),
       }],
     }, {
       path: 'article',

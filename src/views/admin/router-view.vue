@@ -26,6 +26,7 @@
                 <Icon type="paper-airplane"></Icon>导航管理
               </template>
               <MenuItem name="hao-edit">编辑导航</MenuItem>
+              <MenuItem name="hao-class">导航分类</MenuItem>
             </Submenu>
           </Menu>
         </Col>
