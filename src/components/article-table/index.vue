@@ -47,7 +47,7 @@ export default {
                     this.openWindow(params.row)
                   },
                 },
-              }, 'dddfdfdf'),
+              }, params.row.title),
             ]
           },
         },
