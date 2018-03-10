@@ -1,15 +1,21 @@
 <template>
   <div class="article-list">
     <Row>
-        <Col span="12"><Button type="error" icon="trash-a">删除选中</Button></Col>
-        <Col span="12" style="text-align: right;">
-          <Input class="article-search" on-enter="searchHandle" v-model="searchVal" placeholder="请输入标题"></Input>
-          <Button type="primary" @click="searchHandle">查询</Button>
-        </Col>
+      <Col span="12"><Button type="error" icon="trash-a">删除选中</Button></Col>
+      <Col span="12" style="text-align: right;">
+        <Input class="article-search" on-enter="searchHandle" v-model="searchVal" placeholder="请输入标题"></Input>
+        <Button type="primary" @click="searchHandle">查询</Button>
+      </Col>
     </Row>
     <article-table @removeHandler="removeHandler" :datas="datas" class="article-table"></article-table>
     <div class="article-page">
-      <Page :total="pageTotal" show-elevator show-sizer></Page>
+      <Page 
+        :total="pageTotal"
+        show-elevator 
+        show-sizer
+        @on-change="pageChangeHandler" 
+        @on-page-size-change="pageSizeChangeHandler"
+        ></Page>
     </div>
   </div>
 </template>
@@ -29,24 +35,39 @@ export default {
     }
   },
   created() {
-    this.searchHandle()
+    this.searchHandle(1)
   },
   methods: {
     /**
      * 查询文章列表
+     @param {Number} activePage - 激活页
      */
-    searchHandle() {
+    searchHandle(activePage, size = 10) {
       this.$ajax.blogList({
         search: this.searchVal,
-        pageActive: 1,
+        pageActive: activePage,
         classify: 1,
-        pageSize: 10,
+        pageSize: size,
       }).then((data) => {
         this.datas = data.list
         this.pageTotal = data.pageTotal
       }).catch((err) => {
         console.log(err)
       })
+    },
+    /**
+     * 翻页事件
+     * @param {Number} activePage - 翻页数
+     */
+    pageChangeHandler(activePage) {
+      this.searchHandle(activePage)
+    },
+    /**
+     * 翻页变化时候出发
+     * @param {Number} size - 每页数量
+     */
+    pageSizeChangeHandler(size) {
+      this.searchHandle(1, size)
     },
     /**
      * 移除数据事件

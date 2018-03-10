@@ -24,8 +24,8 @@ export default {
     return {
       msg: '登录',
       formInline: {
-        userName: 'yxf',
-        userPwd: 'yxf21618138',
+        userName: '',
+        userPwd: '',
       },
       ruleInline: {
         userName: [
