@@ -5,7 +5,7 @@
           <Input v-model="formValidate.title"></Input>
         </FormItem>
         <FormItem label="文章内容" prop="content">
-          <my-mavon-editor :toHtml="toHtml" :text.sync="formValidate.content"></my-mavon-editor>
+          <my-mavon-editor @save="handleSubmit('formValidate')" :toHtml="toHtml" :text.sync="formValidate.content"></my-mavon-editor>
         </FormItem>
         <FormItem label="文章地址" prop="articleId">
           <Input v-model="formValidate.articleId" class="item-width"></Input>

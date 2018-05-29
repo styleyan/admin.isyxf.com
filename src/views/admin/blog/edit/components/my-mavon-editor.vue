@@ -1,5 +1,5 @@
 <template>
-  <mavon-editor :ishljs="true" @change="changeHandler" class="mavon-editor-markdown" v-model="value"/>
+  <mavon-editor :ishljs="true" @save="saveHandler" @change="changeHandler" class="mavon-editor-markdown" v-model="value"/>
 </template>
 <script>
   export default {
@@ -29,6 +29,9 @@
     methods: {
       changeHandler(value, render) {
         this.toHtml(render)
+      },
+      saveHandler() {
+        this.$emit('save')
       },
     },
   }
