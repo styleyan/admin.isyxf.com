@@ -1,29 +1,28 @@
 <template>
   <el-container>
-    <el-aside :width="asideWidth">
+    <el-aside class="collapse-aside-style" :width="asideWidth">
+      <img width="130" height="130" :src="logoSvg"/>
       <el-menu
+        :router="true"
         :collapse="isCollapse"
-        default-active="2"
+        :default-openeds="defaultOpeneds"
         class="el-menu-vertical"
         background-color="#545c64"
         text-color="#fff"
         active-text-color="#ffd04b">
-        <el-submenu index="1">
+        <el-submenu index="blog">
           <template slot="title">
             <i class="el-icon-location"></i>
             <span>博客管理</span>
           </template>
           <el-menu-item index="1-1">新建文章</el-menu-item>
-          <el-menu-item index="1-2">文章列表</el-menu-item>
+          <el-menu-item index="/blog">文章列表</el-menu-item>
+          <el-menu-item index="/blog/classify">专题列表</el-menu-item>
+          <el-menu-item index="/blog/tags">标签列表</el-menu-item>
+          <el-menu-item index="/blog/maxim">箴言列表</el-menu-item>
+          <el-menu-item index="/blog/books">书单列表</el-menu-item>
+          <el-menu-item index="/blog/links">增加友链</el-menu-item>
         </el-submenu>
-        <el-menu-item index="2">
-          <i class="el-icon-menu"></i>
-          <span slot="title">导航二</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <i class="el-icon-setting"></i>
-          <span slot="title">导航四</span>
-        </el-menu-item>
       </el-menu>
     </el-aside>
     <el-container>
@@ -35,8 +34,6 @@
           <i class="el-icon-setting" style="margin-right: 15px"></i>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>查看</el-dropdown-item>
-            <el-dropdown-item>新增</el-dropdown-item>
-            <el-dropdown-item>删除</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
         <span>王小虎</span>
@@ -50,18 +47,22 @@
 
 <script>
 // @ is an alias to /src
+import logoSvg from '@/assets/images/logo.svg'
+
 export default {
   name: 'GlobalLayout',
   data() {
     return {
+      logoSvg,
       isCollapse: false,
-      asideWidth: '200px',
+      asideWidth: '180px',
+      defaultOpeneds: ['blog'],
     }
   },
   methods: {
     arrowHandle() {
       this.isCollapse = !this.isCollapse
-      this.asideWidth = this.asideWidth === '200px' ? '60px' : '200px'
+      this.asideWidth = this.asideWidth === '180px' ? '60px' : '180px'
     },
   },
 }
@@ -91,7 +92,6 @@ export default {
   }
   .el-menu-vertical{
     border-right none !important
-
     .el-submenu{
       .el-menu-item{
         padding 0 0 0 20px !important
@@ -99,6 +99,17 @@ export default {
         line-height 40px
         font-size 12px
       }
+    }
+    .el-submenu__title,.el-menu{
+      margin-left -30px
+    }
+
+    .el-submenu__title{
+      background-color: #434a50 !important
+    }
+    a{
+      text-decoration none
+      color #fff
     }
   }
   .el-aside {

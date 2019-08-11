@@ -1,24 +1,11 @@
 <template>
   <global-layout>
     <global-container-top></global-container-top>
-    <el-table :data="tableData">
-      <el-table-column prop="title" label="标题" width="280"></el-table-column>
-      <el-table-column prop="tags" :filters="null" label="标签" width="120">
-        <el-tag
-          type="success"
-          close-transition>标签</el-tag>
-      </el-table-column>
-      <el-table-column prop="classifyId" label="分类"></el-table-column>
-      <el-table-column prop="gmtCreate" label="发布时间"></el-table-column>
-      <el-table-column prop="gmtModify" label="更新时间"></el-table-column>
-      <el-table-column label="发布状态">
-        <template slot-scope="scope">
-          <el-switch
-            v-model="scope.row.state">
-          </el-switch>
-        </template>
-      </el-table-column>
-      <el-table-column prop="url" label="预览"></el-table-column>
+    <el-table class="classify-list" :data="tableData">
+      <el-table-column prop="websiteName" label="标题" width="280"></el-table-column>
+      <el-table-column prop="desc" label="说明"></el-table-column>
+      <el-table-column prop="websiteUrl" label="地址"></el-table-column>
+      <el-table-column prop="gmtCreate" label="添加时间"></el-table-column>
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
           <el-button
@@ -32,6 +19,15 @@
         </template>
       </el-table-column>
     </el-table>
+    <el-pagination
+      class="global-page"
+      background
+      @current-change="handleCurrentChange"
+      :current-page.sync="currentPage3"
+      :page-size="10"
+      layout="prev, pager, next, jumper"
+      :total="1000">
+    </el-pagination>
   </global-layout>
 </template>
 
@@ -40,20 +36,17 @@ import GlobalLayout from '@/components/GlobalLayout.vue'
 import GlobalContainerTop from '@/components/GlobalContainerTop.vue'
 
 export default {
-  name: 'aaaa',
+  name: 'linksPage',
   components: { GlobalLayout, GlobalContainerTop },
   data() {
     return {
       tableData: [],
+      currentPage3: 1,
     }
   },
   mounted() {
-    this.$axios.indexList({ pageNum: 1, pageSize: 7 }).then((data) => {
-      data.list.forEach(item => {
-        item.state = !!item.state
-      })
-
-      this.tableData = data.list
+    this.$axios.linksList().then((data) => {
+      this.tableData = data
     })
   },
   methods: {
@@ -69,9 +62,14 @@ export default {
     handleDelete(index, row) {
       console.log(index, row)
     },
+    /**
+     * 当前页码
+     */
+    handleCurrentChange() {
+      console.log('当前页码')
+    },
   },
 }
 </script>
 <style lang="stylus">
-
 </style>
