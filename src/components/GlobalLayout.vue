@@ -7,7 +7,7 @@
         :collapse="isCollapse"
         :default-openeds="defaultOpeneds"
         class="el-menu-vertical"
-        background-color="#545c64"
+        background-color="#495060"
         text-color="#fff"
         active-text-color="#ffd04b">
         <el-submenu index="blog">
@@ -26,17 +26,12 @@
       </el-menu>
     </el-aside>
     <el-container>
-      <el-header class="l">
+      <el-header class="admin-el-header">
         <div class="el-header-arrow" :class="{rotate180:isCollapse}" @click="arrowHandle">
           <i class="iconfont icon-zhankai"></i>
         </div>
-        <el-dropdown>
-          <i class="el-icon-setting" style="margin-right: 15px"></i>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>查看</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <span>王小虎</span>
+        <span class="user">Y.Jer</span>
+        <i class="iconfont icon-out"></i>
       </el-header>
       <el-main>
         <slot></slot>
@@ -70,7 +65,7 @@ export default {
 <style lang="stylus">
   .el-header {
     position: relative;
-    background-color: #f3f3f3;
+    background-color: #495060;
     color: #333;
     line-height: 60px;
     text-align: right;
@@ -114,6 +109,14 @@ export default {
   }
   .el-aside {
     color: #333;
-    background-color: #545c64;
+    background-color: #495060;
+  }
+  .admin-el-header{
+      color #fff
+      .user{
+        font-size 15px
+        font-weight bold
+        margin-right 8px
+      }
   }
 </style>

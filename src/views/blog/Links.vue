@@ -2,10 +2,14 @@
   <global-layout>
     <global-container-top></global-container-top>
     <el-table class="classify-list" :data="tableData">
-      <el-table-column prop="websiteName" label="标题" width="280"></el-table-column>
-      <el-table-column prop="desc" label="说明"></el-table-column>
-      <el-table-column prop="websiteUrl" label="地址"></el-table-column>
-      <el-table-column prop="gmtCreate" label="添加时间"></el-table-column>
+      <el-table-column label="标题">
+        <template slot-scope="scope">
+          <i class="iconfont icon-redo"></i>
+          <router-link :to="scope.row.websiteUrl">{{scope.row.websiteName}}</router-link>
+        </template>
+      </el-table-column>
+      <el-table-column prop="desc" width="300" label="说明"></el-table-column>
+      <el-table-column prop="gmtCreate" width="200" label="添加时间"></el-table-column>
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
           <el-button
@@ -72,4 +76,17 @@ export default {
 }
 </script>
 <style lang="stylus">
+.classify-list{
+  .icon-redo{
+    font-size 12px
+    margin-right 4px
+  }
+  a{
+    color #606266
+    text-direction none
+    &:hover{
+      text-direction underline
+    }
+  }
+}
 </style>

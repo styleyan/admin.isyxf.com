@@ -2,20 +2,20 @@
   <global-layout>
     <global-container-top></global-container-top>
     <el-table class="article-list" :data="tableData">
-      <el-table-column label="标题" width="280">
+      <el-table-column label="标题">
         <template slot-scope="scope">
+          <i class="iconfont icon-redo"></i>
           <router-link :to="scope.row.url">{{scope.row.title}}</router-link>
         </template>
       </el-table-column>
-      <el-table-column prop="tags" :filters="null" label="标签" width="120">
+      <el-table-column prop="tags" :filters="null" label="标签" width="150">
         <el-tag
           type="success"
           close-transition>标签</el-tag>
       </el-table-column>
-      <el-table-column prop="classifyId" label="分类"></el-table-column>
-      <el-table-column prop="gmtCreate" label="发布时间"></el-table-column>
-      <el-table-column prop="gmtModify" label="更新时间"></el-table-column>
-      <el-table-column width="160" label="发布状态">
+      <el-table-column prop="classifyId" label="分类" width="170"></el-table-column>
+      <el-table-column prop="gmtCreate" label="发布时间" width="200"></el-table-column>
+      <el-table-column width="160" label="状态">
         <template slot-scope="scope">
           <el-switch
             v-model="scope.row.state">
@@ -100,6 +100,10 @@ export default {
     &:hover{
       text-decoration underline
     }
+  }
+  .icon-redo{
+    font-size 12px
+    margin-right 4px
   }
 }
 </style>

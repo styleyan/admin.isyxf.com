@@ -4,7 +4,7 @@
     <el-table class="classify-list" :data="tableData">
       <el-table-column prop="title" label="标题" width="280"></el-table-column>
       <el-table-column prop="desc" label="内容"></el-table-column>
-      <el-table-column prop="gmtCreate" label="添加时间"></el-table-column>
+      <el-table-column prop="gmtCreate" width="200" label="添加时间"></el-table-column>
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
           <el-button

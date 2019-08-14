@@ -2,7 +2,7 @@
   <global-layout>
     <global-container-top></global-container-top>
     <el-table class="classify-list" :data="tableData">
-      <el-table-column prop="gmtCreate" width="300" label="添加时间"></el-table-column>
+      <el-table-column prop="gmtCreate" width="180" label="添加时间"></el-table-column>
       <el-table-column prop="context" label="内容"></el-table-column>
       <el-table-column width="160" label="状态">
         <template slot-scope="scope">
