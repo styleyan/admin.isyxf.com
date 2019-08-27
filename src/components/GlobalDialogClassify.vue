@@ -1,11 +1,15 @@
 <template>
-    <el-dialog width="500px" title="添加专题" :visible.sync="dialogFormVisible">
+    <el-dialog :width="dialogWidth" :title="title" :visible.sync="dialogFormVisible">
         <el-form :model="rowData">
-            <el-form-item label="专题名称" :label-width="formLabelWidth">
-            <el-input v-model="rowData.title" auto-complete="off"></el-input>
-            </el-form-item>
-            <el-form-item label="专题内容" :label-width="formLabelWidth">
-                <el-input type="textarea" :rows="5" placeholder="请输入内容" v-model="rowData.desc"></el-input>
+            <el-form-item v-for="(item, index) in itemList" :label="item.label" :key="index" :label-width="formLabelWidth">
+              <template v-if="item.type ==='switch'">
+                  <el-switch
+                    v-model="rowData[item.key]">
+                  </el-switch>
+              </template>
+              <template v-if="item.type ==='input' || item.type ==='textarea'">
+                  <el-input :type="item.type" :rows="item.rows || 0" :placeholder="item.placeholder" v-model="rowData[item.key]"></el-input>
+              </template>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
@@ -17,6 +21,20 @@
 <script>
 export default {
   name: 'global-dialog-classify',
+  props: {
+    title: {
+      type: String,
+      default: '',
+    },
+    dialogWidth: {
+      type: String,
+      default: '500px',
+    },
+    itemList: {
+      type: Array,
+      default: () => [],
+    },
+  },
   data() {
     return {
       dialogFormVisible: false,
@@ -24,6 +42,7 @@ export default {
       rowData: {
         title: '',
         desc: '',
+        state: 1,
       },
     }
   },

@@ -5,7 +5,7 @@
       <el-table-column type="expand">
         <template slot-scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
-            <el-form-item label="状态:">
+            <el-form-item label="进度:">
               <span>{{props.row.progress}}</span>
             </el-form-item>
             <el-form-item label="评分:">

@@ -34,7 +34,7 @@
       layout="prev, pager, next, jumper"
       :total="1000">
     </el-pagination>
-    <global-dialog-classify ref="globalDialogClassify"></global-dialog-classify>
+    <global-dialog-classify :itemList="itemList" title="添加专题" ref="globalDialogClassify"></global-dialog-classify>
   </global-layout>
 </template>
 
@@ -50,6 +50,11 @@ export default {
     return {
       tableData: [],
       currentPage3: 1,
+      itemList: [
+        { type: 'input', label: '专题名称', placeholder: '', key: 'title' },
+        { type: 'textarea', label: '专题内容', placeholder: '', key: 'desc' },
+        { type: 'switch', label: '状态', placeholder: '', key: 'state' },
+      ],
     }
   },
   mounted() {
