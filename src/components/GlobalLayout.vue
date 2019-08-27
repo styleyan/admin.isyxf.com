@@ -18,7 +18,6 @@
           <el-menu-item index="1-1">新建文章</el-menu-item>
           <el-menu-item index="/blog">文章列表</el-menu-item>
           <el-menu-item index="/blog/classify">专题列表</el-menu-item>
-          <el-menu-item index="/blog/tags">标签列表</el-menu-item>
           <el-menu-item index="/blog/maxim">箴言列表</el-menu-item>
           <el-menu-item index="/blog/books">书单列表</el-menu-item>
           <el-menu-item index="/blog/links">增加友链</el-menu-item>

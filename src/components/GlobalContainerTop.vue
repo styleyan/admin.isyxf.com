@@ -1,6 +1,6 @@
 <template>
     <el-row class="global-container-top" justify="space-between">
-        <el-col class="l" :span="12"><el-button type="primary">新增</el-button></el-col>
+        <el-col class="l" :span="12"><el-button @click="addHandle" type="primary">新增</el-button></el-col>
         <el-col class="r" :span="12">
           <el-input :maxlength="15" :clearable="true" placeholder="请输入内容" v-model="searchVal" class="input-with-search">
             <el-button slot="append" icon="el-icon-search"></el-button>
@@ -15,6 +15,11 @@ export default {
     return {
       searchVal: '',
     }
+  },
+  methods: {
+    addHandle() {
+      this.$emit('addHandle')
+    },
   },
 }
 </script>

@@ -1,10 +1,17 @@
 <template>
   <global-layout>
-    <global-container-top></global-container-top>
+    <global-container-top @addHandle="addHandle"></global-container-top>
     <el-table class="classify-list" :data="tableData">
       <el-table-column prop="title" label="标题" width="280"></el-table-column>
       <el-table-column prop="desc" label="内容"></el-table-column>
       <el-table-column prop="gmtCreate" width="200" label="添加时间"></el-table-column>
+      <el-table-column width="160" label="状态">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.state">
+          </el-switch>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
           <el-button
@@ -27,16 +34,18 @@
       layout="prev, pager, next, jumper"
       :total="1000">
     </el-pagination>
+    <global-dialog-classify ref="globalDialogClassify"></global-dialog-classify>
   </global-layout>
 </template>
 
 <script>
 import GlobalLayout from '@/components/GlobalLayout.vue'
 import GlobalContainerTop from '@/components/GlobalContainerTop.vue'
+import GlobalDialogClassify from '@/components/GlobalDialogClassify.vue'
 
 export default {
   name: 'classifyPage',
-  components: { GlobalLayout, GlobalContainerTop },
+  components: { GlobalLayout, GlobalContainerTop, GlobalDialogClassify },
   data() {
     return {
       tableData: [],
@@ -54,6 +63,7 @@ export default {
      */
     handleEdit(index, row) {
       console.log(index, row)
+      this.addHandle(row)
     },
     /**
      * 删除
@@ -66,6 +76,12 @@ export default {
      */
     handleCurrentChange() {
       console.log('当前页码')
+    },
+    /**
+     * 添加专题
+     */
+    addHandle(rowData) {
+      this.$refs.globalDialogClassify.toggleVisibleHandle(rowData)
     },
   },
 }

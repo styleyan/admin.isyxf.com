@@ -3,23 +3,23 @@
     <global-container-top></global-container-top>
     <el-table class="books-list" :data="tableData">
       <el-table-column type="expand">
-      <template slot-scope="props">
-        <el-form label-position="left" inline class="demo-table-expand">
-          <el-form-item label="状态:">
-            <span>{{props.row.progress}}</span>
-          </el-form-item>
-          <el-form-item label="评分:">
-            <span>{{props.row.bookScore}}</span>
-          </el-form-item>
-          <el-form-item label="推荐理由:">
-            <span>{{props.row.bookReason}}</span>
-          </el-form-item>
-          <el-form-item label="评价:">
-            <span>{{props.row.bookEvaluate}}</span>
-          </el-form-item>
-        </el-form>
-      </template>
-    </el-table-column>
+        <template slot-scope="props">
+          <el-form label-position="left" inline class="demo-table-expand">
+            <el-form-item label="状态:">
+              <span>{{props.row.progress}}</span>
+            </el-form-item>
+            <el-form-item label="评分:">
+              <span>{{props.row.bookScore}}</span>
+            </el-form-item>
+            <el-form-item label="推荐理由:">
+              <span>{{props.row.bookReason}}</span>
+            </el-form-item>
+            <el-form-item label="评价:">
+              <span>{{props.row.bookEvaluate}}</span>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-table-column>
       <el-table-column prop="gmtCreate" label="添加时间" width="180"></el-table-column>
       <el-table-column prop="bookName" label="书名"></el-table-column>
       <el-table-column width="160" label="状态">
