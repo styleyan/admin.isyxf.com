@@ -1,6 +1,6 @@
 <template>
   <global-layout>
-    <global-container-top></global-container-top>
+    <global-container-top @addHandle="addHandle"></global-container-top>
     <el-table class="classify-list" :data="tableData">
       <el-table-column label="标题">
         <template slot-scope="scope">
@@ -39,20 +39,29 @@
       layout="prev, pager, next, jumper"
       :total="1000">
     </el-pagination>
+    <global-dialog-classify :itemList="itemList" title="友情链接" ref="globalDialogClassify"></global-dialog-classify>
   </global-layout>
 </template>
 
 <script>
 import GlobalLayout from '@/components/GlobalLayout.vue'
 import GlobalContainerTop from '@/components/GlobalContainerTop.vue'
+import GlobalDialogClassify from '@/components/GlobalDialogClassify.vue'
 
 export default {
   name: 'linksPage',
-  components: { GlobalLayout, GlobalContainerTop },
+  components: { GlobalLayout, GlobalContainerTop, GlobalDialogClassify },
   data() {
     return {
       tableData: [],
       currentPage3: 1,
+      itemList: [
+        { type: 'input', label: '名称', placeholder: '', key: 'websiteName' },
+        { type: 'input', label: 'url', placeholder: '', key: 'websiteUrl' },
+        { type: 'radio', label: '分类', key: 'https', radios: [{ label: 'https', key: 1 }, { label: 'http', key: 0 }] },
+        { type: 'textarea', label: '描述', placeholder: '', key: 'desc' },
+        { type: 'switch', label: '状态', placeholder: '', key: 'state' },
+      ],
     }
   },
   mounted() {
@@ -66,6 +75,7 @@ export default {
      */
     handleEdit(index, row) {
       console.log(index, row)
+      this.addHandle(row)
     },
     /**
      * 删除
@@ -78,6 +88,12 @@ export default {
      */
     handleCurrentChange() {
       console.log('当前页码')
+    },
+    /**
+     * 添加专题
+     */
+    addHandle(rowData) {
+      this.$refs.globalDialogClassify.toggleVisibleHandle(rowData)
     },
   },
 }

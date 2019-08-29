@@ -1,6 +1,6 @@
 <template>
   <global-layout>
-    <global-container-top></global-container-top>
+    <global-container-top @addHandle="addHandle"></global-container-top>
     <el-table class="books-list" :data="tableData">
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -51,24 +51,35 @@
       layout="prev, pager, next, jumper"
       :total="1000">
     </el-pagination>
+    <global-dialog-classify :itemList="itemList" title="添加书单" ref="globalDialogClassify"></global-dialog-classify>
   </global-layout>
 </template>
 
 <script>
 import GlobalLayout from '@/components/GlobalLayout.vue'
 import GlobalContainerTop from '@/components/GlobalContainerTop.vue'
+import GlobalDialogClassify from '@/components/GlobalDialogClassify.vue'
 
 export default {
   name: 'booksPage',
-  components: { GlobalLayout, GlobalContainerTop },
+  components: { GlobalLayout, GlobalContainerTop, GlobalDialogClassify },
   data() {
     return {
       tableData: [],
       currentPage3: 1,
+      itemList: [
+        { type: 'input', label: '书名', placeholder: '', key: 'bookName' },
+        { type: 'radio', label: '进度', key: 'progress', radios: [{ label: '未读', key: 0 }, { label: '正在读', key: 1 }, { label: '已读', key: 2 }] },
+        { type: 'input', label: '评分', placeholder: '', key: 'bookScore' },
+        { type: 'textarea', label: '推荐理由', placeholder: '', key: 'bookReason' },
+        { type: 'textarea', label: '评价', placeholder: '', key: 'bookEvaluate' },
+        { type: 'switch', label: '状态', placeholder: '', key: 'state' },
+      ],
     }
   },
   mounted() {
     this.$axios.booksList().then((data) => {
+      console.log(data)
       this.tableData = data
     })
   },
@@ -78,6 +89,7 @@ export default {
      */
     handleEdit(index, row) {
       console.log(index, row)
+      this.addHandle(row)
     },
     /**
      * 删除
@@ -90,6 +102,12 @@ export default {
      */
     handleCurrentChange() {
       console.log('当前页码')
+    },
+    /**
+     * 添加专题
+     */
+    addHandle(rowData) {
+      this.$refs.globalDialogClassify.toggleVisibleHandle(rowData)
     },
   },
 }
