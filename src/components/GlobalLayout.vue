@@ -20,7 +20,7 @@
           <el-menu-item index="/blog/classify">专题列表</el-menu-item>
           <el-menu-item index="/blog/maxim">箴言列表</el-menu-item>
           <el-menu-item index="/blog/books">书单列表</el-menu-item>
-          <el-menu-item index="/blog/links">增加友链</el-menu-item>
+          <el-menu-item index="/blog/links">友链链接</el-menu-item>
         </el-submenu>
       </el-menu>
     </el-aside>

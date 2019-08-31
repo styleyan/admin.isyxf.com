@@ -25,6 +25,9 @@
       <el-table-column width="160" label="状态">
         <template slot-scope="scope">
           <el-switch
+            :active-value="1"
+            :inactive-value="0"
+            @change="switchChangeHandle($event, scope.row)"
             v-model="scope.row.state">
           </el-switch>
         </template>
@@ -81,6 +84,18 @@ export default {
     this.getList()
   },
   methods: {
+    /**
+     * 状态更新
+     */
+    switchChangeHandle(state, row) {
+      this.$axios.booksUpdate({
+        id: row.id,
+        state,
+      }).catch(() => {
+        row.state = state === 0 ? 1 : 0
+      })
+    },
+
     /**
      * 获取列表
      */

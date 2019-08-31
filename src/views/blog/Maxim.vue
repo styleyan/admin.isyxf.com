@@ -9,6 +9,7 @@
           <el-switch
             :active-value="1"
             :inactive-value="0"
+            @change="switchChangeHandle($event, scope.row)"
             v-model="scope.row.state">
           </el-switch>
         </template>
@@ -60,6 +61,18 @@ export default {
     this.getList()
   },
   methods: {
+    /**
+     * 状态更新
+     */
+    switchChangeHandle(state, row) {
+      this.$axios.maximUpdate({
+        id: row.id,
+        state,
+      }).catch(() => {
+        row.state = state === 0 ? 1 : 0
+      })
+    },
+
     /**
      * 获取列表
      */
