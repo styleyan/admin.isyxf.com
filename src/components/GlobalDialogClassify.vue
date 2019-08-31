@@ -4,6 +4,8 @@
             <el-form-item v-for="(item, index) in itemList" :label="item.label" :class="{'switch-item': item.type ==='switch' || item.type ==='radio'}" :key="index" :label-width="formLabelWidth">
               <template v-if="item.type ==='switch'">
                   <el-switch
+                    :active-value="1"
+                    :inactive-value="0"
                     style="text-align: left"
                     v-model="rowData[item.key]">
                   </el-switch>
@@ -19,12 +21,14 @@
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-            <el-button @click="toggleVisibleHandle()">取 消</el-button>
-            <el-button type="primary" @click="toggleVisibleHandle()">确 定</el-button>
+            <el-button @click="buttonHandle(false)">取 消</el-button>
+            <el-button type="primary" @click="buttonHandle(true)">确 定</el-button>
         </div>
     </el-dialog>
 </template>
 <script>
+import utils from '@/utils'
+
 export default {
   name: 'global-dialog-classify',
   props: {
@@ -45,22 +49,46 @@ export default {
     return {
       dialogFormVisible: false,
       formLabelWidth: '80px',
-      rowData: {
-        title: '',
-        desc: '',
-        state: 1,
-      },
+      rowData: this.initKeys(),
+      // 0: 添加, 1: 更新
+      type: 0,
     }
   },
   methods: {
     /**
-         * 切换显示状态
-         */
+     * 初始化数据
+     */
+    initKeys() {
+      const keys = this.itemList.map(item => item.key)
+      const obj = {}
+
+      keys.forEach((key) => {
+        obj[key] = ''
+      })
+
+      return obj
+    },
+
+    /**
+     * 点击事件
+     */
+    buttonHandle(type) {
+      if (type) {
+        this.$emit('submit', this.rowData, this.type)
+      }
+      this.dialogFormVisible = !this.dialogFormVisible
+    },
+
+    /**
+     * 切换显示状态
+     */
     toggleVisibleHandle(rowData) {
       if (rowData) {
-        this.rowData = rowData
+        this.type = 'update'
+        this.rowData = utils.clone(rowData)
       } else {
-        this.rowData = { title: '', desc: '' }
+        this.type = 'add'
+        this.rowData = this.initKeys()
       }
       this.dialogFormVisible = !this.dialogFormVisible
     },

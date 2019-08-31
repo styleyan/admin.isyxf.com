@@ -1,6 +1,6 @@
 <template>
   <global-layout>
-    <global-container-top @addHandle="addHandle"></global-container-top>
+    <global-container-top :isSearch="false" @addHandle="showDialog"></global-container-top>
     <el-table class="classify-list" :data="tableData">
       <el-table-column label="标题">
         <template slot-scope="scope">
@@ -9,7 +9,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="desc" width="300" label="说明"></el-table-column>
-      <el-table-column prop="gmtCreate" width="200" label="添加时间"></el-table-column>
+      <el-table-column prop="gmtCreate" width="300" label="添加时间"></el-table-column>
       <el-table-column width="160" label="状态">
         <template slot-scope="scope">
           <el-switch
@@ -22,24 +22,15 @@
           <el-button
             size="mini"
             type="primary"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            @click="showDialog(scope.row)">编辑</el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      class="global-page"
-      background
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage3"
-      :page-size="10"
-      layout="prev, pager, next, jumper"
-      :total="1000">
-    </el-pagination>
-    <global-dialog-classify :itemList="itemList" title="友情链接" ref="globalDialogClassify"></global-dialog-classify>
+    <global-dialog-classify @submit="dialogSubmitHandle" :itemList="itemList" title="友情链接" ref="globalDialogClassify"></global-dialog-classify>
   </global-layout>
 </template>
 
@@ -54,7 +45,6 @@ export default {
   data() {
     return {
       tableData: [],
-      currentPage3: 1,
       itemList: [
         { type: 'input', label: '名称', placeholder: '', key: 'websiteName' },
         { type: 'input', label: 'url', placeholder: '', key: 'websiteUrl' },
@@ -65,35 +55,47 @@ export default {
     }
   },
   mounted() {
-    this.$axios.linksList().then((data) => {
-      this.tableData = data
-    })
+    this.getList()
   },
   methods: {
     /**
-     * 编辑
+     * 初始化列表
      */
-    handleEdit(index, row) {
-      console.log(index, row)
-      this.addHandle(row)
+    getList() {
+      this.$axios.linksList().then((data) => {
+        this.tableData = data
+      })
     },
+
     /**
      * 删除
      */
-    handleDelete(index, row) {
-      console.log(index, row)
+    handleDelete(row) {
+      this.$axios.linksDelete(row.id).then(() => {
+        this.getList()
+      })
     },
+
     /**
-     * 当前页码
+     * 显示弹框
      */
-    handleCurrentChange() {
-      console.log('当前页码')
-    },
-    /**
-     * 添加专题
-     */
-    addHandle(rowData) {
+    showDialog(rowData) {
       this.$refs.globalDialogClassify.toggleVisibleHandle(rowData)
+    },
+
+    /**
+     * 提交
+     */
+    dialogSubmitHandle(data, type) {
+      let submitType = 'linksAdd'
+
+      if (type === 'update') {
+        submitType = 'linksUpdate'
+      }
+
+      this.$axios[submitType](data).then(() => {
+        this.getList()
+      })
     },
   },
 }

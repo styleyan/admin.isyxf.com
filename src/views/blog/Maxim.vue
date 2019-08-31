@@ -1,12 +1,14 @@
 <template>
   <global-layout>
-    <global-container-top @addHandle="addHandle"></global-container-top>
+    <global-container-top @addHandle="showDialog"></global-container-top>
     <el-table class="classify-list" :data="tableData">
       <el-table-column prop="gmtCreate" width="180" label="添加时间"></el-table-column>
       <el-table-column prop="context" label="内容"></el-table-column>
       <el-table-column width="160" label="状态">
         <template slot-scope="scope">
           <el-switch
+            :active-value="1"
+            :inactive-value="0"
             v-model="scope.row.state">
           </el-switch>
         </template>
@@ -16,11 +18,11 @@
           <el-button
             size="mini"
             type="primary"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            @click="showDialog(scope.row)">编辑</el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -33,7 +35,7 @@
       layout="prev, pager, next, jumper"
       :total="1000">
     </el-pagination>
-    <global-dialog-classify :itemList="itemList" title="箴言" ref="globalDialogClassify"></global-dialog-classify>
+    <global-dialog-classify @submit="dialogSubmitHandle" :itemList="itemList" title="箴言" ref="globalDialogClassify"></global-dialog-classify>
   </global-layout>
 </template>
 <script>
@@ -55,27 +57,58 @@ export default {
     }
   },
   mounted() {
-    this.$axios.maximList().then((data) => {
-      console.log(data)
-      this.tableData = data
-    })
+    this.getList()
   },
   methods: {
+    /**
+     * 获取列表
+     */
+    getList() {
+      this.$axios.maximList().then((data) => {
+        this.tableData = data
+      })
+    },
+
     handleCurrentChange(index) {
       console.log(index)
     },
+
     /**
      * 编辑
      */
-    handleEdit(index, row) {
-      console.log(index, row)
-      this.addHandle(row)
+    handleEdit(row) {
+      this.showDialog(row)
     },
+
     /**
-     * 添加专题
+     * 删除
      */
-    addHandle(rowData) {
+    handleDelete(row) {
+      this.$axios.maximDelete(row.id).then(() => {
+        this.getList()
+      })
+    },
+
+    /**
+     * 添加
+     */
+    showDialog(rowData) {
       this.$refs.globalDialogClassify.toggleVisibleHandle(rowData)
+    },
+
+    /**
+     * 提交
+     */
+    dialogSubmitHandle(data, type) {
+      let _type = 'maximAdd'
+
+      if (type === 'update') {
+        _type = 'maximUpdate'
+      }
+
+      this.$axios[_type](data).then(() => {
+        this.getList()
+      })
     },
   },
 }

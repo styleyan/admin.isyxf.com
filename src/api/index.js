@@ -27,6 +27,36 @@ class Apis extends Ajax {
   }
 
   /**
+   * 添加专辑
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  classifyAdd(params) {
+    return super.post('/api/classify/add', params)
+  }
+
+  /**
+   * 删除专辑
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} id -专辑id
+   * @returns {Promise} 请求结果
+   */
+  classifyDelete(id) {
+    return super.post(`/api/classify/${id}/delete`)
+  }
+
+  /**
+   * 更新专辑
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} id -专辑id
+   * @returns {Promise} 请求结果
+   */
+  classifyUpdate(params) {
+    return super.post('/api/classify/edit', params)
+  }
+
+  /**
    * 友链列表
    * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
    * @param {Object} params - 请求参数
@@ -37,6 +67,30 @@ class Apis extends Ajax {
   }
 
   /**
+   * 添加友链
+   * @param {Object} params 友链
+   */
+  linksAdd(params) {
+    return super.post('/api/link/add', params)
+  }
+
+  /**
+   * 更新友链
+   * @param {Object} params 友链
+   */
+  linksUpdate(params) {
+    return super.post('/api/link/edit', params)
+  }
+
+  /**
+   * 更新友链
+   * @param {String} id 友链
+   */
+  linksDelete(id) {
+    return super.post(`/api/link/${id}/delete`)
+  }
+
+  /**
    * 箴言列表
    * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
    * @param {Object} params - 请求参数
@@ -44,6 +98,66 @@ class Apis extends Ajax {
    */
   maximList(params) {
     return super.get('/api/maxim/list', params)
+  }
+
+  /**
+   * 添加箴言
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  maximAdd(params) {
+    return super.post('/api/maxim/add', params)
+  }
+
+  /**
+   * 删除箴言
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  maximDelete(id) {
+    return super.post(`/api/maxim/${id}/delete`)
+  }
+
+  /**
+   * 更新箴言
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  maximUpdate(params) {
+    return super.post(`/api/maxim/edit`, params)
+  }
+
+  /**
+   * 书单添加
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  booksAdd(params) {
+    return super.post('/api/books/add', params)
+  }
+
+  /**
+   * 书单删除
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} id - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  booksDelete(id) {
+    return super.post(`/api/books/${id}/delete`)
+  }
+
+  /**
+   * 书单更新
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  booksUpdate(params) {
+    return super.post('/api/books/update', params)
   }
 
   /**

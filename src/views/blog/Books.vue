@@ -1,6 +1,6 @@
 <template>
   <global-layout>
-    <global-container-top @addHandle="addHandle"></global-container-top>
+    <global-container-top @addHandle="showDialog"></global-container-top>
     <el-table class="books-list" :data="tableData">
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -34,11 +34,11 @@
           <el-button
             size="mini"
             type="primary"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            @click="handleEdit(scope.row)">编辑</el-button>
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -51,7 +51,7 @@
       layout="prev, pager, next, jumper"
       :total="1000">
     </el-pagination>
-    <global-dialog-classify :itemList="itemList" title="添加书单" ref="globalDialogClassify"></global-dialog-classify>
+    <global-dialog-classify @submit="dialogSubmitHandle" :itemList="itemList" title="添加书单" ref="globalDialogClassify"></global-dialog-classify>
   </global-layout>
 </template>
 
@@ -78,36 +78,61 @@ export default {
     }
   },
   mounted() {
-    this.$axios.booksList().then((data) => {
-      console.log(data)
-      this.tableData = data
-    })
+    this.getList()
   },
   methods: {
     /**
+     * 获取列表
+     */
+    getList() {
+      this.$axios.booksList().then((data) => {
+        this.tableData = data
+      })
+    },
+
+    /**
      * 编辑
      */
-    handleEdit(index, row) {
-      console.log(index, row)
-      this.addHandle(row)
+    handleEdit(row) {
+      this.showDialog(row)
     },
+
     /**
      * 删除
      */
-    handleDelete(index, row) {
-      console.log(index, row)
+    handleDelete(row) {
+      this.$axios.booksDelete(row.id).then((data) => {
+        this.getList()
+      })
     },
+
     /**
      * 当前页码
      */
     handleCurrentChange() {
       console.log('当前页码')
     },
+
     /**
      * 添加专题
      */
-    addHandle(rowData) {
+    showDialog(rowData) {
       this.$refs.globalDialogClassify.toggleVisibleHandle(rowData)
+    },
+
+    /**
+     * 提交
+     */
+    dialogSubmitHandle(data, type) {
+      let submitType = 'booksAdd'
+
+      if (type === 'update') {
+        submitType = 'booksUpdate'
+      }
+
+      this.$axios[submitType](data).then(() => {
+        this.getList()
+      })
     },
   },
 }

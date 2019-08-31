@@ -1,6 +1,6 @@
 <template>
   <global-layout>
-    <global-container-top @addHandle="addHandle"></global-container-top>
+    <global-container-top :isSearch="false" @addHandle="addHandle"></global-container-top>
     <el-table class="classify-list" :data="tableData">
       <el-table-column prop="title" label="标题" width="280"></el-table-column>
       <el-table-column prop="desc" label="内容"></el-table-column>
@@ -21,20 +21,11 @@
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+            @click="handleDelete(scope.row)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      class="global-page"
-      background
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage3"
-      :page-size="10"
-      layout="prev, pager, next, jumper"
-      :total="1000">
-    </el-pagination>
-    <global-dialog-classify :itemList="itemList" title="添加专题" ref="globalDialogClassify"></global-dialog-classify>
+    <global-dialog-classify @submit="dialogSubmitHandle" :itemList="itemList" title="添加专题" ref="globalDialogClassify"></global-dialog-classify>
   </global-layout>
 </template>
 
@@ -49,7 +40,6 @@ export default {
   data() {
     return {
       tableData: [],
-      currentPage3: 1,
       itemList: [
         { type: 'input', label: '专题名称', placeholder: '', key: 'title' },
         { type: 'textarea', label: '专题内容', placeholder: '', key: 'desc' },
@@ -58,35 +48,53 @@ export default {
     }
   },
   mounted() {
-    this.$axios.classifyList().then((data) => {
-      this.tableData = data
-    })
+    this.getList()
   },
   methods: {
+    /**
+     * 初始化列表
+     */
+    getList() {
+      this.$axios.classifyList().then((data) => {
+        this.tableData = data
+      })
+    },
+
     /**
      * 编辑
      */
     handleEdit(index, row) {
-      console.log(index, row)
       this.addHandle(row)
     },
-    /**
-     * 删除
-     */
-    handleDelete(index, row) {
-      console.log(index, row)
-    },
-    /**
-     * 当前页码
-     */
-    handleCurrentChange() {
-      console.log('当前页码')
-    },
+
     /**
      * 添加专题
      */
     addHandle(rowData) {
       this.$refs.globalDialogClassify.toggleVisibleHandle(rowData)
+    },
+    /**
+     * 删除专题
+     */
+    handleDelete(row) {
+      this.$axios.classifyDelete(row.id).then(() => {
+        this.getList()
+      })
+    },
+
+    /**
+     * 提交
+     */
+    dialogSubmitHandle(data, type) {
+      let submitType = 'classifyAdd'
+
+      if (type === 'update') {
+        submitType = 'classifyUpdate'
+      }
+
+      this.$axios[submitType](data).then(() => {
+        this.getList()
+      })
     },
   },
 }
