@@ -38,10 +38,7 @@
             size="mini"
             type="primary"
             @click="handleEdit(scope.row)">编辑</el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.row)">删除</el-button>
+          <global-popover @submit="handleDelete(scope.row)"></global-popover>
         </template>
       </el-table-column>
     </el-table>
@@ -62,10 +59,11 @@
 import GlobalLayout from '@/components/GlobalLayout.vue'
 import GlobalContainerTop from '@/components/GlobalContainerTop.vue'
 import GlobalDialogClassify from '@/components/GlobalDialogClassify.vue'
+import GlobalPopover from '@/components/GlobalPopover.vue'
 
 export default {
   name: 'booksPage',
-  components: { GlobalLayout, GlobalContainerTop, GlobalDialogClassify },
+  components: { GlobalLayout, GlobalContainerTop, GlobalDialogClassify, GlobalPopover },
   data() {
     return {
       tableData: [],
