@@ -24,15 +24,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      class="global-page"
-      background
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage3"
-      :page-size="10"
-      layout="prev, pager, next, jumper"
-      :total="1000">
-    </el-pagination>
+    <global-page ref="globalPage" @receiveData="receiveDataHandle" request="maximList"></global-page>
     <global-dialog-classify @submit="dialogSubmitHandle" :itemList="itemList" title="箴言" ref="globalDialogClassify"></global-dialog-classify>
   </global-layout>
 </template>
@@ -41,10 +33,11 @@ import GlobalLayout from '@/components/GlobalLayout.vue'
 import GlobalContainerTop from '@/components/GlobalContainerTop.vue'
 import GlobalDialogClassify from '@/components/GlobalDialogClassify.vue'
 import GlobalPopover from '@/components/GlobalPopover.vue'
+import GlobalPage from '@/components/GlobalPage.vue'
 
 export default {
   name: 'maximPage',
-  components: { GlobalLayout, GlobalContainerTop, GlobalDialogClassify, GlobalPopover },
+  components: { GlobalLayout, GlobalContainerTop, GlobalDialogClassify, GlobalPopover, GlobalPage },
   data() {
     return {
       tableData: [],
@@ -55,10 +48,14 @@ export default {
       ],
     }
   },
-  mounted() {
-    this.getList()
-  },
   methods: {
+    /**
+     * 接收列表数据
+     */
+    receiveDataHandle(list) {
+      this.tableData = list
+    },
+
     /**
      * 状态更新
      */
@@ -69,19 +66,6 @@ export default {
       }).catch(() => {
         row.state = state === 0 ? 1 : 0
       })
-    },
-
-    /**
-     * 获取列表
-     */
-    getList() {
-      this.$axios.maximList().then((data) => {
-        this.tableData = data
-      })
-    },
-
-    handleCurrentChange(index) {
-      console.log(index)
     },
 
     /**
@@ -96,15 +80,8 @@ export default {
      */
     handleDelete(row) {
       this.$axios.maximDelete(row.id).then(() => {
-        this.getList()
+        this.$refs.globalPage.getList()
       })
-    },
-
-    /**
-     * 添加
-     */
-    showDialog(rowData) {
-      this.$refs.globalDialogClassify.toggleVisibleHandle(rowData)
     },
 
     /**
@@ -118,8 +95,15 @@ export default {
       }
 
       this.$axios[_type](data).then(() => {
-        this.getList()
+        this.$refs.globalPage.getList()
       })
+    },
+
+    /**
+     * 显示弹框
+     */
+    showDialog(rowData) {
+      this.$refs.globalDialogClassify.toggleVisibleHandle(rowData)
     },
   },
 }

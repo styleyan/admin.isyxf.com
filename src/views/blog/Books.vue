@@ -42,15 +42,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      class="global-page"
-      background
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage3"
-      :page-size="10"
-      layout="prev, pager, next, jumper"
-      :total="1000">
-    </el-pagination>
+    <global-page ref="globalPage" @receiveData="receiveDataHandle" request="booksList"></global-page>
     <global-dialog-classify @submit="dialogSubmitHandle" :itemList="itemList" title="添加书单" ref="globalDialogClassify"></global-dialog-classify>
   </global-layout>
 </template>
@@ -60,10 +52,11 @@ import GlobalLayout from '@/components/GlobalLayout.vue'
 import GlobalContainerTop from '@/components/GlobalContainerTop.vue'
 import GlobalDialogClassify from '@/components/GlobalDialogClassify.vue'
 import GlobalPopover from '@/components/GlobalPopover.vue'
+import GlobalPage from '@/components/GlobalPage.vue'
 
 export default {
   name: 'booksPage',
-  components: { GlobalLayout, GlobalContainerTop, GlobalDialogClassify, GlobalPopover },
+  components: { GlobalLayout, GlobalContainerTop, GlobalDialogClassify, GlobalPopover, GlobalPage },
   data() {
     return {
       tableData: [],
@@ -77,9 +70,6 @@ export default {
         { type: 'switch', label: '状态', placeholder: '', key: 'state' },
       ],
     }
-  },
-  mounted() {
-    this.getList()
   },
   methods: {
     /**
@@ -97,10 +87,8 @@ export default {
     /**
      * 获取列表
      */
-    getList() {
-      this.$axios.booksList().then((data) => {
-        this.tableData = data
-      })
+    receiveDataHandle(list) {
+      this.tableData = list
     },
 
     /**
@@ -115,19 +103,12 @@ export default {
      */
     handleDelete(row) {
       this.$axios.booksDelete(row.id).then((data) => {
-        this.getList()
+        this.$refs.globalPage.getList()
       })
     },
 
     /**
-     * 当前页码
-     */
-    handleCurrentChange() {
-      console.log('当前页码')
-    },
-
-    /**
-     * 添加专题
+     * 显示弹框
      */
     showDialog(rowData) {
       this.$refs.globalDialogClassify.toggleVisibleHandle(rowData)
@@ -144,7 +125,7 @@ export default {
       }
 
       this.$axios[submitType](data).then(() => {
-        this.getList()
+        this.$refs.globalPage.getList()
       })
     },
   },
