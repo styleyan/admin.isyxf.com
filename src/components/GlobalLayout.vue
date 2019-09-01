@@ -3,13 +3,15 @@
     <el-aside class="collapse-aside-style" :width="asideWidth">
       <img width="130" height="130" :src="logoSvg"/>
       <el-menu
-        :router="true"
         :collapse="isCollapse"
         :default-openeds="defaultOpeneds"
         class="el-menu-vertical"
         background-color="#495060"
         text-color="#fff"
-        active-text-color="#ffd04b">
+        :default-active="defaultActive"
+        active-text-color="#ffd04b"
+        @select="menuSelectHandle"
+      >
         <el-submenu index="blog">
           <template slot="title">
             <i class="el-icon-location"></i>
@@ -51,13 +53,34 @@ export default {
       isCollapse: false,
       asideWidth: '180px',
       defaultOpeneds: ['blog'],
+      defaultActive: '',
     }
   },
   methods: {
+    /**
+     * 展开/收起
+     */
     arrowHandle() {
       this.isCollapse = !this.isCollapse
       this.asideWidth = this.asideWidth === '180px' ? '60px' : '180px'
     },
+
+    /**
+     * 菜单
+     */
+    menuSelectHandle(index, indexPath) {
+      if (index === this.$route.path) {
+        return
+      }
+      this.$router.push({
+        path: index,
+      })
+    },
+
+  },
+
+  updated() {
+    this.defaultActive = this.$route.path
   },
 }
 </script>
