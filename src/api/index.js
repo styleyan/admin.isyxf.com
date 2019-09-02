@@ -17,6 +17,16 @@ class Apis extends Ajax {
   }
 
   /**
+   * 文章编辑
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  articleEdit(params) {
+    return super.post('/api/article/edit', params)
+  }
+
+  /**
    * 专辑列表
    * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
    * @param {Object} params - 请求参数

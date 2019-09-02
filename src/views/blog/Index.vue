@@ -13,11 +13,14 @@
           type="success"
           close-transition>标签</el-tag>
       </el-table-column>
-      <el-table-column prop="classifyId" label="分类" width="170"></el-table-column>
+      <el-table-column prop="classifyTitle" label="分类" width="170"></el-table-column>
       <el-table-column prop="gmtCreate" label="发布时间" width="200"></el-table-column>
       <el-table-column width="160" label="状态">
         <template slot-scope="scope">
           <el-switch
+            :active-value="1"
+            :inactive-value="0"
+            @change="switchChangeHandle($event, scope.row)"
             v-model="scope.row.state">
           </el-switch>
         </template>
@@ -28,65 +31,58 @@
             size="mini"
             type="primary"
             @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-          <el-button
-            size="mini"
-            type="danger"
-            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          <global-popover @submit="handleDelete(scope.row)"></global-popover>
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      class="global-page"
-      background
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage3"
-      :page-size="10"
-      layout="prev, pager, next, jumper"
-      :total="1000">
-    </el-pagination>
+    <global-page ref="globalPage" @receiveData="receiveDataHandle" request="indexList"></global-page>
   </global-layout>
 </template>
 
 <script>
 import GlobalLayout from '@/components/GlobalLayout.vue'
 import GlobalContainerTop from '@/components/GlobalContainerTop.vue'
+import GlobalPage from '@/components/GlobalPage.vue'
+import GlobalPopover from '@/components/GlobalPopover.vue'
 
 export default {
   name: 'aaaa',
-  components: { GlobalLayout, GlobalContainerTop },
+  components: { GlobalLayout, GlobalContainerTop, GlobalPage, GlobalPopover },
   data() {
     return {
       tableData: [],
       currentPage3: 1,
     }
   },
-  mounted() {
-    this.$axios.indexList({ pageNum: 1, pageSize: 7 }).then((data) => {
-      data.list.forEach(item => {
-        item.state = !!item.state
-      })
-
-      this.tableData = data.list
-    })
-  },
   methods: {
+    receiveDataHandle(list) {
+      this.tableData = list
+    },
+
+    /**
+     * 文章更新
+     */
+    switchChangeHandle(state, row) {
+      this.$axios.articleEdit({
+        id: row.id,
+        state,
+      }).catch(() => {
+        row.state = state === 0 ? 1 : 0
+      })
+    },
+
     /**
      * 编辑
      */
     handleEdit(index, row) {
       console.log(index, row)
     },
+
     /**
      * 删除
      */
-    handleDelete(index, row) {
-      console.log(index, row)
-    },
-    /**
-     * 当前页码
-     */
-    handleCurrentChange() {
-      console.log('当前页码')
+    handleDelete(row) {
+      console.log(row)
     },
   },
 }
