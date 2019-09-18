@@ -6,9 +6,14 @@ const routes = [
     component: resolve => require(['../../views/blog/Index.vue'], resolve),
   },
   {
-    path: '/blog',
-    name: 'blog',
+    path: '/blog/article',
+    name: 'blogArticle',
     component: resolve => require(['../../views/blog/Index.vue'], resolve),
+  },
+  {
+    path: '/blog/article/new',
+    name: 'blogArticleNew',
+    component: resolve => require(['../../views/blog/Article.vue'], resolve),
   },
   {
     path: '/blog/classify',
