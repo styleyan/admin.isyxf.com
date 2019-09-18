@@ -16,7 +16,7 @@ axios.interceptors.response.use((response) => {
     return data
   }
   // 10001:用户未登录
-  if (data.code === '10001') {
+  if (data.code === 1990) {
     router.push({ name: 'login' })
     return data
   }

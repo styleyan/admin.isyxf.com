@@ -76,7 +76,7 @@ export default {
      */
     submitData() {
       this.$axios.userLogin(this.ruleForm).then(() => {
-        console.log('提交成功')
+        this.$router.push({ name: 'index' })
       }).catch(() => {
         console.log('异常')
       })
