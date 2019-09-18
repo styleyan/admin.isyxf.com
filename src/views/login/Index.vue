@@ -5,8 +5,8 @@
       <el-form-item label="账户" prop="userName">
         <el-input type="text" v-model="ruleForm.userName" autocomplete="off"></el-input>
       </el-form-item>
-      <el-form-item label="密码" prop="userPwd">
-        <el-input type="password" v-model="ruleForm.userPwd" autocomplete="off"></el-input>
+      <el-form-item label="密码" prop="password">
+        <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button class="btn-submit" type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -41,13 +41,13 @@ export default {
     return {
       ruleForm: {
         userName: '',
-        userPwd: '',
+        password: '',
       },
       rules: {
         userName: [
           { validator: validateUser, trigger: 'blur' },
         ],
-        userPwd: [
+        password: [
           { validator: validatePass, trigger: 'blur' },
         ],
       },
@@ -75,7 +75,7 @@ export default {
      * 提交数据
      */
     submitData() {
-      this.$axios.userLogin().then(() => {
+      this.$axios.userLogin(this.ruleForm).then(() => {
         console.log('提交成功')
       }).catch(() => {
         console.log('异常')

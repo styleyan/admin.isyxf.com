@@ -187,7 +187,7 @@ class Apis extends Ajax {
    * @returns {Promise} 请求结果
    */
   userLogin(params) {
-    return super.get('/api/user/login', params)
+    return super.post('/api/user/login', params)
   }
 }
 
