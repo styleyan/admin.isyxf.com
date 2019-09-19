@@ -162,8 +162,8 @@ export default {
         const params = { ...this.formValidate }
         params.tags = params.tags.join(',')
 
-        this.$axios[fn](params).catch(() => {
-          console.log('更新异常')
+        this.$axios[fn](params).then(() => {
+          this.$message.success('提交成功')
         })
       })
     },

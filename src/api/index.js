@@ -27,6 +27,16 @@ class Apis extends Ajax {
   }
 
   /**
+   * 删除文章
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Number} id - 文章id
+   * @returns {Promise} 请求结果
+   */
+  articleDelete(id) {
+    return super.post(`/api/article/${id}/delete`)
+  }
+
+  /**
    * 文章编辑
    * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
    * @param {Object} params - 请求参数
