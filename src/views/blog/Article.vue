@@ -47,8 +47,13 @@ export default {
   components: { GlobalLayout, GlobalMavonEditor },
   data() {
     return {
+      // 文章类型 (添加、修改)
+      articleType: 'add',
+      // 分类列表
       classifyList: [],
+      // 标签列表
       tags: [],
+      // 表单字段
       formValidate: {
         // 文章标题
         title: '',
@@ -62,7 +67,10 @@ export default {
         state: 0,
         // 标签列表
         tags: [],
+        // 文章简介
+        brief: '',
       },
+      // 校验规则
       rules: {
         title: [
           { required: true, message: '请输入文章标题', trigger: 'blur' },
@@ -91,6 +99,7 @@ export default {
 
     const { params, name } = this.$route
     if (params.id && name === 'blogArticleEdit') {
+      this.articleType = 'edit'
       this.getArticleInfo(params.id)
     }
   },
@@ -131,7 +140,7 @@ export default {
      * html标签
      */
     toHtml(html) {
-      this.formValidate.render = html
+      this.formValidate.brief = html
     },
 
     /**
@@ -143,10 +152,17 @@ export default {
           return false
         }
 
+        let fn
+        if (this.articleType === 'add') {
+          fn = 'articleAdd'
+        } else {
+          fn = 'articleEdit'
+        }
+
         const params = { ...this.formValidate }
         params.tags = params.tags.join(',')
 
-        this.$axios.articleEdit(params).catch(() => {
+        this.$axios[fn](params).catch(() => {
           console.log('更新异常')
         })
       })
