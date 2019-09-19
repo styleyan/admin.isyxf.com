@@ -1,6 +1,6 @@
 <template>
   <global-layout>
-    <global-container-top></global-container-top>
+    <global-container-top @addHandle="addHandle"></global-container-top>
     <el-table class="article-list" :data="tableData">
       <el-table-column label="标题">
         <template slot-scope="scope">
@@ -60,6 +60,15 @@ export default {
     },
 
     /**
+     * 添加文章
+     */
+    addHandle() {
+      this.$router.push({
+        name: 'blogArticleNew',
+      })
+    },
+
+    /**
      * 文章更新
      */
     switchChangeHandle(state, row) {
@@ -75,7 +84,10 @@ export default {
      * 编辑
      */
     handleEdit(index, row) {
-      console.log(index, row)
+      this.$router.push({
+        name: 'blogArticleEdit',
+        params: { id: row.id },
+      })
     },
 
     /**

@@ -27,6 +27,16 @@ class Apis extends Ajax {
   }
 
   /**
+   * 文章信息
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  articleDetail(params) {
+    return super.get(`/api/article/${params.id}/detail`)
+  }
+
+  /**
    * 专辑列表
    * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
    * @param {Object} params - 请求参数
@@ -188,6 +198,16 @@ class Apis extends Ajax {
    */
   userLogin(params) {
     return super.post('/api/user/login', params)
+  }
+
+  /**
+   * 标签列表
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  tagsList() {
+    return super.get('/api/tags/list')
   }
 }
 
