@@ -94,7 +94,10 @@ export default {
      * 删除
      */
     handleDelete(row) {
-      console.log(row)
+      this.$axios.articleRemove(row.id).then(() => {
+        this.$message.success('删除文章成功')
+        this.$refs.globalPage.getList()
+      })
     },
   },
 }

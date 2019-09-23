@@ -69,6 +69,8 @@ export default {
         tags: [],
         // 文章简介
         brief: '',
+        // 文章id
+        id: '',
       },
       // 校验规则
       rules: {
@@ -148,6 +150,8 @@ export default {
      */
     saveArticleHandle() {
       this.$refs['ruleForm'].validate((valid) => {
+        let successMessage = ''
+
         if (!valid) {
           return false
         }
@@ -155,15 +159,23 @@ export default {
         let fn
         if (this.articleType === 'add') {
           fn = 'articleAdd'
+          successMessage = '添加文章成功'
         } else {
           fn = 'articleEdit'
+          successMessage = '更新文章成功'
         }
 
         const params = { ...this.formValidate }
         params.tags = params.tags.join(',')
 
-        this.$axios[fn](params).catch(() => {
-          console.log('更新异常')
+        this.$axios[fn](params).catch((e) => {
+          this.$message.error(e.message)
+        }).then((data) => {
+          if (data && this.articleType === 'add') {
+            this.formValidate.id = data
+            this.articleType = 'edit'
+          }
+          this.$message.success(successMessage)
         })
       })
     },
