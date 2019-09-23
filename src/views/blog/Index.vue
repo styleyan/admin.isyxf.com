@@ -46,7 +46,7 @@ import GlobalPage from '@/components/GlobalPage.vue'
 import GlobalPopover from '@/components/GlobalPopover.vue'
 
 export default {
-  name: 'aaaa',
+  name: 'blogArticle',
   components: { GlobalLayout, GlobalContainerTop, GlobalPage, GlobalPopover },
   data() {
     return {
@@ -94,8 +94,8 @@ export default {
      * 删除
      */
     handleDelete(row) {
-      this.$axios.articleRemove(row.id).then(() => {
-        this.$message.success('删除文章成功')
+      this.$axios.articleDelete(row.id).then(() => {
+        this.$message.success('删除成功')
         this.$refs.globalPage.getList()
       })
     },

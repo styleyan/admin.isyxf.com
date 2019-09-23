@@ -3,6 +3,8 @@
  */
 import axios from 'axios'
 import router from '../router'
+import { Message } from 'element-ui'
+
 // 请求配置
 axios.interceptors.request.use((config) => {
   config.headers['X-Requested-Width'] = 'XMLHttpRequest'
@@ -15,6 +17,8 @@ axios.interceptors.response.use((response) => {
   if (data.status) {
     return data
   }
+
+  Message.error(data.message)
   // 10001:用户未登录
   if (data.code === 1990) {
     router.push({ name: 'login' })
