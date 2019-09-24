@@ -12,8 +12,8 @@ class Apis extends Ajax {
    * @param {Object} params - 请求参数
    * @returns {Promise} 请求结果
    */
-  indexList(params) {
-    return super.get('/api/article/list', params)
+  articleSearchList(params) {
+    return super.get('/api/article/search', params)
   }
 
   /**

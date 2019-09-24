@@ -1,6 +1,6 @@
 <template>
   <global-layout>
-    <global-container-top @addHandle="addHandle"></global-container-top>
+    <global-container-top @searchHandle="searchHandle" @addHandle="addHandle"></global-container-top>
     <el-table class="article-list" :data="tableData">
       <el-table-column label="标题">
         <template slot-scope="scope">
@@ -35,7 +35,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <global-page ref="globalPage" @receiveData="receiveDataHandle" request="indexList"></global-page>
+    <global-page ref="globalPage" @receiveData="receiveDataHandle" request="articleSearchList" :searchParam="true"></global-page>
   </global-layout>
 </template>
 
@@ -98,6 +98,13 @@ export default {
         this.$message.success('删除成功')
         this.$refs.globalPage.getList()
       })
+    },
+
+    /**
+     * 搜索
+     */
+    searchHandle(searchVal) {
+      this.$refs.globalPage.searchList(searchVal)
     },
   },
 }
