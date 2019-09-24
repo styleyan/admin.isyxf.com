@@ -131,13 +131,13 @@ class Apis extends Ajax {
   }
 
   /**
-   * 箴言列表
+   * 搜索箴言
    * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
    * @param {Object} params - 请求参数
    * @returns {Promise} 请求结果
    */
-  maximList(params) {
-    return super.get('/api/maxim/list', params)
+  maximSearchList(params) {
+    return super.get('/api/maxim/search', params)
   }
 
   /**
@@ -201,13 +201,13 @@ class Apis extends Ajax {
   }
 
   /**
-   * 书单列表
+   * 搜索书单列表
    * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
    * @param {Object} params - 请求参数
    * @returns {Promise} 请求结果
    */
-  booksList(params) {
-    return super.get('/api/books/list', params)
+  booksSearchList(params) {
+    return super.get('/api/books/search', params)
   }
 
   /**

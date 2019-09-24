@@ -1,6 +1,6 @@
 <template>
   <global-layout>
-    <global-container-top @addHandle="showDialog"></global-container-top>
+    <global-container-top @searchHandle="searchHandle" @addHandle="showDialog"></global-container-top>
     <el-table class="books-list" :data="tableData">
       <el-table-column type="expand">
         <template slot-scope="props">
@@ -42,7 +42,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <global-page ref="globalPage" @receiveData="receiveDataHandle" request="booksList"></global-page>
+    <global-page ref="globalPage" @receiveData="receiveDataHandle" request="booksSearchList" :searchParam="true"></global-page>
     <global-dialog-classify @submit="dialogSubmitHandle" :itemList="itemList" title="添加书单" ref="globalDialogClassify"></global-dialog-classify>
   </global-layout>
 </template>
@@ -127,6 +127,13 @@ export default {
       this.$axios[submitType](data).then(() => {
         this.$refs.globalPage.getList()
       })
+    },
+
+    /**
+     * 搜索
+     */
+    searchHandle(searchVal) {
+      this.$refs.globalPage.searchList(searchVal)
     },
   },
 }

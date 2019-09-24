@@ -1,6 +1,6 @@
 <template>
   <global-layout>
-    <global-container-top @addHandle="showDialog"></global-container-top>
+    <global-container-top @searchHandle="searchHandle" @addHandle="showDialog"></global-container-top>
     <el-table class="classify-list" :data="tableData">
       <el-table-column prop="gmtCreate" width="180" label="添加时间"></el-table-column>
       <el-table-column prop="context" label="内容"></el-table-column>
@@ -24,7 +24,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <global-page ref="globalPage" @receiveData="receiveDataHandle" request="maximList"></global-page>
+    <global-page ref="globalPage" @receiveData="receiveDataHandle" request="maximSearchList" :searchParam="true"></global-page>
     <global-dialog-classify @submit="dialogSubmitHandle" :itemList="itemList" title="箴言" ref="globalDialogClassify"></global-dialog-classify>
   </global-layout>
 </template>
@@ -97,6 +97,13 @@ export default {
       this.$axios[_type](data).then(() => {
         this.$refs.globalPage.getList()
       })
+    },
+
+    /**
+     * 搜索
+     */
+    searchHandle(searchVal) {
+      this.$refs.globalPage.searchList(searchVal)
     },
 
     /**

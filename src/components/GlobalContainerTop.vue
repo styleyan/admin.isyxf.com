@@ -2,8 +2,14 @@
     <el-row class="global-container-top" justify="space-between">
         <el-col class="l" :span="12"><el-button @click="addHandle" type="primary">新增</el-button></el-col>
         <el-col v-if="isSearch" class="r" :span="12">
-          <el-input :maxlength="15" :clearable="true" placeholder="请输入内容" v-model="searchVal" class="input-with-search">
-            <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-input
+            :maxlength="15"
+            :clearable="true"
+            placeholder="搜索内容"
+            v-model="searchVal"
+            @keyup.enter.native="searchHandle"
+            class="input-with-search">
+            <el-button slot="append" @click="searchHandle" icon="el-icon-search"></el-button>
           </el-input>
         </el-col>
     </el-row>
@@ -25,6 +31,9 @@ export default {
   methods: {
     addHandle() {
       this.$emit('addHandle')
+    },
+    searchHandle() {
+      this.$emit('searchHandle', this.searchVal)
     },
   },
 }

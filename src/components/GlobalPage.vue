@@ -13,9 +13,15 @@
 export default {
   name: 'global-page',
   props: {
+    // 请求名称
     request: {
       type: String,
       default: '',
+    },
+    // 是否支持搜索
+    searchParam: {
+      type: Boolean,
+      default: false,
     },
   },
   data() {
@@ -23,6 +29,7 @@ export default {
       pageSize: 10,
       total: 0,
       pageNum: 1,
+      searchVal: '',
     }
   },
   created() {
@@ -46,14 +53,28 @@ export default {
     },
 
     /**
-     * 获取列表
+     * 搜索
      */
-    getList() {
+    searchList(searchVal) {
+      this.pageNum = 1
+      this.searchVal = searchVal
+      this.getList()
+    },
+
+    /**
+     * 获取列表
+     * @param searchVal 搜索内容
+     */
+    getList(param) {
       if (!this.request || !this.$axios[this.request]) {
         return
       }
+      let params = { pageNum: this.pageNum, pageSize: this.pageSize }
 
-      this.$axios[this.request]({ pageNum: this.pageNum, pageSize: this.pageSize }).then((data) => {
+      if (this.searchParam) {
+        params.search = this.searchVal
+      }
+      this.$axios[this.request](params).then((data) => {
         this.$emit('receiveData', data.list)
         this.total = data.total
       })
