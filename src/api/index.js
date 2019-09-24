@@ -221,6 +221,36 @@ class Apis extends Ajax {
   }
 
   /**
+   * 添加标签
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  tagsAdd(params) {
+    return super.post('/api/tags/add', params)
+  }
+
+  /**
+   * 删除标签
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  tagsDelete(id) {
+    return super.post(`/api/tags/${id}/delete`)
+  }
+
+  /**
+   * 添加标签
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  tagsUpdate(params) {
+    return super.post('/api/tags/update', params)
+  }
+
+  /**
    * 标签列表
    * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
    * @param {Object} params - 请求参数

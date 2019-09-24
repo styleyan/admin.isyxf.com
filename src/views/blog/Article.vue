@@ -23,6 +23,7 @@
           <el-form-item label="文章标签" prop="tags">
             <el-checkbox-group v-model="formValidate.tags">
               <el-checkbox v-for="(tag,index) in tags" :key="index" :label="tag.id + ''" value="4">{{tag.name}}</el-checkbox>
+              <el-button type="text" icon="el-icon-edit" @click="showTagDialogHandle"></el-button>
             </el-checkbox-group>
           </el-form-item>
           <el-form-item label="是否显示">
@@ -36,15 +37,17 @@
               <el-button type="primary" @click="saveArticleHandle">保存</el-button>
           </el-form-item>
         </el-form>
+        <global-dialog-tags @tagHandle="tagHandle" ref="dialogTags"></global-dialog-tags>
     </global-layout>
 </template>
 <script>
 import GlobalLayout from '@/components/GlobalLayout.vue'
 import GlobalMavonEditor from '@/components/GlobalMavonEditor.vue'
+import GlobalDialogTags from '@/components/GlobalDialogTags.vue'
 
 export default {
   name: 'articleNew',
-  components: { GlobalLayout, GlobalMavonEditor },
+  components: { GlobalLayout, GlobalMavonEditor, GlobalDialogTags },
   data() {
     return {
       // 文章类型 (添加、修改)
@@ -96,7 +99,6 @@ export default {
     }
   },
   created() {
-    this.getTagsList()
     this.getClassifyList()
 
     const { params, name } = this.$route
@@ -123,10 +125,8 @@ export default {
     /**
      * 获取标签列表
      */
-    getTagsList() {
-      this.$axios.tagsList().then((list) => {
-        this.tags = list
-      })
+    tagHandle(list) {
+      this.tags = list
     },
 
     /**
@@ -166,7 +166,7 @@ export default {
         }
 
         const params = { ...this.formValidate }
-        params.tags = params.tags.join(',')
+        params.tags = params.tags.filter((val) => val !== '').join(',')
 
         this.$axios[fn](params).catch((e) => {
           this.$message.error(e.message)
@@ -178,6 +178,13 @@ export default {
           this.$message.success(successMessage)
         })
       })
+    },
+
+    /**
+     * 显示弹框
+     */
+    showTagDialogHandle() {
+      this.$refs.dialogTags.showDialog()
     },
   },
 }
@@ -201,6 +208,10 @@ export default {
 
   .el-checkbox__label{
     padding-left 4px
+  }
+
+  .el-button--text{
+    color #888
   }
 }
 </style>
