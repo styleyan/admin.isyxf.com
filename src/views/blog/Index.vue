@@ -8,10 +8,18 @@
           <router-link :to="scope.row.url">{{scope.row.title}}</router-link>
         </template>
       </el-table-column>
-      <el-table-column prop="tags" :filters="null" label="标签" width="150">
-        <el-tag
-          type="success"
-          close-transition>标签</el-tag>
+      <el-table-column :filters="null" label="标签" width="220">
+        <template slot-scope="scope">
+          <div class="tag-column" v-if="scope.row.tags">
+            <el-tag
+              type="success"
+              v-for="(tag, index) in scope.row.tags.split(',')"
+              :key="index" close-transition>{{tag}}</el-tag>
+          </div>
+          <div v-else>
+              -
+          </div>
+        </template>
       </el-table-column>
       <el-table-column prop="classifyTitle" label="分类" width="170"></el-table-column>
       <el-table-column prop="gmtCreate" label="发布时间" width="200"></el-table-column>
@@ -122,6 +130,11 @@ export default {
   .icon-redo{
     font-size 12px
     margin-right 4px
+  }
+  .tag-column{
+    .el-tag{
+      margin-right 8px
+    }
   }
 }
 </style>
