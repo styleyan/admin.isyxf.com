@@ -83,7 +83,7 @@ export default {
           { required: true, message: '请输入文章标题', trigger: 'blur' },
           { min: 3, max: 30, message: '长度在 3 到 30 个字符', trigger: 'blur' },
         ],
-        content: [
+        md: [
           { required: true, message: '请输入文章内容', trigger: 'blur' },
           { min: 1, max: 4000, message: '文章不能为空', trigger: 'blur' },
         ],
