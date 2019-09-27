@@ -1,0 +1,22 @@
+{
+  "name": "octopus-docs-web",
+  "version": "1.0.0",
+  "description": "manage docs for shujumohe",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "NODE_ENV=production node ./app.js"
+  },
+  "author": "xiaofei.yan",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.3.0",
+    "koa-body": "^4.0.4",
+    "koa-static-cache": "^5.1.1",
+    "kor-proxy": "^1.0.7",
+    "lru-cache": "^4.1.1",
+    "neat-kor": "^1.0.0",
+    "node-fetch": "^2.2.0",
+    "pm2": "^2.5.0"
+  }
+}
