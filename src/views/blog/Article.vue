@@ -5,7 +5,7 @@
             <el-input v-model="formValidate.title"></el-input>
           </el-form-item>
           <el-form-item label="文章内容" prop="content">
-            <global-mavon-editor @save="saveArticleHandle" :toHtml="toHtml" :text.sync="formValidate.content"></global-mavon-editor>
+            <global-mavon-editor @save="saveArticleHandle" :toHtml="markDownToHtml" :text.sync="formValidate.md"></global-mavon-editor>
           </el-form-item>
           <el-form-item label="文章地址" prop="url">
             <el-input class="article-input-width" v-model="formValidate.url"></el-input>
@@ -58,10 +58,16 @@ export default {
       tags: [],
       // 表单字段
       formValidate: {
+        // 文章id
+        id: '',
         // 文章标题
         title: '',
+        // 文章简介
+        brief: '',
         // 文章内容
         content: '',
+        // 文章 markdown 文本
+        md: '',
         // 专题
         classify: '',
         // 文章访问地址
@@ -70,10 +76,6 @@ export default {
         state: 0,
         // 标签列表
         tags: [],
-        // 文章简介
-        brief: '',
-        // 文章id
-        id: '',
       },
       // 校验规则
       rules: {
@@ -139,10 +141,10 @@ export default {
     },
 
     /**
-     * html标签
+     * markDown转换成 html 标签
      */
-    toHtml(html) {
-      this.formValidate.brief = html
+    markDownToHtml(html) {
+      this.formValidate.content = html
     },
 
     /**
@@ -167,6 +169,7 @@ export default {
 
         const params = { ...this.formValidate }
         params.tags = params.tags.filter((val) => val !== '').join(',')
+        params.brief = `${params.content.split('<!--more-->')[0]}</p>`
 
         this.$axios[fn](params).catch((e) => {
           this.$message.error(e.message)
