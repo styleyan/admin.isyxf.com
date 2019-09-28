@@ -19,7 +19,8 @@ const files = new LRU({
   dispose(key, n) { },
   maxAge: FILE_MAX_AGE,
 })
-const staticMW = koaStatic(path.join(__dirname, '../../dist'), {
+
+const staticMW = koaStatic(path.join(__dirname, '../static'), {
   buffer: true,
   // 开启 gzip 后每次会从 zip buffer
   gzip: true,
@@ -38,12 +39,15 @@ module.exports = async (ctx, next) => {
     ctx.url = '/favicon.ico'
     return staticMW(ctx, stopNext(ctx))
   }
+  console.log('sdfs1111:', ctx.path)
   // 只要不是 /static/ 和 /api/ 路径的，都返回 index.html 静态文件
-  if (!ctx.path.startsWith('/static/') && !ctx.path.startsWith('/api/')) {
+  if (!ctx.path.startsWith('/dist/') && !ctx.path.startsWith('/api/')) {
     ctx.url = '/index.html'
     return staticMW(ctx, stopNext(ctx))
   }
-  if (ctx.path.startsWith('/static/')) {
+  console.log('sdfs2222')
+  if (ctx.path.startsWith('/dist/')) {
+    console.log('sdfs3333')
     return staticMW(ctx, stopNext(ctx))
   }
   return next()

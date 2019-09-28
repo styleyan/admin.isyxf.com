@@ -1,5 +1,8 @@
 module.exports = {
-  assetsDir: './static',
+  // publicPath: '/',
+  outputDir: 'node/static',
+  assetsDir: './dist',
+  // assetsDir: './static',
   devServer: {
     port: 8090,
     open: true,
