@@ -72,7 +72,6 @@ export default {
         if (valid) {
           this.submitData()
         } else {
-          console.log('error submit!!')
           return false
         }
       })
@@ -84,9 +83,7 @@ export default {
     submitData() {
       this.$axios.userLogin(this.ruleForm).then(() => {
         this.$router.push({ name: 'index' })
-      }).catch(() => {
-        console.log('异常')
-      })
+      }).catch(() => {})
     },
   },
 }
