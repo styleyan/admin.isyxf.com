@@ -1,7 +1,14 @@
 <template>
   <div>
     <canvas id="evanyou"></canvas>
-    <el-form class="login-page demo-ruleForm" :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px">
+    <el-form
+      @submit.native.prevent
+      class="login-page demo-ruleForm"
+      :model="ruleForm"
+      status-icon
+      :rules="rules"
+      ref="ruleForm"
+      label-width="100px">
       <el-form-item label="账户" prop="userName">
         <el-input type="text" v-model="ruleForm.userName" autocomplete="off"></el-input>
       </el-form-item>
@@ -9,7 +16,7 @@
         <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button class="btn-submit" type="primary" @click="submitForm('ruleForm')">提交</el-button>
+        <el-button class="btn-submit" native-type="submit" type="primary" @click="submitForm('ruleForm')">提交</el-button>
       </el-form-item>
     </el-form>
   </div>

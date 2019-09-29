@@ -31,8 +31,8 @@
         <div class="el-header-arrow" :class="{rotate180:isCollapse}" @click="arrowHandle">
           <i class="iconfont icon-zhankai"></i>
         </div>
-        <span class="user">Y.Jer</span>
-        <i class="iconfont icon-out"></i>
+        <span class="user">{{userInfo.userAlias}}</span>
+        <i class="iconfont icon-out" @click="logoutHandle"></i>
       </el-header>
       <el-main>
         <slot></slot>
@@ -54,8 +54,14 @@ export default {
       asideWidth: '180px',
       defaultOpeneds: ['blog'],
       defaultActive: '',
+      userAlias: '',
+      userInfo: {},
     }
   },
+  created() {
+    this.getUserInfo()
+  },
+
   methods: {
     /**
      * 展开/收起
@@ -77,10 +83,23 @@ export default {
       })
     },
 
-  },
+    /**
+     * 获取用户信息
+     */
+    getUserInfo() {
+      this.$axios.userLoginInfo().then((data) => {
+        this.userInfo = data
+      })
+    },
 
-  updated() {
-    this.defaultActive = this.$route.path
+    /**
+     * 登出
+     */
+    logoutHandle() {
+      this.$axios.userLogout().then(() => {
+        this.$router.push({ name: 'login' })
+      })
+    },
   },
 }
 </script>
@@ -139,6 +158,9 @@ export default {
         font-size 15px
         font-weight bold
         margin-right 8px
+      }
+      .icon-out{
+        cursor pointer
       }
   }
 </style>

@@ -221,6 +221,24 @@ class Apis extends Ajax {
   }
 
   /**
+   * 登出
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @returns {Promise} 请求结果
+   */
+  userLogout() {
+    return super.post('/api/user/logout')
+  }
+
+  /**
+   * 获取用户基本信息
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @returns {Promise} 请求结果
+   */
+  userLoginInfo() {
+    return super.post('/api/user/info')
+  }
+
+  /**
    * 添加标签
    * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
    * @param {Object} params - 请求参数
