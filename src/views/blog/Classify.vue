@@ -106,6 +106,7 @@ export default {
       }
 
       this.$axios[submitType](data).then(() => {
+        this.$message.success('操作成功')
         this.getList()
       })
     },

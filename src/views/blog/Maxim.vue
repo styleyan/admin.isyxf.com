@@ -95,6 +95,7 @@ export default {
       }
 
       this.$axios[_type](data).then(() => {
+        this.$message.success('操作成功')
         this.$refs.globalPage.getList()
       })
     },
