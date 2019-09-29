@@ -101,6 +101,9 @@ export default {
       })
     },
   },
+  updated() {
+    this.defaultActive = this.$route.path
+  },
 }
 </script>
 <style lang="stylus">
