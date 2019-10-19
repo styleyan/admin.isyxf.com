@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="overflow:hidden; height: 100%">
     <canvas id="evanyou"></canvas>
     <el-form
       @submit.native.prevent
