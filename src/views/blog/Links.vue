@@ -5,7 +5,7 @@
       <el-table-column label="标题">
         <template slot-scope="scope">
           <i class="iconfont icon-redo"></i>
-          <router-link :to="scope.row.websiteUrl">{{scope.row.websiteName}}</router-link>
+          <a :href="scope.row.websiteUrl" target="_blank">{{scope.row.websiteName}}</a>
         </template>
       </el-table-column>
       <el-table-column prop="desc" width="300" label="说明"></el-table-column>
