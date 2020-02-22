@@ -5,7 +5,7 @@
           <el-input
             :maxlength="15"
             :clearable="true"
-            placeholder="搜索内容"
+            :placeholder="placeholder"
             v-model="searchVal"
             @keyup.enter.native="searchHandle"
             class="input-with-search">
@@ -21,6 +21,10 @@ export default {
     isSearch: {
       type: Boolean,
       default: true,
+    },
+    placeholder: {
+      type: String,
+      default: '请输入搜索内容',
     },
   },
   data() {

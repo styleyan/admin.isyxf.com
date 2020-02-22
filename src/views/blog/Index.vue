@@ -1,6 +1,6 @@
 <template>
   <global-layout>
-    <global-container-top @searchHandle="searchHandle" @addHandle="addHandle"></global-container-top>
+    <global-container-top placeholder="请输入文章标题" @searchHandle="searchHandle" @addHandle="addHandle"></global-container-top>
     <el-table class="article-list" :data="tableData">
       <el-table-column label="标题">
         <template slot-scope="scope">

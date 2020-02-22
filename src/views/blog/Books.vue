@@ -1,6 +1,6 @@
 <template>
   <global-layout>
-    <global-container-top @searchHandle="searchHandle" @addHandle="showDialog"></global-container-top>
+    <global-container-top @searchHandle="searchHandle" @addHandle="showDialog" placeholder="请输入书名"></global-container-top>
     <el-table class="books-list" :data="tableData">
       <el-table-column type="expand">
         <template slot-scope="props">
