@@ -168,8 +168,19 @@ export default {
         }
 
         const params = { ...this.formValidate }
+        const moreText = params.content.split('<!--more-->')
+
+        if (moreText.length < 2) {
+          this.$message.error('请增加文章简介')
+          return
+        }
+
+        if (moreText[0].length > 240) {
+          this.$message.error('文章简介过长，请控制在240个字范围内')
+          return
+        }
         params.tags = params.tags.filter((val) => val !== '').join(',')
-        params.brief = `${params.content.split('<!--more-->')[0]}</p>`
+        params.brief = `${moreText[0]}</p>`
 
         this.$axios[fn](params).catch((e) => {
           this.$message.error(e.message)

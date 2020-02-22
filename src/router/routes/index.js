@@ -46,6 +46,11 @@ const routes = [
     component: resolve => require(['../../views/blog/Books.vue'], resolve),
   },
   {
+    path: '/blog/movies',
+    name: 'blogMovie',
+    component: resolve => require(['../../views/blog/Movies.vue'], resolve),
+  },
+  {
     path: '/login',
     name: 'login',
     component: resolve => require(['../../views/login/Index.vue'], resolve),
