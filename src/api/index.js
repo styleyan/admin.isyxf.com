@@ -277,6 +277,46 @@ class Apis extends Ajax {
   tagsList() {
     return super.get('/api/tags/list')
   }
+
+  /**
+   * 影视添加
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  moviesAdd(params) {
+    return super.post('/api/movies/add', params)
+  }
+
+  /**
+   * 影视更新
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  moviesUpdate(params) {
+    return super.post('/api/movies/update', params)
+  }
+
+  /**
+   * 删除影视
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  moviesDelete(id) {
+    return super.post(`/api/movies/${id}/delete`)
+  }
+
+  /**
+   * 影视列表
+   * @url http://rapapi.org/workspace/myWorkspace.do?projectId=29324#294680
+   * @param {Object} params - 请求参数
+   * @returns {Promise} 请求结果
+   */
+  moviesList(params) {
+    return super.get(`/api/movies/list`, params)
+  }
 }
 
 const apis = new Apis(axios)
