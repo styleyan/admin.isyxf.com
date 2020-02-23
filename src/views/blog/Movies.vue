@@ -4,9 +4,18 @@
     <el-table class="books-list" :data="tableData">
       <el-table-column prop="gmtCreate" label="添加时间" width="180"></el-table-column>
       <el-table-column prop="movieName" label="名称"></el-table-column>
-      <el-table-column prop="type" label="类型"></el-table-column>
+      <el-table-column prop="type" label="类型" :formatter="formatterHandle"></el-table-column>
       <el-table-column prop="movieScore" label="评分"></el-table-column>
-      <el-table-column prop="movieEvaluate" label="评价"></el-table-column>
+      <el-table-column label="评价">
+        <template slot-scope="scope">
+          <el-popover
+            placement="top"
+            trigger="hover"
+            :content="scope.row.movieEvaluate">
+            <el-button type="text" slot="reference">查看</el-button>
+          </el-popover>
+        </template>
+      </el-table-column>
       <el-table-column width="160" label="状态">
         <template slot-scope="scope">
           <el-switch
@@ -28,7 +37,7 @@
       </el-table-column>
     </el-table>
     <global-page ref="globalPage" @receiveData="receiveDataHandle" request="moviesList" :searchParam="true"></global-page>
-    <global-dialog-classify @submit="dialogSubmitHandle" :itemList="itemList" title="添加书单" ref="globalDialogClassify"></global-dialog-classify>
+    <global-dialog-classify @submit="dialogSubmitHandle" :itemList="itemList" title="添加影视" ref="globalDialogClassify"></global-dialog-classify>
   </global-layout>
 </template>
 
@@ -52,9 +61,22 @@ export default {
         { type: 'textarea', label: '评价', placeholder: '', key: 'movieEvaluate' },
         { type: 'switch', label: '状态', placeholder: '', key: 'state' },
       ],
+      mapType: {
+        '1': '动漫',
+        '2': '纪录片',
+        '3': '电影',
+        '4': '连续剧',
+      },
     }
   },
   methods: {
+    /**
+     * 格式化类型
+     * 1:动漫, 2:纪录片, 3:电影, 4:连续剧
+     */
+    formatterHandle(row) {
+      return this.mapType[row.type]
+    },
     /**
      * 状态更新
      */
