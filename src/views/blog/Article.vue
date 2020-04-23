@@ -2,7 +2,7 @@
     <global-layout>
         <el-form :model="formValidate" :rules="rules" ref="ruleForm" label-width="100px" class="article-form">
           <el-form-item label="文章标题" prop="title">
-            <el-input v-model="formValidate.title"></el-input>
+            <el-input v-model="formValidate.title" maxlength="60"></el-input>
           </el-form-item>
           <el-form-item label="文章内容" prop="content">
             <global-mavon-editor @save="saveArticleHandle" :toHtml="markDownToHtml" :text.sync="formValidate.md"></global-mavon-editor>
@@ -81,7 +81,7 @@ export default {
       rules: {
         title: [
           { required: true, message: '请输入文章标题', trigger: 'blur' },
-          { min: 3, max: 30, message: '长度在 3 到 30 个字符', trigger: 'blur' },
+          { min: 1, max: 60, message: '长度在 1 到 60 个字符', trigger: 'blur' },
         ],
         md: [
           { required: true, message: '请输入文章内容', trigger: 'blur' },
@@ -89,7 +89,7 @@ export default {
         ],
         url: [
           { required: true, message: '请输入文章地址', trigger: 'blur' },
-          { min: 3, max: 40, message: '长度在 3 到 40 个字符', trigger: 'blur' },
+          { min: 3, max: 120, message: '长度在 3 到 40 个字符', trigger: 'blur' },
         ],
         classifyId: [
           { required: true, message: '请选择文章专提', trigger: 'change' },
