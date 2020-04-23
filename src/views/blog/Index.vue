@@ -43,7 +43,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <global-page ref="globalPage" @receiveData="receiveDataHandle" request="articleSearchList" :searchParam="true"></global-page>
+    <global-page ref="globalPage" @receiveData="receiveDataHandle" @pageInfo="pageInfoHandle" request="articleSearchList" :searchParam="true"></global-page>
   </global-layout>
 </template>
 
@@ -59,7 +59,6 @@ export default {
   data() {
     return {
       tableData: [],
-      currentPage3: 1,
     }
   },
   methods: {
@@ -113,6 +112,15 @@ export default {
      */
     searchHandle(searchVal) {
       this.$refs.globalPage.searchList(searchVal)
+    },
+    /**
+     * 翻页信息
+     */
+    pageInfoHandle(params) {
+      this.$router.push({
+        name: 'blogArticle',
+        query: { pageNum: params.pageNum },
+      })
     },
   },
 }

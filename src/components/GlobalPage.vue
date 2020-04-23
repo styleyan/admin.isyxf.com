@@ -5,6 +5,7 @@
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
     :page-size="pageSize"
+    :current-page.sync="pageNum"
     layout="prev, pager, next, jumper"
     :total="total">
   </el-pagination>
@@ -30,9 +31,16 @@ export default {
       total: 0,
       pageNum: 1,
       searchVal: '',
+      isInit: true,
     }
   },
   created() {
+    const pageNum = this.$route.query.pageNum && Number.parseInt(this.$route.query.pageNum)
+
+    if (!isNaN(pageNum)) {
+      this.pageNum = pageNum
+    }
+
     this.getList()
   },
   methods: {
@@ -65,7 +73,7 @@ export default {
      * 获取列表
      * @param searchVal 搜索内容
      */
-    getList(param) {
+    getList() {
       if (!this.request || !this.$axios[this.request]) {
         return
       }
@@ -74,9 +82,16 @@ export default {
       if (this.searchParam) {
         params.search = this.searchVal
       }
+
       this.$axios[this.request](params).then((data) => {
         this.$emit('receiveData', data.list)
+
+        if (!this.isInit) {
+          this.$emit('pageInfo', params)
+        }
+        this.isInit = false
         this.total = data.total
+        this.pageNum = data.pageNum
       })
     },
   },
