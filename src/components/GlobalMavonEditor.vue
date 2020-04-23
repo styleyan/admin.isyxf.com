@@ -1,5 +1,14 @@
 <template>
-  <mavon-editor ref="md" :ishljs="true" @imgAdd="imgAddHandle" @save="saveHandler" @change="changeHandler" class="global-mavon-editor" v-model="value"/>
+  <mavon-editor
+    ref="md"
+    :ishljs="true"
+    @imgAdd="imgAddHandle"
+    @save="saveHandler"
+    @change="changeHandler"
+    class="global-mavon-editor"
+    defaultOpen="edit"
+    placeholder="开始编写文章了..."
+    v-model="value"/>
 </template>
 <script>
 import mavonEditor from 'mavon-editor'
@@ -48,11 +57,8 @@ export default {
      * 添加图片
      */
     imgAddHandle(pos, $file) {
-      console.log(pos)
-      console.log($file)
-
       // 第一步.将图片上传到服务器.
-      var formdata = new FormData()
+      const formdata = new FormData()
       formdata.append('image', $file)
       axios({
         url: '/api/images/qiniuyun',
