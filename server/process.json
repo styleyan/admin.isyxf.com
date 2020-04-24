@@ -3,7 +3,7 @@
     "name": "admin-isyxf-web",
     "script": "./server/app.js",
     "kill_timeout": 3000,
-    "instances": 4,
+    "instances": 1,
     "exec_mode": "cluster",
     "watch": false,
     "env": {

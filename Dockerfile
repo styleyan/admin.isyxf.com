@@ -23,4 +23,4 @@ ENV HOST 0.0.0.0
 EXPOSE 8088
 
 # 容器启动时执行的命令，类似npm run prd
-CMD [ "pm2-runtime", "./pm2.json", "--no-daemon" ]
+CMD [ "pm2-runtime", "./server/process.json", "--no-daemon" ]
