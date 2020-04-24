@@ -1,0 +1,20 @@
+{
+  "apps": [{
+    "name": "admin-isyxf-web",
+    "script": "./server/app.js",
+    "kill_timeout": 3000,
+    "instances": 4,
+    "exec_mode": "cluster",
+    "watch": false,
+    "env": {
+      "NODE_ENV": "production",
+      "USE_PM2": true
+    },
+    "wait_ready": true,
+    "listen_timeout": 1500,
+    "error": "./logs/pm2-error.log",
+    "output": "./logs/pm2-out.log",
+    "log_date_format": "YYYY-MM-DD HH:mm:ss Z",
+    "ignore_watch": ["node_modules"]
+  }]
+}

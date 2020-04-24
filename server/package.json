@@ -1,0 +1,24 @@
+{
+  "name": "milkyway-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prd": "cross-env NODE_ENV=production node ./app.js",
+    "dev": "cross-env NODE_ENV=dev nodemon ./app.js"
+  },
+  "author": "xiaofei.yan@tongdun.cn",
+  "license": "ISC",
+  "dependencies": {
+    "http-proxy-middleware": "^0.20.0",
+    "koa": "^2.3.0",
+    "koa-static-cache": "^5.1.1",
+    "koa2-connect": "^1.0.2",
+    "lru-cache": "^4.1.1",
+    "pm2": "^2.5.0"
+  },
+  "devDependencies": {
+    "cross-env": "^6.0.3"
+  }
+}

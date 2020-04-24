@@ -1,7 +1,7 @@
 .DS_Store
 node_modules
 vue.config.js
-/dist
+admin-isyxf-web-dev.properties
 
 # local env files
 .env.local
