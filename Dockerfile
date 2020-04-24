@@ -1,5 +1,6 @@
 # 指定我们的基础镜像是node，版本是v8.0.0
 FROM node:10.16.3
+
 # 维护人
 MAINTAINER Y. Jer
 
@@ -9,12 +10,16 @@ RUN mkdir -p /opt/admin.isyxf.com
 # COPY指令和ADD指令功能和使用方式类似。只是COPY指令不会做自动解压工作。
 COPY . /opt/admin.isyxf.com
 
-WORKDIR /opt/admin.isyxf.com
+# 类似 cd 命令
+WORKDIR /opt/admin.isyxf.com/server
 
 # 安装项目依赖包
 RUN npm install --registry=https://registry.npm.taobao.org
 # 安装 pm2
 RUN npm install pm2 -g --registry=https://registry.npm.taobao.org
+
+# 回到项目跟目录
+WORKDIR /opt/admin.isyxf.com
 
 # 配置环境变量
 ENV HOST 0.0.0.0
