@@ -2,6 +2,7 @@
 node_modules
 vue.config.js
 admin-isyxf-web-dev.properties
+admin-isyxf-web.properties
 
 # local env files
 .env.local
