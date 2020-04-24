@@ -59,7 +59,7 @@ export default {
     imgAddHandle(pos, $file) {
       // 第一步.将图片上传到服务器.
       const formdata = new FormData()
-      formdata.append('image', $file)
+      formdata.append('file', $file)
       axios({
         url: '/api/images/qiniuyun',
         method: 'post',
