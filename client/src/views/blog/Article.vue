@@ -8,7 +8,8 @@
             <global-mavon-editor @save="saveArticleHandle" :toHtml="markDownToHtml" :text.sync="formValidate.md"></global-mavon-editor>
           </el-form-item>
           <el-form-item label="文章地址" prop="url">
-            <el-input class="article-input-width" v-model="formValidate.url"></el-input>
+            <el-input class="article-input-width" v-model="formValidate.url"></el-input>&nbsp;&nbsp;&nbsp;
+            <el-link type="primary" :href="`https://www.isyxf.com/articles/${formValidate.url}`" :underline="false" target="_blank">预览</el-link>
           </el-form-item>
           <el-form-item label="文章专题" prop="classifyId">
             <el-select class="article-input-width" v-model="formValidate.classifyId" filterable placeholder="请选择">

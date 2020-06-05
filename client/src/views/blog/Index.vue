@@ -8,7 +8,12 @@
           <a :href="`https://www.isyxf.com/articles/${scope.row.url}`" target="_blank">{{scope.row.title}}</a>
         </template>
       </el-table-column>
-      <el-table-column :filters="null" label="标签" width="220">
+      <el-table-column
+        :filters="tagsFilter"
+        :filter-method="tagFilterHandler"
+        label="标签"
+        width="220"
+      >
         <template slot-scope="scope">
           <div class="tag-column" v-if="scope.row.tags">
             <el-tag
@@ -21,9 +26,18 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="classifyTitle" label="分类" width="170"></el-table-column>
+      <el-table-column
+        prop="classifyTitle"
+        label="专题"
+        width="170"
+        :filters="classifyFilter"
+        :filter-method="classifyFilterHandler"></el-table-column>
       <el-table-column prop="gmtCreate" label="发布时间" width="200"></el-table-column>
-      <el-table-column width="160" label="状态">
+      <el-table-column
+        :filters="statusFilter"
+        :filter-method="statusFilterHandler"
+        width="160"
+        label="状态">
         <template slot-scope="scope">
           <el-switch
             :active-value="1"
@@ -59,7 +73,18 @@ export default {
   data() {
     return {
       tableData: [],
+      statusFilter: [
+        { text: '全部', value: 2 },
+        { text: '已显示', value: 1 },
+        { text: '未显示', value: 0 },
+      ],
+      classifyFilter: [],
+      tagsFilter: [],
     }
+  },
+  created() {
+    this.getCls()
+    this.getTags()
   },
   methods: {
     receiveDataHandle(list) {
@@ -84,6 +109,42 @@ export default {
         state,
       }).catch(() => {
         row.state = state === 0 ? 1 : 0
+      })
+    },
+
+    /**
+     * 获取标签分类
+     */
+    getTags() {
+      this.$axios.tagsList().then((list) => {
+        const tempArr = []
+        list.forEach((item) => {
+          tempArr.push({
+            text: item.name,
+            value: item.id,
+          })
+        })
+        this.tagsFilter = tempArr
+      }).catch(error => {
+        this.$message(error.message || '系统异常')
+      })
+    },
+
+    /**
+     * 获取专题分类
+     */
+    getCls() {
+      this.$axios.classifyList().then((list) => {
+        const tempArr = []
+        list.forEach((item) => {
+          tempArr.push({
+            text: item.title,
+            value: item.id,
+          })
+        })
+        this.classifyFilter = tempArr
+      }).catch(error => {
+        this.$message(error.message || '系统异常')
       })
     },
 
@@ -121,6 +182,27 @@ export default {
         name: 'blogArticle',
         query: { pageNum: params.pageNum },
       })
+    },
+
+    /**
+     * 分类过滤
+     */
+    classifyFilterHandler(value, row) {
+      console.log(value, row)
+    },
+
+    /**
+     * 状态过滤
+     */
+    statusFilterHandler(val, row) {
+      console.log(val, row)
+    },
+
+    /**
+     * 标签分类
+     */
+    tagFilterHandler(val, row) {
+      console.log(val, row)
     },
   },
 }
