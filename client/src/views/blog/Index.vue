@@ -1,7 +1,7 @@
 <template>
   <global-layout>
     <global-container-top placeholder="请输入文章标题" @searchHandle="searchHandle" @addHandle="addHandle"></global-container-top>
-    <el-table class="article-list" :data="tableData">
+    <el-table ref="filterTable" class="article-list" :data="tableData">
       <el-table-column label="标题">
         <template slot-scope="scope">
           <i class="iconfont icon-redo"></i>
@@ -9,6 +9,7 @@
         </template>
       </el-table-column>
       <el-table-column
+        :filtered-value="tagSelected"
         :filters="tagsFilter"
         :filter-method="tagFilterHandler"
         label="标签"
@@ -27,6 +28,7 @@
         </template>
       </el-table-column>
       <el-table-column
+        :filtered-value="classifySelected"
         prop="classifyTitle"
         label="专题"
         width="170"
@@ -34,6 +36,7 @@
         :filter-method="classifyFilterHandler"></el-table-column>
       <el-table-column prop="gmtCreate" label="发布时间" width="200"></el-table-column>
       <el-table-column
+        :filtered-value="statusSelected"
         :filters="statusFilter"
         :filter-method="statusFilterHandler"
         width="160"
@@ -57,6 +60,7 @@
         </template>
       </el-table-column>
     </el-table>
+    {{tagSelected}} {{classifySelected}} {{statusSelected}}
     <global-page ref="globalPage" @receiveData="receiveDataHandle" @pageInfo="pageInfoHandle" request="articleSearchList" :searchParam="true"></global-page>
   </global-layout>
 </template>
@@ -80,6 +84,12 @@ export default {
       ],
       classifyFilter: [],
       tagsFilter: [],
+      // 已选标签
+      tagSelected: [],
+      // 已选专题
+      classifySelected: [],
+      // 已选状态
+      statusSelected: [],
     }
   },
   created() {
@@ -172,6 +182,7 @@ export default {
      * 搜索
      */
     searchHandle(searchVal) {
+      this.clearFilter()
       this.$refs.globalPage.searchList(searchVal)
     },
     /**
@@ -203,6 +214,13 @@ export default {
      */
     tagFilterHandler(val, row) {
       console.log(val, row)
+    },
+
+    /**
+     * 清除所有筛选
+     */
+    clearFilter() {
+      this.$refs.filterTable.clearFilter();
     },
   },
 }
