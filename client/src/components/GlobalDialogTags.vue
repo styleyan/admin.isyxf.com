@@ -1,12 +1,15 @@
 <template>
   <el-dialog
+    top="60px"
     title="标签管理"
-    width="600px"
+    width="620px"
+    :close-on-click-modal="false"
     class="dialog-tags"
     :visible.sync="dialogVisible"
   >
     <el-table
       :data="tableData"
+      max-height="500"
       style="width: 100%">
       <el-table-column
         prop="id"
@@ -165,6 +168,9 @@ export default {
 .dialog-tags{
   .dialog-footer{
     text-align center
+  }
+  .el-dialog__body{
+    padding: 10px 20px 30px
   }
 }
 .dialog-tags-inner{
