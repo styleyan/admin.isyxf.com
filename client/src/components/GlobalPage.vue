@@ -24,6 +24,11 @@ export default {
       type: Boolean,
       default: false,
     },
+    // 额外参数
+    otherParam: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   data() {
     return {
@@ -81,6 +86,10 @@ export default {
 
       if (this.searchParam) {
         params.search = this.searchVal
+      }
+
+      if (Object.keys(this.otherParam)) {
+        params = { ...params, ...this.otherParam }
       }
 
       this.$axios[this.request](params).then((data) => {

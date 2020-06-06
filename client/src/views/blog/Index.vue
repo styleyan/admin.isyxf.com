@@ -9,12 +9,13 @@
         </template>
       </el-table-column>
       <el-table-column
-        :filtered-value="tagSelected"
-        :filters="tagsFilter"
-        :filter-method="tagFilterHandler"
         label="标签"
         width="220"
       >
+        <div slot="header" slot-scope="headerScope">
+          <span>{{headerScope.column.label}}</span>
+          <GlobalPopverMultiple class="va" :list="tagsFilter" @checkout="filterHandle($event, 'tag')"></GlobalPopverMultiple>
+        </div>
         <template slot-scope="scope">
           <div class="tag-column" v-if="scope.row.tags">
             <el-tag
@@ -28,19 +29,22 @@
         </template>
       </el-table-column>
       <el-table-column
-        :filtered-value="classifySelected"
         prop="classifyTitle"
         label="专题"
-        width="170"
-        :filters="classifyFilter"
-        :filter-method="classifyFilterHandler"></el-table-column>
+        width="170">
+        <div slot="header" slot-scope="headerScope">
+          <span>{{headerScope.column.label}}</span>
+          <GlobalPopverMultiple class="va" :list="classifyFilter" @checkout="filterHandle($event, 'classify')"></GlobalPopverMultiple>
+        </div>
+      </el-table-column>
       <el-table-column prop="gmtCreate" label="发布时间" width="200"></el-table-column>
       <el-table-column
-        :filtered-value="statusSelected"
-        :filters="statusFilter"
-        :filter-method="statusFilterHandler"
         width="160"
         label="状态">
+        <div slot="header" slot-scope="headerScope">
+          <span>{{headerScope.column.label}}</span>
+          <GlobalPopverSingle class="va" @select="filterHandle"></GlobalPopverSingle>
+        </div>
         <template slot-scope="scope">
           <el-switch
             :active-value="1"
@@ -52,16 +56,12 @@
       </el-table-column>
       <el-table-column label="操作" width="150">
         <template slot-scope="scope">
-          <el-button
-            size="mini"
-            type="primary"
-            @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+          <el-link :underline="false" :href="`/blog/article/${scope.row.id}/edit`" target="_blank" icon="el-icon-edit" type="primary">编辑</el-link>
           <global-popover @submit="handleDelete(scope.row)"></global-popover>
         </template>
       </el-table-column>
     </el-table>
-    {{tagSelected}} {{classifySelected}} {{statusSelected}}
-    <global-page ref="globalPage" @receiveData="receiveDataHandle" @pageInfo="pageInfoHandle" request="articleSearchList" :searchParam="true"></global-page>
+    <global-page ref="globalPage" :otherParam="otherParam" @receiveData="receiveDataHandle" @pageInfo="pageInfoHandle" request="articleSearchList" :searchParam="true"></global-page>
   </global-layout>
 </template>
 
@@ -70,26 +70,25 @@ import GlobalLayout from '@/components/GlobalLayout.vue'
 import GlobalContainerTop from '@/components/GlobalContainerTop.vue'
 import GlobalPage from '@/components/GlobalPage.vue'
 import GlobalPopover from '@/components/GlobalPopover.vue'
+import GlobalPopverMultiple from '@/components/GlobalPopverMultiple.vue'
+import GlobalPopverSingle from '@/components/GlobalPopverSingle.vue'
 
 export default {
   name: 'blogArticle',
-  components: { GlobalLayout, GlobalContainerTop, GlobalPage, GlobalPopover },
+  components: { GlobalLayout, GlobalContainerTop, GlobalPage, GlobalPopover, GlobalPopverMultiple, GlobalPopverSingle },
   data() {
     return {
       tableData: [],
-      statusFilter: [
-        { text: '全部', value: 2 },
-        { text: '已显示', value: 1 },
-        { text: '未显示', value: 0 },
-      ],
       classifyFilter: [],
       tagsFilter: [],
-      // 已选标签
-      tagSelected: [],
-      // 已选专题
-      classifySelected: [],
-      // 已选状态
-      statusSelected: [],
+      otherParam: {
+        // 已选标签
+        tags: '',
+        // 已选专题
+        classifys: '',
+        // 已选状态
+        state: -1,
+      },
     }
   },
   created() {
@@ -111,7 +110,7 @@ export default {
     },
 
     /**
-     * 文章更新
+     * 修改状态
      */
     switchChangeHandle(state, row) {
       this.$axios.articleEdit({
@@ -182,7 +181,6 @@ export default {
      * 搜索
      */
     searchHandle(searchVal) {
-      this.clearFilter()
       this.$refs.globalPage.searchList(searchVal)
     },
     /**
@@ -196,31 +194,18 @@ export default {
     },
 
     /**
-     * 分类过滤
+     * 过滤
      */
-    classifyFilterHandler(value, row) {
-      console.log(value, row)
-    },
+    filterHandle(value, type) {
+      if (type === 'tag') {
+        this.otherParam.tags = value.join(',')
+      } else if (type === 'classify') {
+        this.otherParam.classifys = value.join(',')
+      } else {
+        this.otherParam.state = value
+      }
 
-    /**
-     * 状态过滤
-     */
-    statusFilterHandler(val, row) {
-      console.log(val, row)
-    },
-
-    /**
-     * 标签分类
-     */
-    tagFilterHandler(val, row) {
-      console.log(val, row)
-    },
-
-    /**
-     * 清除所有筛选
-     */
-    clearFilter() {
-      this.$refs.filterTable.clearFilter();
+      this.$refs.globalPage.getList()
     },
   },
 }
@@ -243,6 +228,9 @@ export default {
     .el-tag{
       margin-right 8px
     }
+  }
+  .va{
+    vertical-align middle
   }
 }
 </style>
